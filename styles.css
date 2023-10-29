@@ -17,6 +17,13 @@ body{
   color: whitesmoke;
 }
 
+
+
+
+
+
+/* header */
+
 .header{
 
     width: 100%;
@@ -30,13 +37,10 @@ body{
     /* background-color:rgba(36,36,40,.8)!important;
   backdrop-filter:blur(10px)!important;
   -webkit-backdrop-filter:blur(10px)!important */
-    
-    
-    
-
-
-    
+     
 }
+
+
 .logo{
     width: 15%;
     height: 70px;
@@ -82,14 +86,19 @@ body{
 
 }
 
-/* .tab:hover{
+.tab:hover{
 
    cursor: pointer;
-  box-shadow: 0px 0px 0px #15b6b0;
+  /* box-shadow: 0px 0px 0px #15b6b0;
   transform: scale(1.25);
   color: whitesmoke ;
-  background-color: #202124;
-} */
+  background-color: #202124; */
+}
+
+
+
+
+
 
 /* banner  */
 
@@ -99,7 +108,7 @@ body{
     height: 700px;
     background-color:#202124;
     padding-left: 8%;
-    padding-right: 8%;
+    padding-right: 0%;
     padding-top: 50px;
     display: flex;
     align-items: center;
@@ -210,14 +219,14 @@ button {
   
    
 
-.person{
-    
+/* .person:hover{
+    cursor: pointer;
     border-radius: 80%;
     background: linear-gradient(315deg, #13a49e, #16c3bc);
     box-shadow:  -0px -0px 20px #129b96,
                  0px 0px 20px #18d1ca;
     
-}
+} */
 
 .Me{
    height: 400px;
@@ -226,6 +235,10 @@ button {
 }
 
 
+
+
+
+/* About */
 
 .About{
     
@@ -245,6 +258,13 @@ button {
 
   color: whitesmoke ;
 }
+
+
+
+
+
+
+/* Skills */
 
 .skills{
     
@@ -377,6 +397,13 @@ transform: scale(1.05);
 
 }
 
+
+
+
+
+
+/* Projects */
+
 .Projects{
 
   width: 100%;
@@ -433,6 +460,13 @@ transform: scale(1.05);
   
   } */
 
+
+
+
+
+
+
+  /* Certificates */
   .cert{
 
     width: 100%;
@@ -481,10 +515,3 @@ transform: scale(1.05);
    
 }
 
-.footer{
-
-    width: 100%;
-    padding: 30px 5%;
-   
-
-}
