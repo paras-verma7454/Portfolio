@@ -156,7 +156,7 @@ button {
     transform: skewX(-20deg);
   }
   
-  @keyframes sh1002 {
+  @keyframes sh02 {
     from {
       opacity: 0;
       left: 0%;
