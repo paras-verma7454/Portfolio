@@ -433,7 +433,7 @@ transform: scale(1.05);
  }
 
  .Project-1{
-  width: 22%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -496,7 +496,7 @@ transform: scale(1.05);
   }
 
   .cert-1{
-    width: 22%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -515,3 +515,23 @@ transform: scale(1.05);
    
 }
 
+/* CSS for desktop screens */
+@media only screen and (min-width: 768px) {
+  body {
+      font-size: 20px;
+  }
+}
+
+/* CSS for tablets */
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+  body {
+      font-size: 18px;
+  }
+}
+
+/* CSS for smartphones */
+@media only screen and (max-width: 480px) {
+  body {
+      font-size: 16px;
+  }
+}
