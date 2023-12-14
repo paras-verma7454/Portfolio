@@ -460,6 +460,7 @@ transform: scale(1.05);
   margin: 0px;
   height: 125px;
   align-self: center;
+  border-radius: 10px;
  
   }
 
@@ -524,6 +525,7 @@ transform: scale(1.05);
     height: 170px;
     /* width: 250px; */
     align-self: center;
+    border-radius: 10px;
    
 }
 
