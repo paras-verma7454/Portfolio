@@ -499,63 +499,61 @@ button:active {
 /* Projects */
 
 .Projects {
-  margin-top: 20px;
+
+  width: 100%;
+  padding: 30px 5%;
+
+
 }
 
 .Project-title {
-  font-size: 24px;
-  color: #15b6b0;
+  font-size: 50px;
+  font-weight: 200;
+  color: whitesmoke;
+
 }
 
 .Project-child {
+
+  width: 100%;
+  padding: 30px 10px;
+  margin-top: 30px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
+  /* flex-wrap: wrap; */
+  /* column-gap: 10px; */
+  /* row-gap: 30px; */
+  /* align-content: start; */
 }
 
 .Project-1 {
-  width: 20%; /* Adjust as needed */
-  margin-bottom: 20px;
-  /* background-color: #f9f9f9; */
-  border-radius: 5px;
-  padding: 15px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  row-gap: 15px;
+  border: 1px solid #15b6b0;
+  border-radius: 20px;
+  color: #15b6b0;
 }
 
-.Project-logo {
-  text-align: center;
-  margin-bottom: 10px;
+.icon-P1 {
+
+  margin: 0px;
+  height: 125px;
+  align-self: center;
+  border-radius: 10px;
+
 }
 
-.Project-logo img {
-  width: 100px; /* Adjust as needed */
-  height: auto;
-}
-
-.Project-details h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.Project-details p {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.button {
-  background-color: #15b6b0;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 5px;
+/* .Project-1:hover{
+ 
   cursor: pointer;
-  /* transition: background-color 0.3s ease; */
-}
-
-.button:hover {
-  background-color: #0a7d76;
-}
+  box-shadow: 0 0 20px #15b6b0;
+  transform: scale(1.05);
+  
+  } */
 
 
 
@@ -634,4 +632,78 @@ button:active {
   body {
     font-size: 16px;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Projects {
+  margin-top: 20px;
+}
+
+.Project-title {
+  font-size: 24px;
+  color: #15b6b0;
+}
+
+.Project-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.Project-1 {
+  width: 20%; /* Adjust as needed */
+  margin-bottom: 20px;
+  /* background-color: #f9f9f9; */
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.Project-logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.Project-logo img {
+  width: 100px; /* Adjust as needed */
+  height: auto;
+}
+
+.Project-details h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.Project-details p {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.button {
+  background-color: #15b6b0;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  /* transition: background-color 0.3s ease; */
+}
+
+.button:hover {
+  background-color: #0a7d76;
 }
