@@ -28,18 +28,6 @@ body {
   background-color: #202124;
 }
 
-::-webkit-scrollbar {
-
-
-  color: #15b6b0;
-  /* background-color: aliceblue; */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #15b6b0;
-  border-radius: 50px;
-}
-
 .cert {
   margin-top: 20px;
 }
@@ -692,5 +680,5 @@ button:active {
 }
 
 .button:hover {
-  background-color: #0a7d76;
+  background-color: #15b6b0;
 }
