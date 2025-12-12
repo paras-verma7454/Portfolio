@@ -55,7 +55,7 @@ const PORTFOLIO_CONTENT = {
     {
       title: "CalMarshal",
       desc: "Full-stack scheduling app with Google Calendar sync.",
-      tags: ['Next.js', 'Prisma', 'Nylas'],
+      tags: ['Next.js', 'Prisma', 'Nylas','Next.js'],
       color: "bg-purple-500",
       href: "https://cal-marshal-phi.vercel.app",
       className: "md:col-span-1"
@@ -63,7 +63,7 @@ const PORTFOLIO_CONTENT = {
     {
       title: "Dionysus",
       desc: "AI dev assistant for code analysis & meetings.",
-      tags: ['Gemini API', 'Supabase'],
+      tags: ['Gemini API', 'Supabase','Assembly AI','Next.js'],
       color: "bg-emerald-500",
       href: "https://dionysus-zeta.vercel.app/",
       className: "md:col-span-1"
@@ -79,7 +79,7 @@ const PORTFOLIO_CONTENT = {
     },{
       title: "DriveDeck",
       desc: "Buy & Sell Cars Without the Friction.",
-      tags: ['Gemini API', 'Supabase'],
+      tags: ['React.js','Node.js','PostgreSQL'],
       color: "bg-purple-300",
       href: "https://drive-deck.vercel.app/",
       className: "md:col-span-1"
