@@ -77,7 +77,7 @@ const PORTFOLIO_CONTENT = {
       period: "Nov 2025 - Present",
       startDate: "2025-11-01", // Used for the auto-counter
       description: "Building scalable AI solutions.",
-      linkedin: "https://linkedin.com/company/jspark-ai",
+      linkedin: "https://linkedin.com/company/jsparkai",
     },
   ],
   // Add as many projects as you like. Use 'col-span-2' class for wide cards.
@@ -509,89 +509,89 @@ const App = () => {
           </BentoCard>
 
           {/* 6. Experience - Dynamic (Wide card, spans two columns) */}
-          <BentoCard
+            <BentoCard
             colSpan="md:col-span-2"
             rowSpan={
               PORTFOLIO_CONTENT.experience.length > 1
-                ? "md:row-span-2"
-                : "md:row-span-1"
+              ? "md:row-span-2"
+              : "md:row-span-1"
             }
             className="relative overflow-hidden"
             delay={0.5}
-          >
+            >
             <div className="absolute top-0 right-0 p-4 opacity-10">
               <Briefcase size={120} />
             </div>
             <div className="relative z-10 h-full flex flex-col">
               <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="text-yellow-400" size={18} />
-                <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-500">
-                  Experience
-                </h3>
+              <Sparkles className="text-yellow-400" size={18} />
+              <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-500">
+                Experience
+              </h3>
               </div>
 
-              <div className="space-y-2 overflow-y-auto px-3 flex-1 min-h-0 mask-linear-gradient-bottom">
-                {PORTFOLIO_CONTENT.experience.map((role, idx) => (
-                  <div
-                    key={idx}
-                    className="relative pl-4 border-l border-white/10 last:mb-0"
-                  >
-                    <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-4 ring-neutral-900 animate-pulse" />
+              <div className="space-y-2 overflow-y-auto px-3 flex-1 min-h-0 mask-linear-gradient-bottom [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-thumb]:rounded-full">
+              {PORTFOLIO_CONTENT.experience.map((role, idx) => (
+                <div
+                key={idx}
+                className="relative pl-4 border-l border-white/10 last:mb-0"
+                >
+                <div className="absolute -left-1.25 top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-4 ring-neutral-900 animate-pulse" />
 
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1">
-                      <div>
-                        <h4 className="text-lg font-bold text-white">
-                          {role.role}
-                        </h4>
-                        <div className="flex items-center gap-2 text-blue-400 font-medium text-sm">
-                          <span>{role.company}</span>
-                          <div className="flex gap-1">
-                            {(role as any).companyUrl && (
-                              <a
-                                href={(role as any).companyUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-blue-400 text-gray-200 transition-colors"
-                                title={`website`}
-                              >
-                                <Globe size={12} />
-                              </a>
-                            )}
-                            {(role as any).linkedin && (
-                              <a
-                                href={(role as any).linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-blue-400 text-gray-200 transition-colors"
-                                title={`LinkedIn page`}
-                              >
-                                <Linkedin size={12} />
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <span className="text-xs text-neutral-500 font-medium sm:text-right mt-1 sm:mt-0">
-                        {role.period}
-                      </span>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1">
+                  <div>
+                  <h4 className="text-lg font-bold text-white">
+                    {role.role}
+                  </h4>
+                  <div className="flex items-center gap-2 text-blue-400 font-medium text-sm">
+                    <span>{role.company}</span>
+                    <div className="flex gap-1">
+                    {role.companyUrl && (
+                      <a
+                      href={role.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-400 text-gray-200 transition-colors"
+                      title={`website`}
+                      >
+                      <Globe size={12} />
+                      </a>
+                    )}
+                    {role.linkedin && (
+                      <a
+                      href={role.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-400 text-gray-200 transition-colors"
+                      title={`LinkedIn page`}
+                      >
+                      <Linkedin size={12} />
+                      </a>
+                    )}
                     </div>
-
-                    {role.description && (
-                      <p className="text-xs text-neutral-400 mb-2 max-w-lg">
-                        {role.description}
-                      </p>
-                    )}
-
-                    {idx === 0 && (
-                      <div className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-bold border border-blue-500/20 mt-1">
-                        Current Tenure: {expDuration}
-                      </div>
-                    )}
                   </div>
-                ))}
+                  </div>
+                  <span className="text-xs text-neutral-500 font-medium sm:text-right mt-1 sm:mt-0">
+                  {role.period}
+                  </span>
+                </div>
+
+                {role.description && (
+                  <p className="text-xs text-neutral-400 mb-2 max-w-lg">
+                  {role.description}
+                  </p>
+                )}
+
+                {idx === 0 && (
+                  <div className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white text-[10px] gap-1">
+                  Current Tenure: {expDuration}
+                  </div>
+                )}
+                </div>
+              ))}
               </div>
             </div>
-          </BentoCard>
+            </BentoCard>
 
           {/* === PROJECTS SECTION (Starts here) === */}
 
@@ -630,8 +630,8 @@ const App = () => {
         {/* Footer */}
         <div className="mt-20 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-neutral-500 text-sm">
-            © {new Date().getFullYear()} {PORTFOLIO_CONTENT.personal.name}{" "}
-            {PORTFOLIO_CONTENT.personal.surname}. All Rights Reserved.
+            © {new Date().getFullYear()} {"Paras"}{" "}
+            . All Rights Reserved.
           </p>
           <div className="flex gap-6 text-sm font-medium text-neutral-400">
             {PORTFOLIO_CONTENT.socials
