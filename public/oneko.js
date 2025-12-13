@@ -20,6 +20,12 @@
   let idleAnimation = null;
   let idleAnimationFrame = 0;
 
+  // Dragging state
+  let isDragging = false;
+  let draggingPointerId = null;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
   const nekoSpeed = 10;
   const spriteSets = {
     idle: [[-3, -3]],
@@ -90,7 +96,12 @@
     nekoEl.style.width = "32px";
     nekoEl.style.height = "32px";
     nekoEl.style.position = "fixed";
-    nekoEl.style.pointerEvents = "none";
+    // Allow pointer events so the neko can be dragged
+    nekoEl.style.pointerEvents = "auto";
+    // Prevent touch action default so pointer events work for touch devices
+    nekoEl.style.touchAction = "none";
+    nekoEl.style.userSelect = "none";
+    nekoEl.style.cursor = "grab";
     nekoEl.style.imageRendering = "pixelated";
     nekoEl.style.left = `${nekoPosX - 16}px`;
     nekoEl.style.top = `${nekoPosY - 16}px`;
@@ -106,9 +117,63 @@
     document.body.appendChild(nekoEl);
 
     document.addEventListener("mousemove", function (event) {
+      // Update the mouse position so the neko follows the cursor when not dragging
       mousePosX = event.clientX;
       mousePosY = event.clientY;
     });
+
+    // Dragging support (pointer events work for both mouse and touch)
+
+    nekoEl.addEventListener("pointerdown", (event) => {
+      // Only start drag on primary button / touch
+      if (event.isPrimary === false) return;
+      event.preventDefault();
+      isDragging = true;
+      draggingPointerId = event.pointerId;
+      // Save offset between pointer position and element top-left
+      const leftPos = nekoPosX - 16;
+      const topPos = nekoPosY - 16;
+      dragOffsetX = event.clientX - leftPos;
+      dragOffsetY = event.clientY - topPos;
+      nekoEl.setPointerCapture(event.pointerId);
+      nekoEl.style.cursor = "grabbing";
+      // Make sure sprite isn't trying to chase while we're dragging
+      idleTime = 0;
+    });
+
+    nekoEl.addEventListener("pointermove", (event) => {
+      if (!isDragging || event.pointerId !== draggingPointerId) return;
+      event.preventDefault();
+      const left = event.clientX - dragOffsetX;
+      const top = event.clientY - dragOffsetY;
+      nekoPosX = left + 16;
+      nekoPosY = top + 16;
+      // Clamp inside viewport
+      nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
+      nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
+      mousePosX = event.clientX;
+      mousePosY = event.clientY;
+      nekoEl.style.left = `${nekoPosX - 16}px`;
+      nekoEl.style.top = `${nekoPosY - 16}px`;
+    });
+
+    function endDrag(event) {
+      if (!isDragging || (event && event.pointerId !== draggingPointerId)) return;
+      if (event) {
+        try { nekoEl.releasePointerCapture(event.pointerId); } catch (e) {}
+      }
+      isDragging = false;
+      draggingPointerId = null;
+      nekoEl.style.cursor = "grab";
+      // Update target mouse position so the neko doesn't suddenly jump
+      mousePosX = nekoPosX;
+      mousePosY = nekoPosY;
+    }
+
+    nekoEl.addEventListener("pointerup", endDrag);
+    nekoEl.addEventListener("pointercancel", endDrag);
+    // Fallbacks in case pointerup occurs outside the element
+    window.addEventListener("pointerup", endDrag);
 
     window.requestAnimationFrame(onAnimationFrame);
   }
@@ -198,6 +263,10 @@
 
   function frame() {
     frameCount += 1;
+    // When the user drags the neko, stop the auto movement
+    if (isDragging) {
+      return;
+    }
     const diffX = nekoPosX - mousePosX;
     const diffY = nekoPosY - mousePosY;
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);

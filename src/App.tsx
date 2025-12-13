@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type JSX } from "react";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -14,6 +14,11 @@ import {
   BookOpen,
   Globe,
 } from "lucide-react";
+import TypeScript from "./Components/Typescript";
+import NextJs from "./Components/NextJS";
+import NodeJs from "./Components/NodeJs";
+import ReactLogo from "./Components/React";
+import PostgreSQL from "./PostgreSQL";
 
 // ==========================================
 // 🚀 CONTENT CONFIGURATION - UPDATE THIS SECTION
@@ -26,7 +31,7 @@ const PORTFOLIO_CONTENT = {
     // role: "Full-stack Developer",
     location: "India",
     timezone: "IST", // displayed in the clock
-    bio: "I build interactive web applications using TypeScript, React, Next.js, Node.js, Prisma, and PostgreSQL — with a strong focus on clean UI.",
+    bio: `I build interactive web applications using TypeScript, React, Next.js, Node.js and PostgreSQL — with a strong focus on clean UI.`,
     // bio: "I'm a Full Stack web developer, I love building products to solve real-world problems. I'm specialized in building MVP's.",
     email: "parasverma7454@gmail.com",
     availability: "Available for freelance",
@@ -99,8 +104,8 @@ const PORTFOLIO_CONTENT = {
       tags: ["Convex", "Next.js", "Gemini", "Tailwind", "Code sandbox"],
       color: "bg-orange-500",
       href: "https://bolt-new-olive.vercel.app/",
-      className: "lg:col-span-2",
-      featured: true,
+      className: "md:col-span-1",
+      // featured: true,
     },
     {
       title: "DriveDeck",
@@ -293,7 +298,7 @@ const App = () => {
               {PORTFOLIO_CONTENT.personal.headline}
             </p> */}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center md:mb-4 gap-3">
             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
             <span className="text-sm font-medium text-green-500 whitespace-nowrap">
               {PORTFOLIO_CONTENT.personal.availability}
@@ -302,7 +307,7 @@ const App = () => {
         </motion.div>
 
         {/* === BENTO GRID LAYOUT (lg:grid-cols-4 structure) === */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto md:auto-rows-[200px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto md:auto-rows-[220px]">
           {/* Row 1: Hero (2x2) | Map (1x1) | Socials (1x1) */}
 
           {/* 1. Hero / About - Large */}
@@ -320,14 +325,81 @@ const App = () => {
                 <h2 className="text-3xl font-bold text-white leading-tight">
                   About me.
                 </h2>
-                <p className="text-neutral-400 text-sm leading-relaxed max-w-md">
-                  {PORTFOLIO_CONTENT.personal.bio}
+                <p className="text-neutral-400 text-sm leading-relaxed max-w-lg">
+                  {(() => {
+                    const bioText = PORTFOLIO_CONTENT.personal.bio;
+                    const inlineMap: Record<string, JSX.Element> = {
+                      TypeScript: (
+                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1">
+                          <span className="w-4 h-4">
+                            <TypeScript />
+                          </span>
+                          <span>TypeScript</span>
+                        </span>
+                      ),
+                      React: (
+                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2">
+                          <span className="w-4 h-4">
+                            <ReactLogo />
+                          </span>
+                          <span>React</span>
+                        </span>
+                      ),
+                      "Next.js": (
+                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2">
+                          <span className="w-4 h-4">
+                            <NextJs />
+                          </span>
+                          <span>Next.js</span>
+                        </span>
+                      ),
+                      "Node.js": (
+                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1">
+                          <span className="w-4 h-4">
+                            <NodeJs />
+                          </span>
+                          <span>Node.js</span>
+                        </span>
+                      ),
+                      // Prisma: (
+                      //   <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1">
+                      //     <span className="w-4 h-4">
+                      //       <Prisma />
+                      //     </span>
+                      //     <span>Prisma</span>
+                      //   </span>
+                      // ),
+                      PostgreSQL: (
+                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1">
+                          <span className="w-4 h-4">
+                            <PostgreSQL />
+                          </span>
+                          <span>PostgreSQL</span>
+                        </span>
+                      ),
+                    };
+
+                    const escaped = Object.keys(inlineMap).map((k) =>
+                      k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+                    );
+                    const splitRegex = new RegExp(`(${escaped.join("|")})`, "g");
+
+                    return bioText.split(splitRegex).map((part, i) =>
+                      inlineMap[part as keyof typeof inlineMap] ? (
+                        <span key={i} className="inline-block align-middle">
+                          {inlineMap[part as keyof typeof inlineMap]}
+                        </span>
+                      ) : (
+                        <span key={i}>{part}</span>
+                      )
+                    );
+                  })()}
                 </p>
               </div>
-              <div className="flex gap-3 mb-4">
+              <div className="flex gap-3">
                 <a
                   href={`mailto:${PORTFOLIO_CONTENT.personal.email}`}
-                  className="px-4 py-1 bg-neutral-800 text-white rounded-full font-semibold hover:bg-neutral-700 transition-colors flex items-center justify-center"
+                  className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 mt-3 gap-1"
                 >
                   Parasverma7454@gmail.com
                 </a>
@@ -338,12 +410,12 @@ const App = () => {
           {/* 2. Map / Location */}
           <BentoCard delay={0.1}>
             <div className="flex flex-col items-center justify-center text-center space-y-3 h-full">
-              <div className="relative w-full h-20 bg-neutral-800 rounded-xl overflow-hidden opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="relative w-full px-5 h-24 bg-neutral-800 rounded-xl overflow-hidden opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                 {/* Abstract Map Pattern */}
                 <div className="absolute inset-0 bg-[radial-gradient(#404040_1px,transparent_1px)] bg-size-[8px_8px] opacity-20"></div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <div className="relative">
-                    <div className="absolute -inset-4 bg-blue-500/20 rounded-full animate-ping" />
+                    <div className="absolute -inset-4 bg-blue-500 rounded-full animate-ping" />
                     <MapPin className="text-blue-400 relative z-10" size={24} />
                   </div>
                 </div>
@@ -381,7 +453,7 @@ const App = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + i * 0.05 }}
-                      className="flex items-center justify-between group/skill cursor-default"
+                      className="flex items-center justify-between group/skill cursor-pointer"
                     >
                       <span className="text-sm font-medium text-neutral-400 group-hover/skill:text-white transition-colors">
                         {skill}

@@ -2,7 +2,7 @@
 
 @layer utilities {
   /* Custom Scrollbar for a sleek look */
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
@@ -15,13 +15,13 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3); 
-  }
+  } */
 
   /* Firefox */
-  * {
+  /* * {
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
-  }
+  } */
 
   .mask-linear-gradient-bottom {
     mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
