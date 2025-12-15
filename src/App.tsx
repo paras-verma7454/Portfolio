@@ -18,7 +18,7 @@ import TypeScript from "./Components/Typescript";
 import NextJs from "./Components/NextJS";
 import NodeJs from "./Components/NodeJs";
 import ReactLogo from "./Components/React";
-import PostgreSQL from "./PostgreSQL";
+import PostgreSQL from "./Components/PostgreSQL";
 
 // ==========================================
 // 🚀 CONTENT CONFIGURATION - UPDATE THIS SECTION
@@ -88,6 +88,7 @@ const PORTFOLIO_CONTENT = {
       tags: ["Next.js", "Prisma", "Nylas", "Next.js"],
       color: "bg-purple-500",
       href: "https://cal-marshal-phi.vercel.app",
+      github: "https://github.com/paras-verma7454/CalMarshal",
       className: "md:col-span-1",
     },
     {
@@ -96,6 +97,7 @@ const PORTFOLIO_CONTENT = {
       tags: ["Gemini API", "Supabase", "Assembly AI", "Next.js"],
       color: "bg-emerald-500",
       href: "https://dionysus-zeta.vercel.app/",
+      github: "https://github.com/paras-verma7454/Dionysus",
       className: "md:col-span-1",
     },
     {
@@ -104,6 +106,7 @@ const PORTFOLIO_CONTENT = {
       tags: ["Convex", "Next.js", "Gemini", "Tailwind", "Code sandbox"],
       color: "bg-orange-500",
       href: "https://bolt-new-olive.vercel.app/",
+      github: "https://github.com/paras-verma7454/bolt.new",
       className: "md:col-span-1",
       // featured: true,
     },
@@ -113,6 +116,31 @@ const PORTFOLIO_CONTENT = {
       tags: ["React.js", "Node.js", "PostgreSQL"],
       color: "bg-purple-300",
       href: "https://drive-deck.vercel.app/",
+      github: "https://github.com/paras-verma7454/DriveDeck",
+      className: "md:col-span-1",
+    },{
+      title: "Chat App",
+      desc: "Chat app build with web sockets.",
+      tags: ["React.js", "Node.js", "WebSockets"],
+      color: "bg-green-300",
+      href: "https://github.com/paras-verma7454/chat-app",
+      github: "https://github.com/paras-verma7454/chat-app",
+      className: "md:col-span-1",
+    },{
+      title: "Paytm",
+      desc: "A full-stack digital wallet application, featuring secure money transfers and user authentication.",
+      tags: ["React.js", "Node.js", "MongoDB"],
+      color: "bg-blue-300",
+      href: "https://paytm-livid.vercel.app/",
+      github: "https://github.com/paras-verma7454/Paytm",
+      className: "md:col-span-1",
+    },{
+      title: "Medium",
+      desc: "A full-stack digital wallet application, featuring secure money transfers and user authentication.",
+      tags: ["React.js", "Hono", "Prisma ORM"],
+      color: "bg-gray-700",
+      href: "https://medium-kappa-nine.vercel.app/",
+      github: "https://github.com/paras-verma7454/Medium",
       className: "md:col-span-1",
     },
   ],
@@ -157,6 +185,7 @@ interface ProjectCardProps {
     tags: string[];
     color: string;
     href: string;
+    github?: string;
     featured?: boolean;
     className?: string;
   };
@@ -167,26 +196,60 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   if (featured) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
+      <div
         className="flex flex-col justify-between h-full group/card cursor-pointer"
+        role="link"
+        tabIndex={0}
+        onClick={() =>
+          window.open(href, "_blank", "noopener,noreferrer")
+        }
+        onKeyDown={(e) => {
+          if (e.key === "Enter") window.open(href, "_blank", "noopener,noreferrer");
+        }}
+        aria-label={`Open ${title} live site`}
       >
         <div className="flex justify-between items-start mb-2">
           <div className={`p-3 rounded-xl ${color} bg-opacity-20`}>
             <Layout className={color.replace("bg-", "text-")} size={24} />
           </div>
-          <ArrowUpRight
-            className="text-neutral-500 group-hover/card:text-white transition-colors"
-            size={20}
-          />
+          <div className="flex items-center gap-2">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${title} live site`}
+              className="text-neutral-500 group-hover/card:text-white transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ArrowUpRight size={20} />
+            </a>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${title} GitHub repo`}
+                className="text-neutral-500 hover:text-white focus:text-white transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Github size={20} />
+              </a>
+            )}
+          </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-white mb-2 group-hover/card:text-blue-400 transition-colors">
-            {title}
-          </h3>
-          <p className="text-neutral-400 text-sm mb-4">{desc}</p>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold text-white mb-2 group-hover/card:text-blue-400 transition-colors">
+              {title}
+            </h3>
+            <p className="text-neutral-400 text-sm mb-4">{desc}</p>
+          </a>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag: string) => (
               <span
@@ -198,16 +261,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             ))}
           </div>
         </div>
-      </a>
+      </div>
     );
   }
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       className="flex flex-col h-full justify-between group/card cursor-pointer"
+      role="link"
+      tabIndex={0}
+      onClick={() => window.open(href, "_blank", "noopener,noreferrer")}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") window.open(href, "_blank", "noopener,noreferrer");
+      }}
+      aria-label={`Open ${title} live site`}
     >
       <div>
         <div className="flex justify-between items-start mb-3">
@@ -219,15 +286,43 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               )} animate-pulse`}
             />
           </div>
-          <ArrowUpRight
-            className="text-neutral-500 group-hover/card:text-white transition-colors"
-            size={20}
-          />
+          <div className="flex items-center gap-2">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${title} live site`}
+              className="text-neutral-500 group-hover/card:text-white transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ArrowUpRight size={20} />
+            </a>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${title} GitHub repo`}
+                className="text-neutral-500 hover:text-white focus:text-white transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Github size={20} />
+              </a>
+            )}
+          </div>
         </div>
-        <h3 className="text-lg font-bold text-white mb-1 group-hover/card:text-blue-400 transition-colors">
-          {title}
-        </h3>
-        <p className="text-sm text-neutral-400 line-clamp-2">{desc}</p>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h3 className="text-lg font-bold text-white mb-1 group-hover/card:text-blue-400 transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-neutral-400 whitespace-normal">{desc}</p>
+        </a>
       </div>
       <div className="flex flex-wrap gap-2 mt-4">
         {tags.map((tag: string) => (
@@ -239,7 +334,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </span>
         ))}
       </div>
-    </a>
+    </div>
   );
 };
 
@@ -530,7 +625,7 @@ const App = () => {
               </h3>
               </div>
 
-              <div className="space-y-2 overflow-y-auto px-3 flex-1 min-h-0 mask-linear-gradient-bottom [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-thumb]:rounded-full">
+              <div className="space-y-2 overflow-y-auto px-3 pb-6 flex-1 min-h-0 mask-linear-gradient-bottom [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-thumb]:rounded-full">
               {PORTFOLIO_CONTENT.experience.map((role, idx) => (
                 <div
                 key={idx}
