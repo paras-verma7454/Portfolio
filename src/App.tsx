@@ -344,28 +344,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [expDuration, setExpDuration] = useState("");
 
   const currentRole = PORTFOLIO_CONTENT.experience[0]; // Get the first role
 
   useEffect(() => {
-    // Clock Timer
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-
-    // Experience Duration Calculator
-    const startDate = new Date(currentRole.startDate);
-    const now = new Date();
-
-    let months =
-      (now.getFullYear() - startDate.getFullYear()) * 12 +
-      (now.getMonth() - startDate.getMonth());
-    if (now.getDate() >= startDate.getDate()) months++;
-
-    const displayMonths = months < 1 ? 1 : months;
-    setExpDuration(`${displayMonths} month${displayMonths > 1 ? "s" : ""}`);
-
     return () => clearInterval(timer);
-  }, [currentRole.startDate]);
+  }, []);
+
+  const startDate = new Date(currentRole.startDate);
+  const now = new Date();
+
+  let months =
+    (now.getFullYear() - startDate.getFullYear()) * 12 +
+    (now.getMonth() - startDate.getMonth());
+  if (now.getDate() >= startDate.getDate()) months++;
+
+  const displayMonths = months < 1 ? 1 : months;
+  const expDuration = `${displayMonths} month${displayMonths > 1 ? "s" : ""}`;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 font-sans selection:bg-blue-500/30 selection:text-blue-200 pb-12">
