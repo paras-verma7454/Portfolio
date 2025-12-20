@@ -125,5 +125,6 @@ export const PORTFOLIO_CONTENT = {
   ],
   contributions: [
     { prUrl: "https://github.com/fastapi/fastapi/pull/14565" },
+    { prUrl: "https://github.com/ig-imanish/mx-icons/pull/9" },
   ],
 };
