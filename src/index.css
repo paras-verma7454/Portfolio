@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+body {
+  background-color: oklch(0.15 0 0);
+}
 @layer utilities {
   /* Custom Scrollbar for a sleek look */
   /* ::-webkit-scrollbar {
