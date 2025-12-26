@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, ArrowUpRight, Github } from "lucide-react";
+import { Layout, ArrowUpRight, Github, Users } from "lucide-react";
 
 interface ProjectCardProps {
   project: {
@@ -10,6 +10,7 @@ interface ProjectCardProps {
     href: string;
     github?: string;
     featured?: boolean;
+    collaborative?: boolean;
     className?: string;
   };
 }
@@ -68,10 +69,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             className="block"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-xl font-bold text-white mb-2 group-hover/card:text-blue-400 transition-colors">
-              {title}
-            </h3>
-            <p className="text-neutral-400 text-sm mb-4">{desc}</p>
+            <div className="flex items-center gap-2 mb-2">
+              <h3 className="text-xl font-bold text-white group-hover/card:text-blue-400 transition-colors">
+                {title}
+              </h3>
+              {project.collaborative && (
+                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] text-blue-400 font-medium">
+                  <Users size={10} />
+                  Collab
+                </span>
+              )}
+            </div>
+            <p className="text-neutral-400 text-sm mb-4 line-clamp-3">{desc}</p>
           </a>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag: string) => (
@@ -141,10 +150,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           className="block"
           onClick={(e) => e.stopPropagation()}
         >
-          <h3 className="text-lg font-bold text-white mb-1 group-hover/card:text-blue-400 transition-colors">
-            {title}
-          </h3>
-          <p className="text-sm text-neutral-400 whitespace-normal">{desc}</p>
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="text-lg font-bold text-white group-hover/card:text-blue-400 transition-colors">
+              {title}
+            </h3>
+            {project.collaborative && (
+              <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[8px] text-blue-400 font-medium whitespace-nowrap">
+                <Users size={8} />
+                Collab
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-neutral-400 whitespace-normal line-clamp-3">{desc}</p>
         </a>
       </div>
       <div className="flex flex-wrap gap-2 mt-4">

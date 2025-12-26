@@ -60,6 +60,17 @@ export const PORTFOLIO_CONTENT = {
   ],
   projects: [
     {
+      title: "Ossium",
+      desc: "An open-source tool to explore trending GitHub projects. Quickly find and filter repositories by language and popularity without complex queries or bloated UIs.",
+      tags: ["Next.js","Drizzle ORM","Tailwind CSS","TypeScript","GitHub API"],
+      color: "bg-white",
+      href: "https://ossium.live/",
+      github: "https://github.com/OssiumOfficial",
+      className: "md:col-span-1",
+      collaborative: true,
+      // featured: true,
+    },
+    {
       title: "CalMarshal",
       desc: "Full-stack scheduling app with Google Calendar sync.",
       tags: ["Next.js", "Prisma", "Nylas", "Next.js"],
