@@ -54,7 +54,7 @@ export const PORTFOLIO_CONTENT = {
       role: "SDE Intern",
       period: "Nov 2025 - Present",
       startDate: "2025-11-01",
-      description: "Building scalable AI solutions.",
+      description: "",
       linkedin: "https://linkedin.com/company/jsparkai",
     },
   ],
