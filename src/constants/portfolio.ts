@@ -5,7 +5,62 @@ import {
   Mail,
 } from "lucide-react";
 
-export const PORTFOLIO_CONTENT = {
+export type Contribution = {
+  prUrl: string;
+  private?: boolean;
+  title?: string;
+  url?: string; // a.k.a redirectUrl
+  status?: 'open' | 'closed' | 'merged';
+};
+
+export interface Personal {
+  name: string;
+  surname: string;
+  location: string;
+  timezone: string;
+  bio: string;
+  email: string;
+  availability: string;
+  avatar: string;
+}
+
+export interface Social {
+  icon: any;
+  href: string;
+  label: string;
+}
+
+export interface Experience {
+  company: string;
+  companyUrl: string;
+  role: string;
+  period: string;
+  startDate: string;
+  description: string;
+  linkedin: string;
+}
+
+export interface Project {
+  title: string;
+  desc: string;
+  tags: string[];
+  color: string;
+  href: string;
+  github: string;
+  className: string;
+  collaborative?: boolean;
+  featured?: boolean;
+}
+
+
+export const PORTFOLIO_CONTENT: {
+  personal: Personal;
+  socials: Social[];
+  skills: string[];
+  experience: Experience[];
+  projects: Project[];
+  contributions: Contribution[];
+} = {
   personal: {
     name: "Hi, I'm Paras —",
     surname: "A Full Stack web developer.",
@@ -59,17 +114,6 @@ export const PORTFOLIO_CONTENT = {
     },
   ],
   projects: [
-    // {
-    //   title: "Ossium",
-    //   desc: "An open-source tool to explore trending GitHub projects. Quickly find and filter repositories by language and popularity without complex queries or bloated UIs.",
-    //   tags: ["Next.js","Drizzle ORM","Tailwind CSS","TypeScript","GitHub API"],
-    //   color: "bg-white",
-    //   href: "https://ossium.live/",
-    //   github: "https://github.com/OssiumOfficial",
-    //   className: "md:col-span-1",
-    //   collaborative: true,
-    //   // featured: true,
-    // },
     {
       title: "CalMarshal",
       desc: "Full-stack scheduling app with Google Calendar sync.",
@@ -135,6 +179,26 @@ export const PORTFOLIO_CONTENT = {
     },
   ],
   contributions: [
+    {
+      prUrl:"https://github.com/OssiumOfficial/ossium/pull/17",
+      title:"feat: Implement Smart Alerts for premium users",
+      private:true,
+      url:"https://www.linkedin.com/posts/paras-vermaa_buildinpublic-saas-developerexperience-activity-7413798950589259776-NDcn?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
+      status:"open"
+    },
+    {
+      prUrl:"https://github.com/OssiumOfficial/ossium/pull/3",
+      title:"Feat: overhaul bounties page, navigation, and language detection",
+      private:true,
+      url:"https://www.linkedin.com/posts/paras-vermaa_opensource-webdevelopment-frontend-activity-7409948094131253248-mnej?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
+      status:"merged"
+    },
+    {
+      prUrl:"https://github.com/OssiumOfficial/ossium/pull/9",
+      title:"feat: Improve GSoC and Issues UIs",
+      private:true,
+      status:"merged"
+    },
     { prUrl: "https://github.com/fastapi/fastapi/pull/14565" },
     { prUrl: "https://github.com/ig-imanish/mx-icons/pull/9" },
   ],

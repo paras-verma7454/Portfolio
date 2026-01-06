@@ -83,9 +83,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <p className="text-neutral-400 text-sm mb-4 line-clamp-3">{desc}</p>
           </a>
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag: string) => (
+            {tags.map((tag: string, index: number) => (
               <span
-                key={tag}
+                key={`${tag}-${index}`}
                 className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] text-neutral-300 uppercase"
               >
                 {tag}
@@ -165,9 +165,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </a>
       </div>
       <div className="flex flex-wrap gap-2 mt-4">
-        {tags.map((tag: string) => (
+        {tags.map((tag: string, index: number) => (
           <span
-            key={tag}
+            key={`${tag}-${index}`}
             className="text-[10px] uppercase tracking-wider text-neutral-500"
           >
             {tag}

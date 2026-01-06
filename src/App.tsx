@@ -9,9 +9,11 @@ import {
   Sparkles,
   BookOpen,
   Globe,
+  ChevronDown,
 } from "lucide-react";
 
-import { PORTFOLIO_CONTENT } from "./constants/portfolio";
+import { PORTFOLIO_CONTENT } from "./constants/portfolio"; // Import Contribution type
+import type { Contribution } from "./constants/portfolio"; // Import Contribution type
 import BentoCard from "./Components/BentoCard";
 import ProjectCard from "./Components/ProjectCard";
 import ContributionItem from "./Components/ContributionItem";
@@ -21,6 +23,57 @@ import NextJs from "./Components/NextJS";
 import NodeJs from "./Components/NodeJs";
 import ReactLogo from "./Components/React";
 import PostgreSQL from "./Components/PostgreSQL";
+
+
+type GroupedContribution = {
+  repoName: string;
+  owner: string;
+  contributions: Contribution[];
+  prCount: number;
+};
+
+// const getOwnerFromPrUrl = (prUrl: string): string | null => {
+//   try {
+//     const urlObj = new URL(prUrl);
+//     const parts = urlObj.pathname.split("/");
+//     return parts[1];
+//   } catch (error) {
+//     console.error("Invalid prUrl for owner extraction:", prUrl, error);
+//     return null;
+//   }
+// };
+
+const groupContributionsByRepo = (
+  contributions: Contribution[]
+): GroupedContribution[] => {
+  const grouped: { [key: string]: GroupedContribution } = {};
+
+  contributions.forEach((contribution) => {
+    try {
+      const urlObj = new URL(contribution.prUrl);
+      const parts = urlObj.pathname.split("/");
+      const owner = parts[1];
+      const repoName = parts[2];
+      const fullRepoName = `${owner}/${repoName}`;
+
+      if (!grouped[fullRepoName]) {
+        grouped[fullRepoName] = {
+          repoName: fullRepoName,
+          owner: owner,
+          contributions: [],
+          prCount: 0,
+        };
+      }
+      grouped[fullRepoName].contributions.push(contribution);
+      grouped[fullRepoName].prCount++;
+    } catch (error) {
+      console.error("Invalid prUrl in contribution:", contribution.prUrl, error);
+    }
+  });
+
+  return Object.values(grouped);
+};
+
 
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -42,6 +95,25 @@ const App = () => {
 
   const displayMonths = months < 1 ? 1 : months;
   const expDuration = `${displayMonths} month${displayMonths > 1 ? "s" : ""}`;
+
+  const groupedContributions = groupContributionsByRepo(
+    PORTFOLIO_CONTENT.contributions
+  );
+
+  const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
+    new Set(groupedContributions.map(group => group.repoName))
+  );
+  const toggleCollapse = (repoName: string) => {
+    setCollapsedGroups((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(repoName)) {
+        newSet.delete(repoName);
+      } else {
+        newSet.add(repoName);
+      }
+      return newSet;
+    });
+  };
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 font-sans selection:bg-blue-500/30 selection:text-blue-200">
@@ -323,9 +395,40 @@ const App = () => {
           </div>
 
           <div className="flex flex-col mb-12 sm:mx-6 md:mx-12 lg:mx-20 bg-neutral-900/40 rounded-3xl border border-white/5 overflow-hidden">
-            {PORTFOLIO_CONTENT.contributions.map((contribution, index) => (
-              <ContributionItem key={index} contribution={contribution} />
-            ))}
+            {groupedContributions.map((group) => {
+              const isCollapsed = collapsedGroups.has(group.repoName);
+              return (
+                <div key={group.repoName} className="border-b border-white/5 last:border-b-0">
+                  <button
+                    className="flex items-center justify-between w-full p-4 bg-neutral-800/50 hover:bg-neutral-800/70 transition-colors cursor-pointer"
+                    onClick={() => toggleCollapse(group.repoName)}
+                    aria-expanded={!isCollapsed}
+                    aria-controls={`contributions-for-${group.repoName}`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={`https://github.com/${group.owner}.png`}
+                        alt={group.owner}
+                        className="w-6 h-6 rounded-full"
+                      />
+                      <h3 className="text-lg font-bold text-white">{group.repoName}</h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-neutral-500 text-sm">{group.prCount} PRs</p>
+                    <ChevronDown size={20} className={`text-neutral-400 transition-transform duration-300 ${isCollapsed ? 'rotate-0' : 'rotate-180'}`} />
+                    </div>
+                  </button>
+                  <div
+                    id={`contributions-for-${group.repoName}`}
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${isCollapsed ? 'max-h-0 opacity-0' : 'max-h-[1000px] opacity-100'}`}
+                  >
+                    {!isCollapsed && group.contributions.map((contribution, index) => (
+                      <ContributionItem key={index} contribution={contribution} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
