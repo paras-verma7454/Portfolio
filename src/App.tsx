@@ -400,7 +400,7 @@ const App = () => {
               return (
                 <div key={group.repoName} className="border-b border-white/5 last:border-b-0">
                   <button
-                    className="flex items-center justify-between w-full p-4 bg-neutral-800/50 hover:bg-neutral-800/70 transition-colors cursor-pointer"
+                    className="flex items-center border-b border-white/10 justify-between w-full p-4 bg-neutral-800/50 hover:bg-neutral-800/70 transition-colors cursor-pointer"
                     onClick={() => toggleCollapse(group.repoName)}
                     aria-expanded={!isCollapsed}
                     aria-controls={`contributions-for-${group.repoName}`}

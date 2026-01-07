@@ -180,6 +180,9 @@ export const PORTFOLIO_CONTENT: {
   ],
   contributions: [
     {
+      prUrl:"https://github.com/itshover/itshover/pull/58"
+    },
+    {
       prUrl:"https://github.com/OssiumOfficial/ossium/pull/17",
       title:"feat: Implement Smart Alerts for premium users",
       private:true,
