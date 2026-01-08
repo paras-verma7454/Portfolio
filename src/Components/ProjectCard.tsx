@@ -42,7 +42,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${title} live site`}
-              className="text-neutral-500 group-hover/card:text-white transition-colors"
+              className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
               <ArrowUpRight size={20} />
@@ -53,7 +53,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${title} GitHub repo`}
-                className="text-neutral-500 hover:text-white focus:text-white transition-colors"
+                className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Github size={20} />
@@ -70,23 +70,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-2 mb-2">
-              <h3 className="text-xl font-bold text-white group-hover/card:text-blue-400 transition-colors">
+              <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">
                 {title}
               </h3>
               {project.collaborative && (
-                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] text-blue-400 font-medium">
+                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] text-blue-500 dark:text-blue-400 font-medium">
                   <Users size={10} />
                   Collab
                 </span>
               )}
             </div>
-            <p className="text-neutral-400 text-sm mb-4 line-clamp-3">{desc}</p>
+            <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-4 line-clamp-3">{desc}</p>
           </a>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag: string, index: number) => (
               <span
                 key={`${tag}-${index}`}
-                className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] text-neutral-300 uppercase"
+                className="px-2 py-1 rounded bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 text-[10px] text-neutral-600 dark:text-neutral-300 uppercase"
               >
                 {tag}
               </span>
@@ -124,7 +124,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${title} live site`}
-              className="text-neutral-500 group-hover/card:text-white transition-colors"
+              className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
               <ArrowUpRight size={20} />
@@ -135,7 +135,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${title} GitHub repo`}
-                className="text-neutral-500 hover:text-white focus:text-white transition-colors"
+                className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Github size={20} />
@@ -151,24 +151,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg font-bold text-white group-hover/card:text-blue-400 transition-colors">
+            <h3 className="text-lg font-bold text-neutral-900 dark:text-white group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">
               {title}
             </h3>
             {project.collaborative && (
-              <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[8px] text-blue-400 font-medium whitespace-nowrap">
+              <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[8px] text-blue-500 dark:text-blue-400 font-medium whitespace-nowrap">
                 <Users size={8} />
                 Collab
               </span>
             )}
           </div>
-          <p className="text-sm text-neutral-400 whitespace-normal line-clamp-3">{desc}</p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 whitespace-normal line-clamp-3">{desc}</p>
         </a>
       </div>
       <div className="flex flex-wrap gap-2 mt-4">
         {tags.map((tag: string, index: number) => (
           <span
             key={`${tag}-${index}`}
-            className="text-[10px] uppercase tracking-wider text-neutral-500"
+            className="text-[10px] uppercase tracking-wider text-neutral-600 dark:text-neutral-500"
           >
             {tag}
           </span>

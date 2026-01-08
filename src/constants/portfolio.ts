@@ -67,7 +67,7 @@ export const PORTFOLIO_CONTENT: {
     location: "India",
     timezone: "IST",
     bio: `I build interactive web applications using TypeScript, React, Next.js, Node.js and PostgreSQL — with a strong focus on clean UI.`,
-    email: "parasverma7454@gmail.com",
+    email: "Parasverma7454@gmail.com",
     availability: "Available for freelance",
     avatar: "luffy.jpg",
   },
