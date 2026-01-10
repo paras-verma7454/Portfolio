@@ -187,7 +187,7 @@ export const PORTFOLIO_CONTENT: {
       title:"feat: Implement Smart Alerts for premium users",
       private:true,
       url:"https://www.linkedin.com/posts/paras-vermaa_buildinpublic-saas-developerexperience-activity-7413798950589259776-NDcn?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
-      status:"open"
+      status:"merged"
     },
     {
       prUrl:"https://github.com/OssiumOfficial/ossium/pull/3",
