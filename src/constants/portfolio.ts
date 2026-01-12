@@ -117,7 +117,7 @@ export const PORTFOLIO_CONTENT: {
   projects: [
     {
       title: "CalMarshal",
-      desc: "Full-stack scheduling app with Google Calendar sync.",
+      desc: "Streamlined event scheduling platform featuring seamless Google Calendar integration and real-time availability tracking.",
       tags: ["Next.js", "Prisma", "Nylas", "Next.js"],
       color: "bg-purple-500",
       href: "https://cal-marshal-phi.vercel.app",
@@ -126,7 +126,7 @@ export const PORTFOLIO_CONTENT: {
     },
     {
       title: "Dionysus",
-      desc: "AI dev assistant for code analysis & meetings.",
+      desc: "Executive AI assistant that automates meeting notes, performs deep code analysis, and enhances developer productivity using LLMs.",
       tags: ["Gemini API", "Supabase", "Assembly AI", "Next.js"],
       color: "bg-emerald-500",
       href: "https://dionysus-zeta.vercel.app/",
@@ -135,7 +135,7 @@ export const PORTFOLIO_CONTENT: {
     },
     {
       title: "Bolt New",
-      desc: "A prompt-based frontend builder that generates production-ready React components using natural language.",
+      desc: "Advanced prompt-to-app generator that transforms natural language into production-ready React applications with instant previews.",
       tags: ["Convex", "Next.js", "Gemini", "Tailwind", "Code sandbox"],
       color: "bg-orange-500",
       href: "https://bolt-new-olive.vercel.app/",
@@ -144,7 +144,7 @@ export const PORTFOLIO_CONTENT: {
     },
     {
       title: "DriveDeck",
-      desc: "Buy & Sell Cars Without the Friction.",
+      desc: "Dynamic automotive marketplace platform designed for high-performance car trading with integrated management tools.",
       tags: ["React.js", "Node.js", "PostgreSQL"],
       color: "bg-purple-300",
       href: "https://drive-deck.vercel.app/",
@@ -153,7 +153,7 @@ export const PORTFOLIO_CONTENT: {
     },
     {
       title: "Chat App",
-      desc: "Chat app build with web sockets.",
+      desc: "Real-time communication platform powered by WebSockets, featuring instant messaging and low-latency data synchronization.",
       tags: ["React.js", "Node.js", "WebSockets"],
       color: "bg-green-300",
       href: "https://github.com/paras-verma7454/chat-app",
@@ -162,7 +162,7 @@ export const PORTFOLIO_CONTENT: {
     },
     {
       title: "Paytm",
-      desc: "A full-stack digital wallet application, featuring secure money transfers and user authentication.",
+      desc: "Comprehensive fintech solution for digital payments, enabling secure peer-to-peer transfers and robust account management.",
       tags: ["React.js", "Node.js", "MongoDB"],
       color: "bg-blue-300",
       href: "https://paytm-livid.vercel.app/",
@@ -171,7 +171,7 @@ export const PORTFOLIO_CONTENT: {
     },
     {
       title: "Medium",
-      desc: "A full-stack digital wallet application, featuring secure money transfers and user authentication.",
+      desc: "Full-featured blogging platform with markdown support, content discovery, and a rich reading experience — built with Hono and Prisma.",
       tags: ["React.js", "Hono", "Prisma ORM"],
       color: "bg-gray-700",
       href: "https://medium-kappa-nine.vercel.app/",
