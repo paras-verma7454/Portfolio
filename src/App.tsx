@@ -23,6 +23,8 @@ import NextJs from "./Components/NextJS";
 import NodeJs from "./Components/NodeJs";
 import ReactLogo from "./Components/React";
 import PostgreSQL from "./Components/PostgreSQL";
+import { fetchMediumPosts, type MediumPost } from "./lib/medium";
+import BlogCard from "./Components/BlogCard";
 
 
 type GroupedContribution = {
@@ -79,11 +81,20 @@ import ThemeToggle from "./Components/ThemeToggle";
 
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [blogs, setBlogs] = useState<MediumPost[]>([]);
+  const [loadingBlogs, setLoadingBlogs] = useState(true);
 
   const currentRole = PORTFOLIO_CONTENT.experience[0];
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    
+    // Fetch blogs
+    fetchMediumPosts(PORTFOLIO_CONTENT.mediumUrl).then((posts) => {
+      setBlogs(posts);
+      setLoadingBlogs(false);
+    });
+
     return () => clearInterval(timer);
   }, []);
 
@@ -436,6 +447,38 @@ const App = () => {
             })}
           </div>
         </div>
+
+        {/* === BLOG SECTION === */}
+        {(loadingBlogs || blogs.length > 0) && (
+          <div className="mt-20 w-full mb-20">
+            <div className="mb-8 px-4 md:px-6">
+              <div className="flex items-center gap-3">
+                <BookOpen className="text-emerald-500" size={24} />
+                <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Latest Writings</h2>
+              </div>
+              <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1">Thought-provoking articles on technology and development.</p>
+            </div>
+
+            {loadingBlogs ? (
+              <div className="flex justify-center py-10">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {blogs.map((post, idx) => (
+                  <motion.div
+                    key={post.guid}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * idx }}
+                  >
+                    <BlogCard post={post} />
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Footer */}
         <div className="mt-20 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">

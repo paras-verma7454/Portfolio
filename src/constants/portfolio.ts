@@ -60,6 +60,7 @@ export const PORTFOLIO_CONTENT: {
   experience: Experience[];
   projects: Project[];
   contributions: Contribution[];
+  mediumUrl: string;
 } = {
   personal: {
     name: "Hi, I'm Paras —",
@@ -205,4 +206,5 @@ export const PORTFOLIO_CONTENT: {
     { prUrl: "https://github.com/fastapi/fastapi/pull/14565" },
     { prUrl: "https://github.com/ig-imanish/mx-icons/pull/9" },
   ],
+  mediumUrl: "https://medium.com/@parasverma7454",
 };
