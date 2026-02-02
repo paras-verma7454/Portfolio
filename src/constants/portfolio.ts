@@ -116,6 +116,15 @@ export const PORTFOLIO_CONTENT: {
   ],
   projects: [
     {
+      title: "ReviewScope",
+      desc: "Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.",
+      tags: ["Next.js", "Hono", "webhook", "Gemini API","Open AI"],
+      color: "bg-gray-500",
+      href: "https://reviewscope.luffytaro.me",
+      github: "https://github.com/Review-scope/ReviewScope",
+      className: "md:col-span-1",
+    },
+    {
       title: "CalMarshal",
       desc: "Streamlined event scheduling platform featuring seamless Google Calendar integration and real-time availability tracking.",
       tags: ["Next.js", "Prisma", "Nylas", "Next.js"],
