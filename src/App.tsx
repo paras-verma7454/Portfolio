@@ -25,6 +25,8 @@ import ReactLogo from "./Components/React";
 import PostgreSQL from "./Components/PostgreSQL";
 import { fetchMediumPosts, type MediumPost } from "./lib/medium";
 import BlogCard from "./Components/BlogCard";
+import GitHubCalendarComponent from "./Components/GitHubCalendarComponent";
+
 
 
 type GroupedContribution = {
@@ -399,6 +401,9 @@ const App = () => {
             </BentoCard>
           ))}
         </div>
+
+        {/* === GITHUB CALENDAR SECTION === */}
+        <GitHubCalendarComponent />
 
         {/* === OPEN SOURCE SECTION (Outside the fixed-row grid to fix overflow) === */}
         <div className="mt-16 w-full">
