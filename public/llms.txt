@@ -1,0 +1,49 @@
+# Paras Verma — Portfolio
+
+This is the portfolio of Paras Verma, a full-stack web developer based in India (IST).
+
+## Summary
+- Builds interactive web applications with clean UI.
+- Primary stack: TypeScript, React, Next.js, Node.js, PostgreSQL.
+- Availability: Available for freelance.
+
+## Current Experience
+- SDE Intern at Jspark AI (Nov 2025 - Present)
+- Company: https://jspark.ai
+
+## Skills
+Next.js, React, TypeScript, JavaScript, Node.js, Prisma ORM, Supabase, Tailwind CSS, Docker, Redux, Postman, PostgreSQL, MongoDB, Git, GitHub
+
+## Featured Projects
+- ReviewScope: Automated AI code reviews with repository context.
+  - Live: https://reviewscope.luffytaro.me
+  - Source: https://github.com/Review-scope/ReviewScope
+- CalMarshal: Event scheduling with Google Calendar integration.
+  - Live: https://cal-marshal-phi.vercel.app
+  - Source: https://github.com/paras-verma7454/CalMarshal
+- Dionysus: Executive AI assistant for meetings and code analysis.
+  - Live: https://dionysus-zeta.vercel.app/
+  - Source: https://github.com/paras-verma7454/Dionysus
+- Bolt New: Prompt-to-app generator for React applications.
+  - Live: https://bolt-new-olive.vercel.app/
+  - Source: https://github.com/paras-verma7454/bolt.new
+- DriveDeck: Automotive marketplace platform.
+  - Live: https://drive-deck.vercel.app/
+  - Source: https://github.com/paras-verma7454/DriveDeck
+
+## Open Source Contributions
+- https://github.com/itshover/itshover/pull/58
+- https://github.com/OssiumOfficial/ossium/pull/17
+- https://github.com/OssiumOfficial/ossium/pull/3
+- https://github.com/OssiumOfficial/ossium/pull/9
+- https://github.com/fastapi/fastapi/pull/14565
+- https://github.com/ig-imanish/mx-icons/pull/9
+
+## Writing
+- Medium: https://medium.com/@parasverma7454
+
+## Contact
+- Email: parasverma7454@gmail.com
+- GitHub: https://github.com/paras-verma7454
+- LinkedIn: https://www.linkedin.com/in/paras-vermaa/
+- X (Twitter): https://x.com/ParasVerma7454
