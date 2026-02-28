@@ -116,12 +116,21 @@ export const PORTFOLIO_CONTENT: {
   ],
   projects: [
     {
-      title: "ReviewScope",
+      title: "Review Scope",
       desc: "Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.",
       tags: ["Next.js", "Hono", "webhook", "Gemini API","Open AI"],
       color: "bg-gray-500",
       href: "https://reviewscope.luffytaro.me",
       github: "https://github.com/Review-scope/ReviewScope",
+      className: "md:col-span-1",
+    },
+    {
+      title: "Orizen Flow",
+      desc: "Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates with technical precision.",
+      tags: ["Next.js", "Hono", "Sarvam AI"],
+      color: "bg-orange-200",
+      href: "https://orizenflow.luffytaro.me",
+      github: "",
       className: "md:col-span-1",
     },
     {
