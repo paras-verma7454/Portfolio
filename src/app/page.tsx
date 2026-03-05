@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, type JSX } from "react";
 import { motion } from "framer-motion";
 import {
@@ -12,22 +14,22 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-import { PORTFOLIO_CONTENT } from "./constants/portfolio"; // Import Contribution type
-import type { Contribution } from "./constants/portfolio"; // Import Contribution type
-import BentoCard from "./Components/BentoCard";
-import ProjectCard from "./Components/ProjectCard";
-import ContributionItem from "./Components/ContributionItem";
+import { PORTFOLIO_CONTENT } from "@/constants/portfolio";
+import type { Contribution } from "@/constants/portfolio";
+import BentoCard from "@/Components/BentoCard";
+import ProjectCard from "@/Components/ProjectCard";
+import ContributionItem from "@/Components/ContributionItem";
 
-import TypeScript from "./Components/Typescript";
-import NextJs from "./Components/NextJS";
-import NodeJs from "./Components/NodeJs";
-import ReactLogo from "./Components/React";
-import PostgreSQL from "./Components/PostgreSQL";
-import { fetchMediumPosts, type MediumPost } from "./lib/medium";
-import BlogCard from "./Components/BlogCard";
-import GitHubCalendarComponent from "./Components/GitHubCalendarComponent";
-
-
+import TypeScript from "@/Components/Typescript";
+import NextJs from "@/Components/NextJS";
+import NodeJs from "@/Components/NodeJs";
+import ReactLogo from "@/Components/React";
+import PostgreSQL from "@/Components/PostgreSQL";
+import { fetchMediumPosts, type MediumPost } from "@/lib/medium";
+import BlogCard from "@/Components/BlogCard";
+import GitHubCalendarComponent from "@/Components/GitHubCalendarComponent";
+import ThemeToggle from "@/Components/ThemeToggle";
+import Oneko from "@/Components/Oneko";
 
 type GroupedContribution = {
   repoName: string;
@@ -35,17 +37,6 @@ type GroupedContribution = {
   contributions: Contribution[];
   prCount: number;
 };
-
-// const getOwnerFromPrUrl = (prUrl: string): string | null => {
-//   try {
-//     const urlObj = new URL(prUrl);
-//     const parts = urlObj.pathname.split("/");
-//     return parts[1];
-//   } catch (error) {
-//     console.error("Invalid prUrl for owner extraction:", prUrl, error);
-//     return null;
-//   }
-// };
 
 const groupContributionsByRepo = (
   contributions: Contribution[]
@@ -78,10 +69,7 @@ const groupContributionsByRepo = (
   return Object.values(grouped);
 };
 
-
-import ThemeToggle from "./Components/ThemeToggle";
-
-const App = () => {
+export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
@@ -182,31 +170,31 @@ const App = () => {
                    {PORTFOLIO_CONTENT.personal.bio.split(/(TypeScript|React|Next\.js|Node\.js|PostgreSQL)/g).map((part, i) => {
                     const inlineMap: Record<string, JSX.Element> = {
                       TypeScript: (
-                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
+                        <span key={`ts-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
                           <span className="w-4 h-4"><TypeScript /></span>
                           <span>TypeScript</span>
                         </span>
                       ),
                       React: (
-                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2 align-middle">
+                        <span key={`react-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2 align-middle">
                           <span className="w-4 h-4"><ReactLogo /></span>
                           <span>React</span>
                         </span>
                       ),
                       "Next.js": (
-                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2 align-middle">
+                        <span key={`next-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2 align-middle">
                           <span className="w-4 h-4"><NextJs /></span>
                           <span>Next.js</span>
                         </span>
                       ),
                       "Node.js": (
-                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
+                        <span key={`node-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
                           <span className="w-4 h-4"><NodeJs /></span>
                           <span>Node.js</span>
                         </span>
                       ),
                       PostgreSQL: (
-                        <span className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
+                        <span key={`pg-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
                           <span className="w-4 h-4"><PostgreSQL /></span>
                           <span>PostgreSQL</span>
                         </span>
@@ -501,8 +489,7 @@ const App = () => {
           </div>
         </div>
       </div>
+      <Oneko />
     </div>
   );
-};
-
-export default App;
+}

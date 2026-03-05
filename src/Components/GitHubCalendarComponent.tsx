@@ -1,14 +1,24 @@
+'use client';
+
 import { GitHubCalendar } from "react-github-calendar";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const GitHubCalendarComponent = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const gitHubTheme = {
     light: ['#ebedf0', '#9be9a8', '#40c460', '#30a14e', '#216e39'],
     dark: ['#1f2328', '#0e4429', '#40c463', '#26a641', '#39d353'],
   };
+
+  const colorScheme = resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
     <div className="w-full mt-16 mb-24 px-4 md:px-6 flex justify-center">
@@ -46,15 +56,21 @@ const GitHubCalendarComponent = () => {
 
           <div className="relative z-10 w-full overflow-x-auto scrollbar-hide">
             <div className="min-w-[800px] lg:min-w-0 flex justify-center">
-              <GitHubCalendar
-                key={theme}
-                username="paras-verma7454"
-                blockSize={14}
-                blockMargin={4}
-                fontSize={12}
-                colorScheme={theme as 'light' | 'dark'}
-                theme={gitHubTheme}
-              />
+              {mounted ? (
+                <GitHubCalendar
+                  key={colorScheme}
+                  username="paras-verma7454"
+                  blockSize={14}
+                  blockMargin={4}
+                  fontSize={12}
+                  colorScheme={colorScheme}
+                  theme={gitHubTheme}
+                />
+              ) : (
+                <div className="flex justify-center py-10">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
