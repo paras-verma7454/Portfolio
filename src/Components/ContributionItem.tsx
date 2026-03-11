@@ -1,18 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { Github, ArrowUpRight, Lock } from "lucide-react";
 import type { Contribution } from "../constants/portfolio";
 
 const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contribution }) => {
   const { prUrl, private: isPrivate, title: customTitle, url } = contribution;
-  const [data, setData] = useState<{ 
-    repo: string; 
-    title: string; 
-    type: string;
-    status?: 'open' | 'closed' | 'merged' | 'unknown';
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
-  
+
   const info = useMemo(() => {
     try {
       const urlObj = new URL(prUrl);
@@ -27,7 +20,16 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
       return null;
     }
   }, [prUrl]);
-  
+
+  const displayData = useMemo(() => {
+    if (!info) return null;
+    return {
+      repo: `${info.owner}/${info.repoName}`,
+      title: customTitle || `Pull Request #${info.number}`,
+      status: contribution.status || "unknown",
+    };
+  }, [info, customTitle, contribution.status]);
+
   const avatarUrl = info?.owner ? `https://github.com/${info.owner}.png` : null;
 
   const handleOnClick = () => {
@@ -39,64 +41,6 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
       window.open(prUrl, "_blank", "noopener,noreferrer");
     }
   };
-
-  useEffect(() => {
-    if (!info) {
-      setLoading(false);
-      return;
-    }
-
-    // If it's a private contribution and we have a custom title, use it directly
-    if (isPrivate) {
-      setData({
-        repo: `${info.owner}/${info.repoName}`,
-        title: customTitle || `Pull Request #${info.number}`,
-        type: "PR",
-        status: contribution.status || 'unknown'
-      });
-      setLoading(false);
-      return;
-    }
-
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const fetchUrl = `https://api.github.com/repos/${info.owner}/${info.repoName}/pulls/${info.number}`;
-        const response = await fetch(fetchUrl);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-        }
-
-        const json = await response.json();
-        
-        let status: 'open' | 'closed' | 'merged' = 'open';
-        if (json.merged) status = 'merged';
-        else if (json.state === 'closed') status = 'closed';
-        else status = 'open';
-
-        setData({
-          repo: `${info.owner}/${info.repoName}`,
-          title: json.title,
-          type: "PR",
-          status: status
-        });
-      } catch (err) {
-        console.error("Error fetching contribution data:", err);
-        // Fallback to URL parts if API fails or for private repos
-        setData({
-          repo: `${info.owner}/${info.repoName}`,
-          title: customTitle || `Pull Request #${info.number}`,
-          type: "PR",
-          status: 'unknown'
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [info, isPrivate, customTitle, contribution.status, url]); // Added customTitle, contribution.status, and url to dependencies
 
   return (
     <div
@@ -121,38 +65,31 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
           )}
         </div>
         <div className="min-w-0">
-          {loading ? (
-            <div className="animate-pulse flex flex-col gap-2">
-              <div className="h-4 w-24 bg-neutral-200 dark:bg-white/10 rounded" />
-              <div className="h-3 w-48 bg-neutral-100 dark:bg-white/5 rounded" />
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center gap-2">
-                <h4 className="text-sm font-bold text-neutral-900 dark:text-white group-hover/item:text-blue-500 dark:group-hover/item:text-blue-400 transition-colors truncate">
-                  {data?.repo}
-                </h4>
-                {isPrivate && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-500/10 text-gray-500 dark:text-gray-400 border border-gray-500/20">
-                    <Lock size={10} className="inline-block align-text-bottom  mb-0.5" /> Private
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-neutral-600 dark:text-neutral-500 line-clamp-1">{data?.title}</p>
-            </>
-          )}
+          <div className="flex items-center gap-2">
+            <h4 className="text-sm font-bold text-neutral-900 dark:text-white group-hover/item:text-blue-500 dark:group-hover/item:text-blue-400 transition-colors truncate">
+              {displayData?.repo ?? "Unknown repo"}
+            </h4>
+            {isPrivate && (
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-500/10 text-gray-500 dark:text-gray-400 border border-gray-500/20">
+                <Lock size={10} className="inline-block align-text-bottom  mb-0.5" /> Private
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-neutral-600 dark:text-neutral-500 line-clamp-1">
+            {displayData?.title ?? customTitle ?? "Pull Request"}
+          </p>
         </div>
       </div>
       <div className="flex items-center justify-between sm:justify-end gap-6">
-        {!loading && data?.status && (
+        {displayData?.status && (
           <div className="flex items-center gap-2">
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-              data.status === 'merged' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20' :
-              data.status === 'closed' ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20' :
-              data.status === 'open' ? 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20' :
+              displayData.status === 'merged' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20' :
+              displayData.status === 'closed' ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20' :
+              displayData.status === 'open' ? 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20' :
               'bg-gray-500/10 text-gray-500 dark:text-gray-400 border border-gray-500/20' // Style for 'unknown' status
             }`}>
-              {data.status}
+              {displayData.status}
             </span>
           </div>
         )}

@@ -82,10 +82,16 @@ export default function Home() {
 
   useEffect(() => {
     // Fetch blogs via cached server action
-    getMediumPosts(PORTFOLIO_CONTENT.mediumUrl).then((posts) => {
-      setBlogs(posts);
-      setLoadingBlogs(false);
-    });
+    getMediumPosts(PORTFOLIO_CONTENT.mediumUrl)
+      .then((posts) => {
+        setBlogs(posts);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch Medium posts:", error);
+      })
+      .finally(() => {
+        setLoadingBlogs(false);
+      });
   }, []);
 
   const startDate = new Date(currentRole.startDate);
@@ -429,36 +435,48 @@ export default function Home() {
         </div>
 
         {/* === BLOG SECTION === */}
-        {(loadingBlogs || blogs.length > 0) && (
-          <div className="mt-20 w-full mb-20 cv-auto">
-            <div className="mb-8 px-4 md:px-6">
-              <div className="flex items-center gap-3">
-                <BookOpen className="text-emerald-500" size={24} />
-                <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Latest Writings</h2>
-              </div>
-              <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1">Thought-provoking articles on technology and development.</p>
+        <div className="mt-20 w-full mb-20 cv-auto">
+          <div className="mb-8 px-4 md:px-6">
+            <div className="flex items-center gap-3">
+              <BookOpen className="text-emerald-500" size={24} />
+              <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Latest Writings</h2>
             </div>
-
-            {loadingBlogs ? (
-              <div className="flex justify-center py-10">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {blogs.map((post, idx) => (
-                  <motion.div
-                    key={post.guid}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * idx }}
-                  >
-                    <BlogCard post={post} />
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1">Thought-provoking articles on technology and development.</p>
           </div>
-        )}
+
+          {loadingBlogs ? (
+            <div className="flex justify-center py-10">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+            </div>
+          ) : blogs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {blogs.map((post, idx) => (
+                <motion.div
+                  key={post.guid}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * idx }}
+                >
+                  <BlogCard post={post} />
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="mx-4 md:mx-6 rounded-2xl border border-neutral-200 dark:border-white/10 bg-white/70 dark:bg-neutral-900/50 p-5 flex flex-col gap-2">
+              <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                Unable to load Medium posts right now.
+              </p>
+              <a
+                href={PORTFOLIO_CONTENT.mediumUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-emerald-600 dark:text-emerald-400 hover:underline w-fit"
+              >
+                Read on Medium
+              </a>
+            </div>
+          )}
+        </div>
 
         {/* Footer */}
         <div className="mt-20 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
