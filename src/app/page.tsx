@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, type JSX } from "react";
+import { useState, useEffect, type JSX, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -19,17 +19,21 @@ import type { Contribution } from "@/constants/portfolio";
 import BentoCard from "@/Components/BentoCard";
 import ProjectCard from "@/Components/ProjectCard";
 import ContributionItem from "@/Components/ContributionItem";
+import LiveClock from "@/Components/LiveClock";
+import Hero from "@/Components/Hero";
 
 import TypeScript from "@/Components/Typescript";
 import NextJs from "@/Components/NextJS";
 import NodeJs from "@/Components/NodeJs";
 import ReactLogo from "@/Components/React";
 import PostgreSQL from "@/Components/PostgreSQL";
-import { fetchMediumPosts, type MediumPost } from "@/lib/medium";
+import { getMediumPosts, type MediumPost } from "@/actions/getMediumPosts";
 import BlogCard from "@/Components/BlogCard";
-import GitHubCalendarComponent from "@/Components/GitHubCalendarComponent";
 import ThemeToggle from "@/Components/ThemeToggle";
-import Oneko from "@/Components/Oneko";
+
+// Lazy load heavy below-the-fold components
+const GitHubCalendarComponent = lazy(() => import("@/Components/GitHubCalendarComponent"));
+const Oneko = lazy(() => import("@/Components/Oneko"));
 
 type GroupedContribution = {
   repoName: string;
@@ -70,22 +74,17 @@ const groupContributionsByRepo = (
 };
 
 export default function Home() {
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
 
   const currentRole = PORTFOLIO_CONTENT.experience[0];
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    
-    // Fetch blogs
-    fetchMediumPosts(PORTFOLIO_CONTENT.mediumUrl).then((posts) => {
+    // Fetch blogs via cached server action
+    getMediumPosts(PORTFOLIO_CONTENT.mediumUrl).then((posts) => {
       setBlogs(posts);
       setLoadingBlogs(false);
     });
-
-    return () => clearInterval(timer);
   }, []);
 
   const startDate = new Date(currentRole.startDate);
@@ -121,36 +120,14 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200 font-sans selection:bg-blue-500/30 selection:text-blue-200 transition-colors duration-300">
       {/* Background Gradient Mesh */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/5 dark:bg-blue-900/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/5 dark:bg-purple-900/10 blur-[120px]" />
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/5 dark:bg-blue-900/10 blur-[60px] gpu" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/5 dark:bg-purple-900/10 blur-[60px] gpu" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         {/* === HERO SECTION === */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 relative"
-        >
-          <div>
-            <h1 className="text-3xl md:text-5xl -mt-10 font-bold text-neutral-900 dark:text-white tracking-tight mb-2">
-              {PORTFOLIO_CONTENT.personal.name}{" "}
-              <span className="text-neutral-500 dark:text-neutral-600">
-                {PORTFOLIO_CONTENT.personal.surname}
-              </span>
-            </h1>
-          </div>
-          <div className="flex items-center md:mb-4 gap-3">
-            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm font-medium text-green-600 dark:text-green-500 whitespace-nowrap">
-              {PORTFOLIO_CONTENT.personal.availability}
-            </span>
-            <div className="ml-4">
-              <ThemeToggle />
-            </div>
-          </div>
-        </motion.div>
+        <Hero />
 
         {/* === BENTO GRID LAYOUT === */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto md:auto-rows-[220px]">
@@ -232,12 +209,8 @@ export default function Home() {
                   {PORTFOLIO_CONTENT.personal.location}
                 </h3>
                 <p className="text-xs text-neutral-600 dark:text-neutral-500">
-                  {currentTime.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                  })}{" "}
-                  ({PORTFOLIO_CONTENT.personal.timezone})
+                   <LiveClock timezone={PORTFOLIO_CONTENT.personal.timezone ?? "Asia/Kolkata"} />
+                   {" "}({PORTFOLIO_CONTENT.personal.timezone})
                 </p>
               </div>
             </div>
@@ -335,7 +308,7 @@ export default function Home() {
               <div className="space-y-4 overflow-y-auto px-3 pb-6 flex-1 min-h-0 mask-linear-gradient-bottom [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-neutral-400 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-thumb]:rounded-full">
                 {PORTFOLIO_CONTENT.experience.map((role, idx) => (
                   <div key={idx} className="relative pl-4 border-l border-neutral-200 dark:border-white/10 last:mb-0">
-                    <div className="absolute -left-1.25 top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-4 ring-white dark:ring-neutral-900 animate-pulse" />
+                    <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-4 ring-white dark:ring-neutral-900 animate-pulse" />
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1">
                       <div>
                         <h4 className="text-lg font-bold text-neutral-900 dark:text-white">{role.role}</h4>
@@ -391,10 +364,18 @@ export default function Home() {
         </div>
 
         {/* === GITHUB CALENDAR SECTION === */}
-        <GitHubCalendarComponent />
+        <div className="cv-auto">
+          <Suspense fallback={
+            <div className="w-full mt-16 mb-24 flex justify-center">
+              <div className="max-w-7xl w-full animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-3xl h-[200px]" />
+            </div>
+          }>
+            <GitHubCalendarComponent />
+          </Suspense>
+        </div>
 
         {/* === OPEN SOURCE SECTION (Outside the fixed-row grid to fix overflow) === */}
-        <div className="mt-16 w-full">
+        <div className="mt-16 w-full cv-auto">
           <div className="mb-6 px-4 md:px-6">
             <div className="flex items-center gap-3">
               <Github className="text-purple-500" size={24} />
@@ -443,7 +424,7 @@ export default function Home() {
 
         {/* === BLOG SECTION === */}
         {(loadingBlogs || blogs.length > 0) && (
-          <div className="mt-20 w-full mb-20">
+          <div className="mt-20 w-full mb-20 cv-auto">
             <div className="mb-8 px-4 md:px-6">
               <div className="flex items-center gap-3">
                 <BookOpen className="text-emerald-500" size={24} />
@@ -489,7 +470,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Oneko />
+      <Suspense fallback={null}>
+        <Oneko />
+      </Suspense>
     </div>
   );
 }
