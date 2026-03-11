@@ -10,7 +10,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Paras Verma - Full Stack Developer',
-  description: 'Portfolio showcasing full-stack development projects and open source contributions',
+  description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
+  icons: {
+    icon: '/luffy.jpg',
+  },
 };
 
 export default function RootLayout({
