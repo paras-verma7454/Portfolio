@@ -76,6 +76,7 @@ const groupContributionsByRepo = (
 export default function Home() {
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
+  const [buildSha, setBuildSha] = useState<string>("...");
 
   const currentRole = PORTFOLIO_CONTENT.experience[0];
 
@@ -100,6 +101,33 @@ export default function Home() {
       })
       .finally(() => {
         setLoadingBlogs(false);
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/build-info", {
+      signal: controller.signal,
+      cache: "no-store",
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch build info: ${response.status}`);
+        }
+        return response.json() as Promise<{ commitSha?: string }>;
+      })
+      .then((data) => {
+        const sha = data.commitSha || "local";
+        setBuildSha(sha.slice(0, 7));
+      })
+      .catch((error) => {
+        if ((error as Error).name === "AbortError") return;
+        setBuildSha("n/a");
       });
 
     return () => {
@@ -492,6 +520,7 @@ export default function Home() {
         <div className="mt-20 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-neutral-500 text-sm">
             © {new Date().getFullYear()} Paras. All Rights Reserved.
+            <span className="ml-2 text-xs text-neutral-500/80">Build: {buildSha}</span>
           </p>
           <div className="flex gap-6 text-sm font-medium text-neutral-400">
             {PORTFOLIO_CONTENT.socials
