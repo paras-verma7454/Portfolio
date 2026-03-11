@@ -61,7 +61,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     return () => {
       isMounted = false;
     };
-  }, [href]);
+  }, [href, github]);
 
   const handleContainerClick = () => {
     window.open(href, "_blank", "noopener,noreferrer");

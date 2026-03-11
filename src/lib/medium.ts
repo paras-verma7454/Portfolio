@@ -7,7 +7,11 @@ export interface MediumPost {
   thumbnail: string;
   description: string;
   content: string;
-  enclosure: any;
+  enclosure: {
+    link?: string;
+    type?: string;
+    thumbnail?: string;
+  } | null;
   categories: string[];
 }
 

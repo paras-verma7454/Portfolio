@@ -4,6 +4,7 @@ import {
   Twitter,
   Mail,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export type Contribution = {
   prUrl: string;
@@ -25,7 +26,7 @@ export interface Personal {
 }
 
 export interface Social {
-  icon: any;
+  icon: LucideIcon;
   href: string;
   label: string;
 }

@@ -65,7 +65,7 @@ const Oneko = () => {
       idleTime += 1;
 
       if (idleTime > 10 && Math.floor(Math.random() * 200) === 0 && idleAnimation === null) {
-        let availableIdleAnimations = ["sleeping", "scratchSelf"];
+        const availableIdleAnimations = ["sleeping", "scratchSelf"];
         if (nekoPosX < 32) availableIdleAnimations.push("scratchWallW");
         if (nekoPosY < 32) availableIdleAnimations.push("scratchWallN");
         if (nekoPosX > window.innerWidth - 32) availableIdleAnimations.push("scratchWallE");
@@ -182,7 +182,7 @@ const Oneko = () => {
     const endDrag = (event?: PointerEvent) => {
       if (!isDragging || (event && event.pointerId !== draggingPointerId)) return;
       if (event) {
-        try { nekoEl.releasePointerCapture(event.pointerId); } catch (e) {}
+        try { nekoEl.releasePointerCapture(event.pointerId); } catch {}
       }
       isDragging = false;
       draggingPointerId = null;

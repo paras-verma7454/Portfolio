@@ -1,17 +1,6 @@
 "use server";
 
-export interface MediumPost {
-  title: string;
-  pubDate: string;
-  link: string;
-  guid: string;
-  author: string;
-  thumbnail: string;
-  description: string;
-  content: string;
-  enclosure: unknown;
-  categories: string[];
-}
+import type { MediumPost } from "@/lib/medium";
 
 export async function getMediumPosts(mediumUrl: string): Promise<MediumPost[]> {
   try {

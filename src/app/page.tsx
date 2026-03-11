@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, type JSX, lazy, Suspense } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -27,9 +28,9 @@ import NextJs from "@/Components/NextJS";
 import NodeJs from "@/Components/NodeJs";
 import ReactLogo from "@/Components/React";
 import PostgreSQL from "@/Components/PostgreSQL";
-import { getMediumPosts, type MediumPost } from "@/actions/getMediumPosts";
+import { getMediumPosts } from "@/actions/getMediumPosts";
+import type { MediumPost } from "@/lib/medium";
 import BlogCard from "@/Components/BlogCard";
-import ThemeToggle from "@/Components/ThemeToggle";
 
 // Lazy load heavy below-the-fold components
 const GitHubCalendarComponent = lazy(() => import("@/Components/GitHubCalendarComponent"));
@@ -135,10 +136,12 @@ export default function Home() {
           <BentoCard colSpan="md:col-span-2" rowSpan="md:row-span-2" delay={0}>
             <div className="flex flex-col justify-between h-full">
               <div className="space-y-4">
-                <img
+                <Image
                   className="w-40 h-40 rounded-2xl"
                   src={PORTFOLIO_CONTENT.personal.avatar}
                   alt="Avatar"
+                  width={160}
+                  height={160}
                 />
                 <h2 className="text-3xl font-bold text-neutral-900 dark:text-white leading-tight">
                   About me.
@@ -279,7 +282,7 @@ export default function Home() {
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
                 <p className="text-xl font-medium text-neutral-600 dark:text-neutral-400 italic">
-                  "Code is read much more often than it is written."
+                  &quot;Code is read much more often than it is written.&quot;
                 </p>
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-500">
                   — Guido van Rossum
@@ -396,10 +399,13 @@ export default function Home() {
                     aria-controls={`contributions-for-${group.repoName}`}
                   >
                     <div className="flex items-center gap-2">
-                      <img
+                      <Image
                         src={`https://github.com/${group.owner}.png`}
                         alt={group.owner}
                         className="w-6 h-6 rounded-full"
+                        width={24}
+                        height={24}
+                        unoptimized
                       />
                       <h3 className="text-lg font-bold text-neutral-900 dark:text-white">{group.repoName}</h3>
                     </div>

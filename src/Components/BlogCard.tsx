@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { ExternalLink, Calendar } from "lucide-react";
 import type { MediumPost } from "../lib/medium";
 
@@ -40,10 +41,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       <div className="space-y-4">
         {displayThumbnail && (
           <div className="relative aspect-5/2 rounded-2xl overflow-hidden mb-4">
-            <img
+            <Image
               src={displayThumbnail}
               alt={title}
               className="object-cover w-full h-full transform group-hover/blog:scale-105 transition-transform duration-500"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              unoptimized
             />
           </div>
         )}
