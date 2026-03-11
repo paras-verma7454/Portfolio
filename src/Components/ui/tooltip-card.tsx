@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { createPortal } from "react-dom";
 
@@ -56,16 +56,18 @@ export const Tooltip = ({
     setPosition(newPosition);
   };
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
     setIsVisible(true);
     updateMousePosition(e.clientX, e.clientY);
   };
 
-  const handleMouseLeave = () => {
+  const handlePointerLeave = () => {
     setIsVisible(false);
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
     if (!isVisible) return;
     updateMousePosition(e.clientX, e.clientY);
   };
@@ -105,10 +107,10 @@ export const Tooltip = ({
 
   return (
     <div
-      className={cn("relative inline-block", containerClassName)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
+      className={cn("relative block", containerClassName)}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onPointerMove={handlePointerMove}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleClick}

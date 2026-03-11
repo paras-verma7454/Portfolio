@@ -28,12 +28,11 @@ import NextJs from "@/Components/NextJS";
 import NodeJs from "@/Components/NodeJs";
 import ReactLogo from "@/Components/React";
 import PostgreSQL from "@/Components/PostgreSQL";
-import { getMediumPosts } from "@/actions/getMediumPosts";
 import type { MediumPost } from "@/lib/medium";
 import BlogCard from "@/Components/BlogCard";
+import GitHubCalendarComponent from "@/Components/GitHubCalendarComponent";
 
 // Lazy load heavy below-the-fold components
-const GitHubCalendarComponent = lazy(() => import("@/Components/GitHubCalendarComponent"));
 const Oneko = lazy(() => import("@/Components/Oneko"));
 
 type GroupedContribution = {
@@ -81,17 +80,31 @@ export default function Home() {
   const currentRole = PORTFOLIO_CONTENT.experience[0];
 
   useEffect(() => {
-    // Fetch blogs via cached server action
-    getMediumPosts(PORTFOLIO_CONTENT.mediumUrl)
-      .then((posts) => {
-        setBlogs(posts);
+    const controller = new AbortController();
+
+    fetch(`/api/medium?url=${encodeURIComponent(PORTFOLIO_CONTENT.mediumUrl)}`, {
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch Medium posts: ${response.status}`);
+        }
+        return response.json() as Promise<{ posts?: MediumPost[] }>;
+      })
+      .then((data) => {
+        setBlogs(Array.isArray(data.posts) ? data.posts : []);
       })
       .catch((error) => {
+        if ((error as Error).name === "AbortError") return;
         console.error("Failed to fetch Medium posts:", error);
       })
       .finally(() => {
         setLoadingBlogs(false);
       });
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   const startDate = new Date(currentRole.startDate);
@@ -353,34 +366,31 @@ export default function Home() {
             </div>
           </BentoCard>
 
-          {/* 7. Featured Projects Header */}
-          <BentoCard colSpan="md:col-span-3 lg:col-span-4" className="bg-transparent border-none p-0 mt-8" delay={0.6}>
-            <div className="flex flex-col justify-center h-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="text-blue-500" size={24} />
-                <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Featured Projects</h2>
-              </div>
-              <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1">Showcasing my most ambitious full-stack and AI applications.</p>
-            </div>
-          </BentoCard>
+        </div>
 
-          {/* 8. Projects */}
-          {PORTFOLIO_CONTENT.projects.map((project, index) => (
-            <BentoCard key={project.title} colSpan={project.className || "md:col-span-1"} delay={0.7 + index * 0.1}>
-              <ProjectCard project={project} />
-            </BentoCard>
-          ))}
+        {/* === FEATURED PROJECTS (separate from bento grid for stable ordering) === */}
+        <div className="mt-10 w-full pt-5">
+          <div className="mb-6 px-1 md:px-2">
+            <div className="flex items-center gap-3">
+              <BookOpen className="text-blue-500" size={24} />
+              <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Featured Projects</h2>
+            </div>
+            <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1">
+              Showcasing my most ambitious full-stack and AI applications.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {PORTFOLIO_CONTENT.projects.map((project, index) => (
+              <BentoCard key={project.title} delay={0.7 + index * 0.05}>
+                <ProjectCard project={project} />
+              </BentoCard>
+            ))}
+          </div>
         </div>
 
         {/* === GITHUB CALENDAR SECTION === */}
         <div className="cv-auto">
-          <Suspense fallback={
-            <div className="w-full mt-16 mb-24 flex justify-center">
-              <div className="max-w-7xl w-full animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-3xl h-[200px]" />
-            </div>
-          }>
-            <GitHubCalendarComponent />
-          </Suspense>
+          <GitHubCalendarComponent />
         </div>
 
         {/* === OPEN SOURCE SECTION (Outside the fixed-row grid to fix overflow) === */}

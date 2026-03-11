@@ -25,6 +25,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { title, desc, tags, color, href, featured } = project;
   const github = project.github;
   const [ogImage, setOgImage] = useState<string | null>(null);
+  const dotColor = React.useMemo(() => {
+    const key = `${title}-${href}`;
+    let hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      hash = (hash << 5) - hash + key.charCodeAt(i);
+      hash |= 0;
+    }
+    const normalized = Math.abs(hash);
+    const hue = normalized % 360;
+    const saturation = 65 + (normalized % 18); // 65-82
+    const lightness = 48 + (normalized % 14); // 48-61
+    return `hsl(${hue} ${saturation}% ${lightness}%)`;
+  }, [title, href]);
 
   useEffect(() => {
     let isMounted = true;
@@ -85,7 +98,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         {title}
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className="w-[240px] rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900 p-3 shadow-xl">
+      <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 line-clamp-1">{title}</p>
+      <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-400 line-clamp-3">{desc}</p>
+    </div>
+  );
 
   if (featured) {
     return (
@@ -189,10 +207,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <div className="flex items-center gap-3">
               <div className={`p-2 rounded-xl ${color} bg-opacity-20`}>
                 <div
-                  className={`w-2 h-2 rounded-full ${color.replace(
-                    "bg-",
-                    "bg-opacity-100 "
-                  )} animate-pulse`}
+                  className="w-2 h-2 rounded-full ring-1 ring-white/20 animate-pulse"
+                  style={{ backgroundColor: dotColor }}
                 />
               </div>
             </div>

@@ -65,6 +65,8 @@ const GitHubCalendarComponent = () => {
                   fontSize={12}
                   colorScheme={colorScheme}
                   theme={gitHubTheme}
+                  throwOnError={false}
+                  errorMessage="GitHub activity is temporarily unavailable."
                 />
               ) : (
                 <div className="flex justify-center py-10">

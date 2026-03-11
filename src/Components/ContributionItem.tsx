@@ -26,7 +26,7 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
     return {
       repo: `${info.owner}/${info.repoName}`,
       title: customTitle || `Pull Request #${info.number}`,
-      status: contribution.status || "unknown",
+      status: contribution.status,
     };
   }, [info, customTitle, contribution.status]);
 
@@ -86,8 +86,7 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
               displayData.status === 'merged' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20' :
               displayData.status === 'closed' ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20' :
-              displayData.status === 'open' ? 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20' :
-              'bg-gray-500/10 text-gray-500 dark:text-gray-400 border border-gray-500/20' // Style for 'unknown' status
+              'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20'
             }`}>
               {displayData.status}
             </span>
