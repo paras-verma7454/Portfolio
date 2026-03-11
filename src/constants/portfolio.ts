@@ -71,7 +71,7 @@ export const PORTFOLIO_CONTENT: {
     bio: `I build interactive web applications using TypeScript, React, Next.js, Node.js and PostgreSQL — with a strong focus on clean UI.`,
     email: "Parasverma7454@gmail.com",
     availability: "Available for freelance",
-    avatar: "luffy.jpg",
+    avatar: "/luffy.jpg",
   },
   socials: [
     {
