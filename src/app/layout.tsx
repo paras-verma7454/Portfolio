@@ -14,6 +14,18 @@ export const metadata: Metadata = {
   icons: {
     icon: '/luffy.jpg',
   },
+  openGraph: {
+    title: 'Paras Verma - Full Stack Developer',
+    description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
+    images: ['/image.png'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Paras Verma - Full Stack Developer',
+    description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
+    images: ['/image.png'],
+  },
 };
 
 export default function RootLayout({
