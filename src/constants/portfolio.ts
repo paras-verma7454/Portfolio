@@ -1,10 +1,9 @@
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Mail,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { GithubIcon } from "@/Components/ui/github";
+import { LinkedinIcon } from "@/Components/ui/linkedin";
+import { SendIcon } from "@/Components/ui/send";
+import { TwitterIcon } from "@/Components/ui/twitter";
+import { Mail } from "lucide-react";
+
 
 export type Contribution = {
   prUrl: string;
@@ -26,7 +25,7 @@ export interface Personal {
 }
 
 export interface Social {
-  icon: LucideIcon;
+  icon: any ;
   href: string;
   label: string;
 }
@@ -45,7 +44,6 @@ export interface Project {
   title: string;
   desc: string;
   tags: string[];
-  color: string;
   href: string;
   github: string;
   className: string;
@@ -75,17 +73,17 @@ export const PORTFOLIO_CONTENT: {
   },
   socials: [
     {
-      icon: Github,
+      icon: GithubIcon,
       href: "https://github.com/paras-verma7454",
       label: "GitHub",
     },
     {
-      icon: Linkedin,
+      icon: LinkedinIcon,
       href: "https://www.linkedin.com/in/paras-vermaa/",
       label: "LinkedIn",
     },
-    { icon: Twitter, href: "https://x.com/ParasVerma7454", label: "Twitter" },
-    { icon: Mail, href: "mailto:parasverma7454@gmail.com", label: "Email" },
+    { icon: TwitterIcon, href: "https://x.com/ParasVerma7454", label: "Twitter" },
+    { icon: SendIcon, href: "mailto:parasverma7454@gmail.com", label: "Email" },
   ],
   skills: [
     "Next.js",
@@ -94,15 +92,14 @@ export const PORTFOLIO_CONTENT: {
     "JavaScript",
     "Node.js",
     "Prisma ORM",
-    "Supabase",
-    "Tailwind CSS",
+    "Drizzle ORM",
+    "Python",
     "Docker",
-    "Redux",
-    "Postman",
+    "GCP",
     "PostgreSQL",
     "MongoDB",
-    "Git",
-    "GitHub",
+    "Claude Code",
+    "Codex",
   ],
   experience: [
     {
@@ -120,7 +117,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Review Scope",
       desc: "Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.",
       tags: ["Next.js", "Hono", "webhook", "Gemini API","Open AI"],
-      color: "bg-gray-500",
       href: "https://reviewscope.luffytaro.me",
       github: "https://github.com/Review-scope/ReviewScope",
       className: "md:col-span-1",
@@ -129,7 +125,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Orizen Flow",
       desc: "Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates with technical precision.",
       tags: ["Next.js", "Hono", "Sarvam AI"],
-      color: "bg-orange-200",
       href: "https://orizenflow.luffytaro.me",
       github: "",
       className: "md:col-span-1",
@@ -138,7 +133,6 @@ export const PORTFOLIO_CONTENT: {
       title: "CalMarshal",
       desc: "Streamlined event scheduling platform featuring seamless Google Calendar integration and real-time availability tracking.",
       tags: ["Next.js", "Prisma", "Nylas", "Next.js"],
-      color: "bg-purple-500",
       href: "https://cal-marshal-phi.vercel.app",
       github: "https://github.com/paras-verma7454/CalMarshal",
       className: "md:col-span-1",
@@ -147,7 +141,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Dionysus",
       desc: "Executive AI assistant that automates meeting notes, performs deep code analysis, and enhances developer productivity using LLMs.",
       tags: ["Gemini API", "Supabase", "Assembly AI", "Next.js"],
-      color: "bg-emerald-500",
       href: "https://dionysus-zeta.vercel.app/",
       github: "https://github.com/paras-verma7454/Dionysus",
       className: "md:col-span-1",
@@ -156,7 +149,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Bolt New",
       desc: "Advanced prompt-to-app generator that transforms natural language into production-ready React applications with instant previews.",
       tags: ["Convex", "Next.js", "Gemini", "Tailwind", "Code sandbox"],
-      color: "bg-orange-500",
       href: "https://bolt-new-olive.vercel.app/",
       github: "https://github.com/paras-verma7454/bolt.new",
       className: "md:col-span-1",
@@ -165,7 +157,6 @@ export const PORTFOLIO_CONTENT: {
       title: "DriveDeck",
       desc: "Dynamic automotive marketplace platform designed for high-performance car trading with integrated management tools.",
       tags: ["React.js", "Node.js", "PostgreSQL"],
-      color: "bg-purple-300",
       href: "https://drive-deck.vercel.app/",
       github: "https://github.com/paras-verma7454/DriveDeck",
       className: "md:col-span-1",
@@ -174,7 +165,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Chat App",
       desc: "Real-time communication platform powered by WebSockets, featuring instant messaging and low-latency data synchronization.",
       tags: ["React.js", "Node.js", "WebSockets"],
-      color: "bg-green-300",
       href: "https://github.com/paras-verma7454/chat-app",
       github: "https://github.com/paras-verma7454/chat-app",
       className: "md:col-span-1",
@@ -183,7 +173,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Paytm",
       desc: "Comprehensive fintech solution for digital payments, enabling secure peer-to-peer transfers and robust account management.",
       tags: ["React.js", "Node.js", "MongoDB"],
-      color: "bg-blue-300",
       href: "https://paytm-livid.vercel.app/",
       github: "https://github.com/paras-verma7454/Paytm",
       className: "md:col-span-1",
@@ -192,7 +181,6 @@ export const PORTFOLIO_CONTENT: {
       title: "Medium",
       desc: "Full-featured blogging platform with markdown support, content discovery, and a rich reading experience — built with Hono and Prisma.",
       tags: ["React.js", "Hono", "Prisma ORM"],
-      color: "bg-gray-700",
       href: "https://medium-kappa-nine.vercel.app/",
       github: "https://github.com/paras-verma7454/Medium",
       className: "md:col-span-1",
@@ -200,7 +188,8 @@ export const PORTFOLIO_CONTENT: {
   ],
   contributions: [
     {
-      prUrl:"https://github.com/itshover/itshover/pull/58"
+      prUrl:"https://github.com/itshover/itshover/pull/58",
+      status:"merged"
     },
     {
       prUrl:"https://github.com/OssiumOfficial/ossium/pull/17",
@@ -222,8 +211,14 @@ export const PORTFOLIO_CONTENT: {
       private:true,
       status:"merged"
     },
-    { prUrl: "https://github.com/fastapi/fastapi/pull/14565" },
-    { prUrl: "https://github.com/ig-imanish/mx-icons/pull/9" },
+    {
+      prUrl: "https://github.com/fastapi/fastapi/pull/14565",
+      status:"merged"
+    },
+    {
+      prUrl: "https://github.com/ig-imanish/mx-icons/pull/9",
+      status:"merged"
+    },
   ],
   mediumUrl: "https://medium.com/@parasverma7454",
 };

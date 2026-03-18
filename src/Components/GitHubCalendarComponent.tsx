@@ -4,6 +4,7 @@ import { GitHubCalendar } from "react-github-calendar";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Github, ExternalLink } from "lucide-react";
 
 const GitHubCalendarComponent = () => {
   const { resolvedTheme } = useTheme();
@@ -15,69 +16,77 @@ const GitHubCalendarComponent = () => {
 
   const gitHubTheme = {
     light: ['#ebedf0', '#9be9a8', '#40c460', '#30a14e', '#216e39'],
-    dark: ['#1f2328', '#0e4429', '#40c463', '#26a641', '#39d353'],
+    dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
   };
 
   const colorScheme = resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
-    <div className="w-full mt-16 mb-24 px-4 md:px-6 flex justify-center">
-      <div className="max-w-7xl w-full">
-        {/* Clean & Minimalist Header */}
-        <motion.div 
+    <section className="w-full py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-4 mb-8 px-2"
+          className="flex items-center justify-between mb-6"
         >
-          <div className="flex items-center gap-2">
-            {/* <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]" /> */}
-            <h2 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight leading-none">
+          <div className="flex items-center gap-3">
+            <Github className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
+            <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
               GitHub Activity
             </h2>
           </div>
-          <div className="h-px flex-1 max-w-[120px] bg-neutral-200 dark:bg-neutral-800" />
+          <a
+            href="https://github.com/paras-verma7454"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
+          >
+            @paras-verma7454
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </motion.div>
 
-        {/* The Card - Isolated to the Graph */}
+        {/* Calendar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative group bg-white dark:bg-neutral-900/40 rounded-3xl border border-neutral-200 dark:border-white/10 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="relative"
         >
-          {/* Ambient Glow */}
-          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-            <div className="absolute -top-24 -right-24 w-96 h-96 bg-green-500/5 dark:bg-green-500/10 rounded-full blur-[120px]" />
-            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[120px]" />
-          </div>
-
-          <div className="relative z-10 w-full overflow-x-auto scrollbar-hide">
-            <div className="min-w-[800px] lg:min-w-0 flex justify-center">
-              {mounted ? (
-                <GitHubCalendar
-                  key={colorScheme}
-                  username="paras-verma7454"
-                  blockSize={14}
-                  blockMargin={4}
-                  fontSize={12}
-                  colorScheme={colorScheme}
-                  theme={gitHubTheme}
-                  throwOnError={false}
-                  errorMessage="GitHub activity is temporarily unavailable."
-                />
-              ) : (
-                <div className="flex justify-center py-10">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
-                </div>
-              )}
-            </div>
+          <div className="overflow-x-auto scrollbar-hide flex justify-center">
+            {mounted ? (
+              <GitHubCalendar
+                key={colorScheme}
+                username="paras-verma7454"
+                blockSize={16}
+                blockMargin={4}
+                fontSize={14}
+                colorScheme={colorScheme}
+                theme={gitHubTheme}
+                throwOnError={false}
+                errorMessage="Unable to load GitHub activity."
+                labels={{
+                  months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                  weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                  totalCount: '{{count}} contributions',
+                }}
+              />
+            ) : (
+              <div className="flex items-center justify-center py-16 gap-2">
+                <div className="w-2 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600 animate-pulse" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600 animate-pulse" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600 animate-pulse" style={{ animationDelay: '300ms' }} />
+              </div>
+            )}
           </div>
         </motion.div>
+
       </div>
-    </div>
+    </section>
   );
 };
 

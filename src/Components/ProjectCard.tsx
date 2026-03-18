@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Layout, ArrowUpRight, Github, Users } from "lucide-react";
+import { ArrowUpRight, Github, Users } from "lucide-react";
 import { getOgImage } from "@/actions/getOgImage";
 import { Tooltip } from "./ui/tooltip-card";
+import TypeScript from "./Typescript";
+import NextJs from "./NextJS";
+import ReactIcon from "./React";
+import NodeJs from "./NodeJs";
+import Prisma from "./Prisma";
+import PostgreSQL from "./PostgreSQL";
+
+// Skill icon mapping
+const skillIcons: Record<string, React.FC<{ className?: string }>> = {
+  "TypeScript": TypeScript,
+  "Next.js": NextJs,
+  "React.js": ReactIcon,
+  "React": ReactIcon,
+  "Node.js": NodeJs,
+  "Prisma": Prisma,
+  "Prisma ORM": Prisma,
+  "PostgreSQL": PostgreSQL,
+};
 
 // Module-level cache: deduplicate server action calls across all cards & StrictMode double-invocations
 const ogImageCache = new Map<string, string | null>();
@@ -12,7 +30,7 @@ interface ProjectCardProps {
     title: string;
     desc: string;
     tags: string[];
-    color: string;
+    color?: string;
     href: string;
     github?: string;
     featured?: boolean;
@@ -22,22 +40,9 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const { title, desc, tags, color, href, featured } = project;
+  const { title, desc, tags, href, featured } = project;
   const github = project.github;
   const [ogImage, setOgImage] = useState<string | null>(null);
-  const dotColor = React.useMemo(() => {
-    const key = `${title}-${href}`;
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-      hash = (hash << 5) - hash + key.charCodeAt(i);
-      hash |= 0;
-    }
-    const normalized = Math.abs(hash);
-    const hue = normalized % 360;
-    const saturation = 65 + (normalized % 18); // 65-82
-    const lightness = 48 + (normalized % 14); // 48-61
-    return `hsl(${hue} ${saturation}% ${lightness}%)`;
-  }, [title, href]);
 
   useEffect(() => {
     let isMounted = true;
@@ -109,41 +114,34 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             aria-label={`Open ${title} live site`}
             className="absolute inset-0 z-0 rounded-2xl"
           />
-          <div className="flex justify-between items-start mb-2 relative">
-            <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-xl ${color} bg-opacity-20`}>
-                <Layout className={color.replace("bg-", "text-")} size={24} />
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
+          <div className="absolute top-0 right-0 flex items-start gap-2 z-20">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${title} live site`}
+              className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors"
+            >
+              <ArrowUpRight size={20} />
+            </a>
+            {project.github && (
               <a
-                href={href}
+                href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${title} live site`}
-                className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors relative z-20"
+                aria-label={`Open ${title} GitHub repo`}
+                className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors"
               >
-                <ArrowUpRight size={20} />
+                <Github size={20} />
               </a>
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${title} GitHub repo`}
-                  className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors relative z-20"
-                >
-                  <Github size={20} />
-                </a>
-              )}
-            </div>
+            )}
           </div>
           <div>
             <a
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="block relative z-10"
+              className="block relative z-10 pr-14"
             >
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">
@@ -161,14 +159,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               </p>
             </a>
             <div className="flex flex-wrap gap-2 relative z-10">
-              {tags.map((tag: string, index: number) => (
-                <span
-                  key={`${tag}-${index}`}
-                  className="px-2 py-1 rounded bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 text-[10px] text-neutral-600 dark:text-neutral-300 uppercase"
-                >
-                  {tag}
-                </span>
-              ))}
+              {tags.map((tag: string, index: number) => {
+                const IconComponent = skillIcons[tag];
+                if (IconComponent) {
+                  return (
+                    <span
+                      key={`${tag}-${index}`}
+                      className="w-5 h-5 flex items-center justify-center"
+                      title={tag}
+                    >
+                      <IconComponent className="w-4 h-4" />
+                    </span>
+                  );
+                }
+                return (
+                  <span
+                    key={`${tag}-${index}`}
+                    className="px-2 py-1 rounded bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 text-[10px] text-neutral-600 dark:text-neutral-300 uppercase"
+                  >
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -190,43 +202,33 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           className="absolute inset-0 z-0 rounded-2xl"
         />
         <div>
-          <div className="flex justify-between items-start mb-3 relative">
-            <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-xl ${color} bg-opacity-20`}>
-                <div
-                  className="w-2 h-2 rounded-full ring-1 ring-white/20 animate-pulse"
-                  style={{ backgroundColor: dotColor }}
-                />
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
+          <div className="absolute top-0 right-0 flex items-start gap-2 z-20">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${title} live site`}
+              className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors"
+            >
+              <ArrowUpRight size={20} />
+            </a>
+            {project.github && (
               <a
-                href={href}
+                href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${title} live site`}
-                className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors relative z-20"
+                aria-label={`Open ${title} GitHub repo`}
+                className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors"
               >
-                <ArrowUpRight size={20} />
+                <Github size={20} />
               </a>
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${title} GitHub repo`}
-                  className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors relative z-20"
-                >
-                  <Github size={20} />
-                </a>
-              )}
-            </div>
+            )}
           </div>
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="block relative z-10"
+            className="block relative z-10 pr-14"
           >
             <div className="flex items-center gap-2 mb-1">
               <h3 className="text-lg font-bold text-neutral-900 dark:text-white group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">
@@ -245,14 +247,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </a>
         </div>
         <div className="flex flex-wrap gap-2 mt-4 relative z-10">
-          {tags.map((tag: string, index: number) => (
-            <span
-              key={`${tag}-${index}`}
-              className="text-[10px] uppercase tracking-wider text-neutral-600 dark:text-neutral-500"
-            >
-              {tag}
-            </span>
-          ))}
+          {tags.map((tag: string, index: number) => {
+            const IconComponent = skillIcons[tag];
+            if (IconComponent) {
+              return (
+                <span
+                  key={`${tag}-${index}`}
+                  className="w-5 h-5 flex items-center justify-center"
+                  title={tag}
+                >
+                  <IconComponent className="w-4 h-4" />
+                </span>
+              );
+            }
+            return (
+              <span
+                key={`${tag}-${index}`}
+                className="text-[10px] uppercase tracking-wider text-neutral-600 dark:text-neutral-500"
+              >
+                {tag}
+              </span>
+            );
+          })}
         </div>
       </div>
     </Tooltip>

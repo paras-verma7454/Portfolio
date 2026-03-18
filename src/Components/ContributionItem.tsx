@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import Image from "next/image";
-import { Github, ArrowUpRight, Lock } from "lucide-react";
+import { Github, ArrowUpRight, Lock, GitMerge, GitPullRequest, XCircle } from "lucide-react";
 import type { Contribution } from "../constants/portfolio";
 
 const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contribution }) => {
@@ -40,7 +40,7 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
       href={safeHref}
       target={isDisabledLink ? undefined : "_blank"}
       rel={isDisabledLink ? undefined : "noopener noreferrer"}
-      className="flex flex-col sm:flex-row sm:items-center justify-between py-4 border-b border-neutral-200 dark:border-white/5 hover:bg-neutral-100 dark:hover:bg-white/2 transition-colors group/item cursor-pointer px-4 gap-4 sm:gap-5"
+      className="flex flex-col sm:flex-row sm:items-center justify-between py-4 border-b border-neutral-200 dark:border-white/5 hover:bg-neutral-100 dark:hover:bg-white/10 transition-colors group/item cursor-pointer px-4 gap-4 sm:gap-5"
       aria-label={`Open contribution ${displayData?.title ?? customTitle ?? "Pull Request"}`}
       onClick={isDisabledLink ? (e) => e.preventDefault() : undefined}
     >
@@ -80,11 +80,14 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
       <div className="flex items-center justify-between sm:justify-end gap-6">
         {displayData?.status && (
           <div className="flex items-center gap-2">
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
               displayData.status === 'merged' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20' :
               displayData.status === 'closed' ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20' :
               'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20'
             }`}>
+              {displayData.status === 'merged' && <GitMerge size={10} />}
+              {displayData.status === 'closed' && <XCircle size={10} />}
+              {displayData.status === 'open' && <GitPullRequest size={10} />}
               {displayData.status}
             </span>
           </div>

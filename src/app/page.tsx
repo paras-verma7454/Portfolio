@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, type JSX, lazy, Suspense } from "react";
+import { useState, useEffect, type JSX, lazy, Suspense, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
@@ -13,6 +13,7 @@ import {
   BookOpen,
   Globe,
   ChevronDown,
+  Mail,
 } from "lucide-react";
 
 import { PORTFOLIO_CONTENT } from "@/constants/portfolio";
@@ -28,9 +29,16 @@ import NextJs from "@/Components/NextJS";
 import NodeJs from "@/Components/NodeJs";
 import ReactLogo from "@/Components/React";
 import PostgreSQL from "@/Components/PostgreSQL";
+
+// Animated icons
+import { GithubIcon, type GithubIconHandle } from "@/Components/ui/github";
+import { LinkedinIcon, type LinkedinIconHandle } from "@/Components/ui/linkedin";
+import { TwitterIcon, type TwitterIconHandle } from "@/Components/ui/twitter";
+import { SendIcon, type SendIconHandle } from "@/Components/ui/send";
 import type { MediumPost } from "@/lib/medium";
 import BlogCard from "@/Components/BlogCard";
 import GitHubCalendarComponent from "@/Components/GitHubCalendarComponent";
+import { MapPinIcon, type MapPinIconHandle } from "@/Components/ui/map-pin";
 
 // Lazy load heavy below-the-fold components
 const Oneko = lazy(() => import("@/Components/Oneko"));
@@ -72,6 +80,111 @@ const groupContributionsByRepo = (
 
   return Object.values(grouped);
 };
+
+// Socials Card Component with animated icons
+function SocialsCard() {
+  const githubRef = useRef<GithubIconHandle>(null);
+  const linkedinRef = useRef<LinkedinIconHandle>(null);
+  const twitterRef = useRef<TwitterIconHandle>(null);
+  const emailRef = useRef<SendIconHandle>(null);
+
+  const iconRefs = {
+    "GitHub": githubRef,
+    "LinkedIn": linkedinRef,
+    "Twitter": twitterRef,
+    "Email": emailRef,
+  };
+
+  const handleMouseEnter = (label: string) => {
+    const ref = iconRefs[label as keyof typeof iconRefs];
+    ref?.current?.startAnimation();
+  };
+
+  const handleMouseLeave = (label: string) => {
+    const ref = iconRefs[label as keyof typeof iconRefs];
+    ref?.current?.stopAnimation();
+  };
+
+  const getIcon = (social: typeof PORTFOLIO_CONTENT.socials[0]) => {
+    const className = "text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white mb-2";
+
+    switch (social.label) {
+      case "GitHub":
+        return <GithubIcon ref={githubRef} size={20} className={className} />;
+      case "LinkedIn":
+        return <LinkedinIcon ref={linkedinRef} size={20} className={className} />;
+      case "Twitter":
+        return <TwitterIcon ref={twitterRef} size={20} className={className} />;
+      case "Email":
+        return <SendIcon ref={emailRef} size={20} className={className} />;
+      default:
+        return <social.icon size={20} className={className} />;
+    }
+  };
+
+  return (
+    <BentoCard delay={0.2}>
+      <div className="flex flex-col justify-center h-full">
+        <div className="grid grid-cols-2 gap-3">
+          {PORTFOLIO_CONTENT.socials.map((link, i) => (
+            <a
+              key={i}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center p-3 rounded-xl bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 hover:scale-105 transition-all duration-300 group"
+              onMouseEnter={() => handleMouseEnter(link.label)}
+              onMouseLeave={() => handleMouseLeave(link.label)}
+            >
+              {getIcon(link)}
+              <span className="text-[10px] text-neutral-600 dark:text-neutral-500">
+                {link.label}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </BentoCard>
+  );
+}
+
+// Location Card Component with animated MapPin icon
+function LocationCard() {
+  const mapPinRef = useRef<MapPinIconHandle>(null);
+
+  return (
+    <BentoCard delay={0.1}>
+      <div
+        className="flex flex-col items-center justify-center text-center space-y-3 h-full"
+        onMouseEnter={() => mapPinRef.current?.startAnimation()}
+        onMouseLeave={() => mapPinRef.current?.stopAnimation()}
+      >
+        <div className="relative w-full px-5 h-24 bg-neutral-200 dark:bg-neutral-800 rounded-xl overflow-hidden opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+          <div className="absolute inset-0 bg-[radial-gradient(#a3a3a3_1px,transparent_1px)] dark:bg-[radial-gradient(#404040_1px,transparent_1px)] bg-size-[8px_8px] opacity-20"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-blue-500 rounded-full animate-ping" />
+              <MapPinIcon
+                ref={mapPinRef}
+                size={24}
+                className="text-blue-500 dark:text-blue-400 relative z-10"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 className="text-neutral-900 dark:text-white font-semibold pt-2">
+            {PORTFOLIO_CONTENT.personal.location}
+          </h3>
+          <p className="text-xs text-neutral-600 dark:text-neutral-500">
+            <LiveClock timezone={PORTFOLIO_CONTENT.personal.timezone ?? "Asia/Kolkata"} />
+            {" "}({PORTFOLIO_CONTENT.personal.timezone})
+          </p>
+        </div>
+      </div>
+    </BentoCard>
+  );
+}
 
 export default function Home() {
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
@@ -215,28 +328,7 @@ export default function Home() {
           </BentoCard>
 
           {/* 2. Map / Location */}
-          <BentoCard delay={0.1}>
-            <div className="flex flex-col items-center justify-center text-center space-y-3 h-full">
-              <div className="relative w-full px-5 h-24 bg-neutral-200 dark:bg-neutral-800 rounded-xl overflow-hidden opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                <div className="absolute inset-0 bg-[radial-gradient(#a3a3a3_1px,transparent_1px)] dark:bg-[radial-gradient(#404040_1px,transparent_1px)] bg-size-[8px_8px] opacity-20"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="relative">
-                    <div className="absolute -inset-4 bg-blue-500 rounded-full animate-ping" />
-                    <MapPin className="text-blue-500 dark:text-blue-400 relative z-10" size={24} />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-neutral-900 dark:text-white font-semibold pt-2">
-                  {PORTFOLIO_CONTENT.personal.location}
-                </h3>
-                <p className="text-xs text-neutral-600 dark:text-neutral-500">
-                   <LiveClock timezone={PORTFOLIO_CONTENT.personal.timezone ?? "Asia/Kolkata"} />
-                   {" "}({PORTFOLIO_CONTENT.personal.timezone})
-                </p>
-              </div>
-            </div>
-          </BentoCard>
+          <LocationCard />
 
            {/* 3. Tech Stack */}
           <BentoCard rowSpan="md:row-span-3" delay={0.3}>
@@ -270,29 +362,7 @@ export default function Home() {
           </BentoCard>
 
           {/* 4. Socials */}
-          <BentoCard delay={0.2}>
-            <div className="flex flex-col justify-center h-full">
-              <div className="grid grid-cols-2 gap-3">
-                {PORTFOLIO_CONTENT.socials.map((link, i) => (
-                  <a
-                    key={i}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center justify-center p-3 rounded-xl bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 hover:scale-105 transition-all duration-300 group/icon"
-                  >
-                    <link.icon
-                      size={20}
-                      className="text-neutral-600 dark:text-neutral-400 group-hover/icon:text-black dark:group-hover/icon:text-white mb-2"
-                    />
-                    <span className="text-[10px] text-neutral-600 dark:text-neutral-500">
-                      {link.label}
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </BentoCard>
+          <SocialsCard />
 
          
 

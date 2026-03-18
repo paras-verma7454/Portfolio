@@ -15,6 +15,8 @@ node_modules
 out/
 build/
 *.local
+dist/
+.next-env.d.ts
 
 # Testing
 coverage/
@@ -32,6 +34,7 @@ coverage/
 
 # Environment variables
 .env*.local
+.env*
 
 # TypeScript
 *.tsbuildinfo
