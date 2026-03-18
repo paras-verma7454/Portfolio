@@ -15,6 +15,13 @@
     -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
   }
 
+  @supports not (mask-image: linear-gradient(to bottom, black 85%, transparent 100%)) {
+    .mask-linear-gradient-bottom {
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+  }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -26,6 +33,12 @@
   .cv-auto {
     content-visibility: auto;
     contain-intrinsic-size: 1px 1000px;
+  }
+
+  @supports not (content-visibility: auto) {
+    .cv-auto {
+      contain: layout paint;
+    }
   }
 
   .gpu {

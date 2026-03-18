@@ -20,6 +20,7 @@ export const Tooltip = ({
   });
   const contentRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const supportsPointerEvents = typeof window !== "undefined" && "PointerEvent" in window;
 
   useEffect(() => {
     setMounted(true);
@@ -85,7 +86,12 @@ export const Tooltip = ({
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (window.matchMedia("(hover: none)").matches) {
+    const hasHover =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      !window.matchMedia("(hover: none)").matches;
+
+    if (!hasHover) {
       e.preventDefault();
       if (isVisible) {
         setIsVisible(false);
@@ -114,6 +120,16 @@ export const Tooltip = ({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleClick}
+      onMouseEnter={supportsPointerEvents ? undefined : (e) => {
+        setIsVisible(true);
+        updateMousePosition(e.clientX, e.clientY);
+      }}
+      onMouseMove={supportsPointerEvents ? undefined : (e) => {
+        if (isVisible) updateMousePosition(e.clientX, e.clientY);
+      }}
+      onMouseLeave={supportsPointerEvents ? undefined : () => {
+        setIsVisible(false);
+      }}
     >
       {children}
       {mounted &&

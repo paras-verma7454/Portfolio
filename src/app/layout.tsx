@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Paras Verma - Full Stack Developer',
   description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
   icons: {
-    icon: '/luffy.jpg',
+    icon: '/Favicon.png',
   },
   openGraph: {
     title: 'Paras Verma - Full Stack Developer',

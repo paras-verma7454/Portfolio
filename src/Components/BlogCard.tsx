@@ -34,9 +34,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   const displayThumbnail = getThumbnail();
 
   return (
-    <div
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
       className="flex flex-col h-full justify-between group/blog cursor-pointer bg-white/50 dark:bg-neutral-900/50 p-5 rounded-3xl border border-neutral-200 dark:border-white/5 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all duration-300"
-      onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
+      aria-label={`Open blog post: ${title}`}
     >
       <div className="space-y-4">
         {displayThumbnail && (
@@ -81,7 +84,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           <ExternalLink size={14} className="text-neutral-400 group-hover/blog:text-blue-500 transition-colors shrink-0" />
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

@@ -4,9 +4,14 @@ import { useEffect } from 'react';
 
 const Oneko = () => {
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    if (typeof window.requestAnimationFrame !== "function") return;
+
     // Check for reduced motion preference
-    const isReducedMotion =
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canMatchMedia = typeof window.matchMedia === "function";
+    const isReducedMotion = canMatchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
     if (isReducedMotion) return;
 
     // Check if oneko is already present
@@ -27,6 +32,7 @@ const Oneko = () => {
     let draggingPointerId: number | null = null;
     let dragOffsetX = 0;
     let dragOffsetY = 0;
+    const hasPointerEvents = "PointerEvent" in window;
 
     const nekoSpeed = 10;
     const spriteSets: Record<string, [number, number][]> = {
@@ -160,7 +166,9 @@ const Oneko = () => {
       const topPos = nekoPosY - 16;
       dragOffsetX = event.clientX - leftPos;
       dragOffsetY = event.clientY - topPos;
-      nekoEl.setPointerCapture(event.pointerId);
+      if (typeof nekoEl.setPointerCapture === "function") {
+        nekoEl.setPointerCapture(event.pointerId);
+      }
       nekoEl.style.cursor = "grabbing";
       idleTime = 0;
     };
@@ -182,10 +190,48 @@ const Oneko = () => {
     const endDrag = (event?: PointerEvent) => {
       if (!isDragging || (event && event.pointerId !== draggingPointerId)) return;
       if (event) {
-        try { nekoEl.releasePointerCapture(event.pointerId); } catch {}
+        if (typeof nekoEl.releasePointerCapture === "function") {
+          try { nekoEl.releasePointerCapture(event.pointerId); } catch {}
+        }
       }
       isDragging = false;
       draggingPointerId = null;
+      nekoEl.style.cursor = "grab";
+      mousePosX = nekoPosX;
+      mousePosY = nekoPosY;
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      isDragging = true;
+      const leftPos = nekoPosX - 16;
+      const topPos = nekoPosY - 16;
+      dragOffsetX = touch.clientX - leftPos;
+      dragOffsetY = touch.clientY - topPos;
+      mousePosX = touch.clientX;
+      mousePosY = touch.clientY;
+      nekoEl.style.cursor = "grabbing";
+      idleTime = 0;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!isDragging) return;
+      const touch = event.touches[0];
+      if (!touch) return;
+      const left = touch.clientX - dragOffsetX;
+      const top = touch.clientY - dragOffsetY;
+      nekoPosX = Math.min(Math.max(16, left + 16), window.innerWidth - 16);
+      nekoPosY = Math.min(Math.max(16, top + 16), window.innerHeight - 16);
+      mousePosX = touch.clientX;
+      mousePosY = touch.clientY;
+      nekoEl.style.left = `${nekoPosX - 16}px`;
+      nekoEl.style.top = `${nekoPosY - 16}px`;
+    };
+
+    const handleTouchEnd = () => {
+      if (!isDragging) return;
+      isDragging = false;
       nekoEl.style.cursor = "grab";
       mousePosX = nekoPosX;
       mousePosY = nekoPosY;
@@ -209,16 +255,36 @@ const Oneko = () => {
 
     document.body.appendChild(nekoEl);
     document.addEventListener("mousemove", handleMouseMove);
-    nekoEl.addEventListener("pointerdown", handlePointerDown);
-    nekoEl.addEventListener("pointermove", handlePointerMove);
-    nekoEl.addEventListener("pointerup", endDrag);
-    nekoEl.addEventListener("pointercancel", endDrag);
-    window.addEventListener("pointerup", endDrag);
+
+    if (hasPointerEvents) {
+      nekoEl.addEventListener("pointerdown", handlePointerDown);
+      nekoEl.addEventListener("pointermove", handlePointerMove);
+      nekoEl.addEventListener("pointerup", endDrag);
+      nekoEl.addEventListener("pointercancel", endDrag);
+      window.addEventListener("pointerup", endDrag);
+    } else {
+      nekoEl.addEventListener("touchstart", handleTouchStart, { passive: true });
+      nekoEl.addEventListener("touchmove", handleTouchMove, { passive: true });
+      nekoEl.addEventListener("touchend", handleTouchEnd);
+      nekoEl.addEventListener("touchcancel", handleTouchEnd);
+    }
+
     window.requestAnimationFrame(onAnimationFrame);
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("pointerup", endDrag);
+      if (hasPointerEvents) {
+        nekoEl.removeEventListener("pointerdown", handlePointerDown);
+        nekoEl.removeEventListener("pointermove", handlePointerMove);
+        nekoEl.removeEventListener("pointerup", endDrag);
+        nekoEl.removeEventListener("pointercancel", endDrag);
+        window.removeEventListener("pointerup", endDrag);
+      } else {
+        nekoEl.removeEventListener("touchstart", handleTouchStart);
+        nekoEl.removeEventListener("touchmove", handleTouchMove);
+        nekoEl.removeEventListener("touchend", handleTouchEnd);
+        nekoEl.removeEventListener("touchcancel", handleTouchEnd);
+      }
       if (nekoEl.parentNode) {
         nekoEl.parentNode.removeChild(nekoEl);
       }

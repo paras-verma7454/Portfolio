@@ -31,21 +31,18 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
   }, [info, customTitle, contribution.status]);
 
   const avatarUrl = info?.owner ? `https://github.com/${info.owner}.png` : null;
-
-  const handleOnClick = () => {
-    if (isPrivate) {
-      if (url) {
-        window.open(url, "_blank", "noopener,noreferrer");
-      }
-    } else {
-      window.open(prUrl, "_blank", "noopener,noreferrer");
-    }
-  };
+  const destination = isPrivate ? url : prUrl;
+  const safeHref = destination || "#";
+  const isDisabledLink = !destination;
 
   return (
-    <div
+    <a
+      href={safeHref}
+      target={isDisabledLink ? undefined : "_blank"}
+      rel={isDisabledLink ? undefined : "noopener noreferrer"}
       className="flex flex-col sm:flex-row sm:items-center justify-between py-4 border-b border-neutral-200 dark:border-white/5 hover:bg-neutral-100 dark:hover:bg-white/2 transition-colors group/item cursor-pointer px-4 gap-4 sm:gap-5"
-      onClick={handleOnClick}
+      aria-label={`Open contribution ${displayData?.title ?? customTitle ?? "Pull Request"}`}
+      onClick={isDisabledLink ? (e) => e.preventDefault() : undefined}
     >
       <div className="flex items-center gap-4 sm:gap-5">
         <div className="w-10 h-10 rounded-xl overflow-hidden bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shrink-0">
@@ -94,7 +91,7 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
         )}
         <ArrowUpRight size={16} className="text-neutral-400 dark:text-neutral-600 group-hover/item:text-black dark:group-hover/item:text-white transition-colors shrink-0" />
       </div>
-    </div>
+    </a>
   );
 };
 

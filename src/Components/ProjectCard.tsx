@@ -76,16 +76,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     };
   }, [href, github]);
 
-  const handleContainerClick = () => {
-    window.open(href, "_blank", "noopener,noreferrer");
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      window.open(href, "_blank", "noopener,noreferrer");
-    }
-  };
-
   const TooltipContent = ogImage ? (
     <div className="flex flex-col items-center justify-center p-0 rounded-xl overflow-hidden bg-black shadow-xl">
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -111,14 +101,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         content={TooltipContent}
         containerClassName="w-full h-full flex flex-col justify-between group/card cursor-pointer"
       >
-        <div
-          className="flex flex-col justify-between h-full"
-          role="link"
-          tabIndex={0}
-          onClick={handleContainerClick}
-          onKeyDown={handleKeyDown}
-          aria-label={`Open ${title} live site`}
-        >
+        <div className="relative flex flex-col justify-between h-full">
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${title} live site`}
+            className="absolute inset-0 z-0 rounded-2xl"
+          />
           <div className="flex justify-between items-start mb-2 relative">
             <div className="flex items-center gap-3">
               <div className={`p-3 rounded-xl ${color} bg-opacity-20`}>
@@ -132,7 +122,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 rel="noopener noreferrer"
                 aria-label={`Open ${title} live site`}
                 className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors relative z-20"
-                onClick={(e) => e.stopPropagation()}
               >
                 <ArrowUpRight size={20} />
               </a>
@@ -143,7 +132,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   rel="noopener noreferrer"
                   aria-label={`Open ${title} GitHub repo`}
                   className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors relative z-20"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Github size={20} />
                 </a>
@@ -156,7 +144,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               target="_blank"
               rel="noopener noreferrer"
               className="block relative z-10"
-              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="text-xl font-bold text-neutral-900 dark:text-white group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">
@@ -194,14 +181,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       content={TooltipContent}
       containerClassName="w-full h-full flex flex-col justify-between group/card cursor-pointer"
     >
-      <div
-        className="flex flex-col h-full justify-between"
-        role="link"
-        tabIndex={0}
-        onClick={handleContainerClick}
-        onKeyDown={handleKeyDown}
-        aria-label={`Open ${title} live site`}
-      >
+      <div className="relative flex flex-col h-full justify-between">
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${title} live site`}
+          className="absolute inset-0 z-0 rounded-2xl"
+        />
         <div>
           <div className="flex justify-between items-start mb-3 relative">
             <div className="flex items-center gap-3">
@@ -219,7 +206,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 rel="noopener noreferrer"
                 aria-label={`Open ${title} live site`}
                 className="text-neutral-400 dark:text-neutral-500 group-hover/card:text-black dark:group-hover/card:text-white transition-colors relative z-20"
-                onClick={(e) => e.stopPropagation()}
               >
                 <ArrowUpRight size={20} />
               </a>
@@ -230,7 +216,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   rel="noopener noreferrer"
                   aria-label={`Open ${title} GitHub repo`}
                   className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white transition-colors relative z-20"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Github size={20} />
                 </a>
@@ -242,7 +227,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             target="_blank"
             rel="noopener noreferrer"
             className="block relative z-10"
-            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-2 mb-1">
               <h3 className="text-lg font-bold text-neutral-900 dark:text-white group-hover/card:text-blue-500 dark:group-hover/card:text-blue-400 transition-colors">
