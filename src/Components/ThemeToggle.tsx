@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -14,11 +14,13 @@ const ThemeToggle = () => {
   }, []);
 
   if (!mounted) {
-    return null;
+    return (
+      <div className="p-2 h-9 w-9 rounded-full bg-neutral-200 dark:bg-neutral-800 animate-pulse" />
+    );
   }
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -29,10 +31,10 @@ const ThemeToggle = () => {
     >
       <motion.div
         initial={false}
-        animate={{ rotate: theme === "light" ? 0 : 180 }}
+        animate={{ rotate: resolvedTheme === "light" ? 0 : 180 }}
         transition={{ duration: 0.3 }}
       >
-        {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+        {resolvedTheme === "light" ? <Moon size={20} /> : <Sun size={20} />}
       </motion.div>
     </button>
   );
