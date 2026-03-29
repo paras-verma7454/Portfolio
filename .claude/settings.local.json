@@ -3,7 +3,9 @@
     "allow": [
       "Bash(bun run:*)",
       "Bash(bunx next:*)",
-      "Bash(bun add:*)"
+      "Bash(bun add:*)",
+      "Bash(npx playwright:*)",
+      "Bash(npm uninstall:*)"
     ]
   }
 }

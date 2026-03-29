@@ -251,7 +251,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200 font-sans selection:bg-blue-500/30 selection:text-blue-200 transition-colors duration-300">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200 font-sans selection:bg-blue-600 selection:text-white dark:selection:bg-blue-300 dark:selection:text-neutral-900 transition-colors duration-300">
       {/* Background Gradient Mesh */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/5 dark:bg-blue-900/10 blur-[60px] gpu" />
@@ -279,7 +279,7 @@ export default function Home() {
                   About me.
                 </h2>
                 <div className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-lg">
-                   {PORTFOLIO_CONTENT.personal.bio.split(/(TypeScript|React|Next\.js|Node\.js|PostgreSQL)/g).map((part, i) => {
+                   {PORTFOLIO_CONTENT.personal.bio.split(/(TypeScript|React|Next\.js|Node\.js|PostgreSQL|LLM APIs|RAG|FastAPI)/g).map((part, i) => {
                     const inlineMap: Record<string, JSX.Element> = {
                       TypeScript: (
                         <span key={`ts-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
@@ -311,19 +311,37 @@ export default function Home() {
                           <span>PostgreSQL</span>
                         </span>
                       ),
+                      // "LLM APIs": (
+                      //   <span key={`llm-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
+                      //     <Sparkles className="w-4 h-4" />
+                      //     <span>LLM APIs</span>
+                      //   </span>
+                      // ),
+                      // RAG: (
+                      //   <span key={`rag-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
+                      //     <Sparkles className="w-4 h-4" />
+                      //     <span>RAG</span>
+                      //   </span>
+                      // ),
+                      FastAPI: (
+                        <span key={`fastapi-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
+                          <Sparkles className="w-4 h-4" />
+                          <span>FastAPI</span>
+                        </span>
+                      ),
                     };
                     return inlineMap[part] || <span key={i}>{part}</span>;
                   })}
                 </div>
               </div>
-              <div className="flex gap-3">
+              {/* <div className="flex gap-3">
                 <a
                   href={`mailto:${PORTFOLIO_CONTENT.personal.email}`}
                   className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 mt-3 gap-1"
                 >
                   {PORTFOLIO_CONTENT.personal.email}
                 </a>
-              </div>
+              </div> */}
             </div>
           </BentoCard>
 

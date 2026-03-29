@@ -7,14 +7,18 @@ export default function LiveClock({ timezone }: { timezone: string }) {
 
   useEffect(() => {
     const update = () => {
-      setTime(
-        new Date().toLocaleTimeString('en-US', {
-          timeZone: timezone,
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        })
-      );
+      try {
+        setTime(
+          new Date().toLocaleTimeString('en-US', {
+            timeZone: timezone,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          })
+        );
+      } catch {
+        setTime('');
+      }
     };
     update();
     const timer = setInterval(update, 1000);

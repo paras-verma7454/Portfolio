@@ -1,10 +1,24 @@
 'use client';
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { PORTFOLIO_CONTENT } from "@/constants/portfolio";
 import ThemeToggle from "@/Components/ThemeToggle";
 
 export default function Hero() {
+  const roles = PORTFOLIO_CONTENT.personal.roles?.length
+    ? PORTFOLIO_CONTENT.personal.roles
+    : [PORTFOLIO_CONTENT.personal.surname];
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2200);
+
+    return () => clearInterval(interval);
+  }, [roles.length]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -14,8 +28,19 @@ export default function Hero() {
       <div>
         <h1 className="text-3xl md:text-5xl -mt-10 font-bold text-neutral-900 dark:text-white tracking-tight mb-2">
           {PORTFOLIO_CONTENT.personal.name}{" "}
-          <span className="text-neutral-500 dark:text-neutral-600">
-            {PORTFOLIO_CONTENT.personal.surname}
+          <span className="inline-block text-neutral-500 dark:text-neutral-600">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={roles[roleIndex]}
+                initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -14, filter: "blur(6px)" }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+                className="inline-block"
+              >
+                {roles[roleIndex]}
+              </motion.span>
+            </AnimatePresence>
           </span>
         </h1>
       </div>

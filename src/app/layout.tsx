@@ -9,21 +9,21 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Paras Verma - Full Stack Developer',
-  description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
+  title: 'Paras Verma — Fullstack Developer',
+  description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL — focused on clean UX and real user impact.',
   icons: {
     icon: '/Favicon.png',
   },
   openGraph: {
-    title: 'Paras Verma - Full Stack Developer',
-    description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
+    title: 'Paras Verma — Fullstack Developer',
+    description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL — focused on clean UX and real user impact.',
     images: ['/image.png'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Paras Verma - Full Stack Developer',
-    description: 'Full-stack developer who loves turning ideas into code. React, Next.js, Node.js enthusiast. Check out my latest projects and GitHub contributions.',
+    title: 'Paras Verma — Fullstack Developer',
+    description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL — focused on clean UX and real user impact.',
     images: ['/image.png'],
   },
 };

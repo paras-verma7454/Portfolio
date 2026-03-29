@@ -16,6 +16,7 @@ export type Contribution = {
 export interface Personal {
   name: string;
   surname: string;
+  roles?: string[];
   location: string;
   timezone: string;
   bio: string;
@@ -63,10 +64,11 @@ export const PORTFOLIO_CONTENT: {
 } = {
   personal: {
     name: "Hi, I'm Paras —",
-    surname: "A Full Stack web developer.",
+    surname: "Fullstack Developer.",
+    roles: ["Fullstack Developer.", "Software Engineer.", "AI Engineer."],
     location: "India",
-    timezone: "IST",
-    bio: `I build interactive web applications using TypeScript, React, Next.js, Node.js and PostgreSQL — with a strong focus on clean UI.`,
+    timezone: "Asia/Kolkata",
+    bio: `I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL, RAG — focused on clean UX and real user impact.`,
     email: "Parasverma7454@gmail.com",
     availability: "Available for freelance",
     avatar: "/luffy.jpg",
@@ -94,6 +96,10 @@ export const PORTFOLIO_CONTENT: {
     "Prisma ORM",
     "Drizzle ORM",
     "Python",
+    "RAG",
+    "FastAPI",
+    "Vector Databases",
+    "langchain",
     "Docker",
     "GCP",
     "PostgreSQL",
@@ -127,6 +133,14 @@ export const PORTFOLIO_CONTENT: {
       tags: ["Next.js", "Hono", "Sarvam AI"],
       href: "https://orizenflow.luffytaro.me",
       github: "",
+      className: "md:col-span-1",
+    },
+    {
+      title: "Paper Mind ",
+      desc: "PaperMind is a simple Retrieval-Augmented Generation (RAG) system that lets you chat with PDF documents using modern AI tools.",
+      tags: ["RAG", "Qdrant", "Python","Gemini API"],
+      href: "https://github.com/paras-verma7454/PaperMind",
+      github: "https://github.com/paras-verma7454/PaperMind",
       className: "md:col-span-1",
     },
     {

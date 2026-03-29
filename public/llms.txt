@@ -1,6 +1,6 @@
 # Paras Verma — Portfolio
 
-This is the portfolio of Paras Verma, a full-stack web developer based in India (IST).
+This is the portfolio of Paras Verma, a software engineer and AI engineer based in India (IST).
 
 ## Summary
 - Builds interactive web applications with clean UI.
@@ -15,21 +15,30 @@ This is the portfolio of Paras Verma, a full-stack web developer based in India 
 Next.js, React, TypeScript, JavaScript, Node.js, Prisma ORM, Supabase, Tailwind CSS, Docker, Redux, Postman, PostgreSQL, MongoDB, Git, GitHub
 
 ## Featured Projects
-- ReviewScope: Automated AI code reviews with repository context.
+- Review Scope: Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.
   - Live: https://reviewscope.luffytaro.me
   - Source: https://github.com/Review-scope/ReviewScope
-- CalMarshal: Event scheduling with Google Calendar integration.
+- CalMarshal: Streamlined event scheduling platform featuring seamless Google Calendar integration and real-time availability tracking.
   - Live: https://cal-marshal-phi.vercel.app
   - Source: https://github.com/paras-verma7454/CalMarshal
-- Dionysus: Executive AI assistant for meetings and code analysis.
+- Dionysus: Executive AI assistant that automates meeting notes, performs deep code analysis, and enhances developer productivity using LLMs.
   - Live: https://dionysus-zeta.vercel.app/
   - Source: https://github.com/paras-verma7454/Dionysus
-- Bolt New: Prompt-to-app generator for React applications.
+- Bolt New: Advanced prompt-to-app generator that transforms natural language into production-ready React applications with instant previews.
   - Live: https://bolt-new-olive.vercel.app/
   - Source: https://github.com/paras-verma7454/bolt.new
-- DriveDeck: Automotive marketplace platform.
+- DriveDeck: Dynamic automotive marketplace platform designed for high-performance car trading with integrated management tools.
   - Live: https://drive-deck.vercel.app/
   - Source: https://github.com/paras-verma7454/DriveDeck
+- Chat App: Real-time communication platform powered by WebSockets, featuring instant messaging and low-latency data synchronization.
+  - Live: https://github.com/paras-verma7454/chat-app
+  - Source: https://github.com/paras-verma7454/chat-app
+- Paytm: Comprehensive fintech solution for digital payments, enabling secure peer-to-peer transfers and robust account management.
+  - Live: https://paytm-livid.vercel.app/
+  - Source: https://github.com/paras-verma7454/Paytm
+- Medium: Full-featured blogging platform with markdown support, content discovery, and a rich reading experience — built with Hono and Prisma.
+  - Live: https://medium-kappa-nine.vercel.app/
+  - Source: https://github.com/paras-verma7454/Medium
 
 ## Open Source Contributions
 - https://github.com/itshover/itshover/pull/58

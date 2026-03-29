@@ -36,6 +36,8 @@ coverage/
 .env*.local
 .env*
 
+.claude/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
