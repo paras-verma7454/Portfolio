@@ -334,14 +334,14 @@ export default function Home() {
                   })}
                 </div>
               </div>
-              {/* <div className="flex gap-3">
+              <div className="flex gap-3">
                 <a
                   href={`mailto:${PORTFOLIO_CONTENT.personal.email}`}
                   className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 mt-3 gap-1"
                 >
                   {PORTFOLIO_CONTENT.personal.email}
                 </a>
-              </div> */}
+              </div>
             </div>
           </BentoCard>
 
