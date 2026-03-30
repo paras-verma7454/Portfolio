@@ -35,6 +35,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+      <head>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="c690b6ce-058c-4ea6-ba59-1103bcd8d636"></script>
+      </head>
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>

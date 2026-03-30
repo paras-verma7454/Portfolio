@@ -133,7 +133,7 @@ export const PORTFOLIO_CONTENT: {
       desc: "Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates with technical precision.",
       tags: ["Next.js", "Hono", "Sarvam AI"],
       href: "https://orizenflow.luffytaro.me",
-      github: "",
+      github: "https://github.com/paras-verma7454/orizenflow",
       className: "md:col-span-1",
     },
     {
