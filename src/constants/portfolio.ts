@@ -65,8 +65,7 @@ export const PORTFOLIO_CONTENT: {
   personal: {
     name: "Hi, I'm Paras —",
     surname: "Fullstack Developer.",
-    // roles: ["Fullstack Developer.", "Software Engineer.", "AI Engineer."],
-    roles: ["Fullstack Developer.", "Software Engineer."],
+    roles: ["Fullstack Developer.", "AI Engineer.", "Software Engineer."],
     location: "India",
     timezone: "Asia/Kolkata",
     bio: `I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL, RAG — focused on clean UX and real user impact.`,
