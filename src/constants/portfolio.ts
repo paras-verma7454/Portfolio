@@ -100,6 +100,7 @@ export const PORTFOLIO_CONTENT: {
     "FastAPI",
     "Vector Databases",
     "langchain",
+    "Redis",
     "Docker",
     "GCP",
     "PostgreSQL",
