@@ -137,6 +137,14 @@ export const PORTFOLIO_CONTENT: {
       className: "md:col-span-1",
     },
     {
+      title: "Orizen TUI",
+      desc: "Open-source terminal UI components for Node.js CLI applications. Build beautiful terminal interfaces with a shadcn-style copy workflow.",
+      tags: ["Next.js", "React Ink"],
+      href: "https://orizen-tui.vercel.app",
+      github: "https://github.com/paras-verma7454/orizen-tui",
+      className: "md:col-span-1",
+    },
+    {
       title: "Paper Mind ",
       desc: "PaperMind is a simple Retrieval-Augmented Generation (RAG) system that lets you chat with PDF documents using modern AI tools.",
       tags: ["RAG", "Qdrant", "Python","Gemini API"],
