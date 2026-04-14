@@ -8,6 +8,7 @@ import ReactIcon from "./React";
 import NodeJs from "./NodeJs";
 import Prisma from "./Prisma";
 import PostgreSQL from "./PostgreSQL";
+import FastAPI from "./FastAPI";
 
 // Skill icon mapping
 const skillIcons: Record<string, React.FC<{ className?: string }>> = {
@@ -19,6 +20,7 @@ const skillIcons: Record<string, React.FC<{ className?: string }>> = {
   "Prisma": Prisma,
   "Prisma ORM": Prisma,
   "PostgreSQL": PostgreSQL,
+  "FastAPI": FastAPI,
 };
 
 // Module-level cache: deduplicate server action calls across all cards & StrictMode double-invocations

@@ -30,6 +30,7 @@ import NextJs from "@/Components/NextJS";
 import NodeJs from "@/Components/NodeJs";
 import ReactLogo from "@/Components/React";
 import PostgreSQL from "@/Components/PostgreSQL";
+import FastAPI from "@/Components/FastAPI";
 
 // Animated icons
 import { GithubIcon, type GithubIconHandle } from "@/Components/ui/github";
@@ -304,8 +305,8 @@ export default function Home() {
                 <h2 className="text-3xl font-bold text-neutral-900 dark:text-white leading-tight">
                   About me.
                 </h2>
-                <div className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-lg">
-                   {PORTFOLIO_CONTENT.personal.bio.split(/(TypeScript|React|Next\.js|Node\.js|PostgreSQL|LLM APIs|RAG|FastAPI)/g).map((part, i) => {
+                 <div className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-lg">
+                   {PORTFOLIO_CONTENT.personal.bio.split(/(TypeScript|React|Next\.js|Node\.js|PostgreSQL|LLM APIs|RAG|FastAPI|AI|web)/g).map((part, i) => {
                     const inlineMap: Record<string, JSX.Element> = {
                       TypeScript: (
                         <span key={`ts-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
@@ -351,9 +352,15 @@ export default function Home() {
                       // ),
                       FastAPI: (
                         <span key={`fastapi-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
-                          <Sparkles className="w-4 h-4" />
+                          <span className="w-4 h-4"><FastAPI /></span>
                           <span>FastAPI</span>
                         </span>
+                      ),
+                      AI: (
+                        <span key={`ai-${i}`} className="font-bold text-neutral-900 dark:text-neutral-100">AI</span>
+                      ),
+                      web: (
+                        <span key={`web-${i}`} className="font-bold text-neutral-900 dark:text-neutral-100">web</span>
                       ),
                     };
                     return inlineMap[part] || <span key={i}>{part}</span>;

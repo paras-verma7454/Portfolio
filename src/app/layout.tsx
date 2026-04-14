@@ -10,20 +10,20 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Paras Verma — Fullstack Developer',
-  description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL — focused on clean UX and real user impact.',
+  description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI — focused on clean UX and real user impact.',
   icons: {
     icon: '/Favicon.png',
   },
   openGraph: {
     title: 'Paras Verma — Fullstack Developer',
-    description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL — focused on clean UX and real user impact.',
+    description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI — focused on clean UX and real user impact.',
     images: ['/image.png'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Paras Verma — Fullstack Developer',
-    description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL — focused on clean UX and real user impact.',
+    description: 'I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI — focused on clean UX and real user impact.',
     images: ['/image.png'],
   },
 };

@@ -68,7 +68,7 @@ export const PORTFOLIO_CONTENT: {
     roles: ["Fullstack Developer.", "AI Engineer.", "Software Engineer."],
     location: "India",
     timezone: "Asia/Kolkata",
-    bio: `I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, PostgreSQL, RAG — focused on clean UX and real user impact.`,
+    bio: `I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI, RAG — focused on clean UX and real user impact.`,
     email: "Parasverma7454@gmail.com",
     availability: "Available for freelance",
     avatar: "/luffy.jpg",
