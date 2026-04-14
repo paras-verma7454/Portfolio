@@ -102,6 +102,22 @@ export const Tooltip = ({
     }
   };
 
+  const handleFocus = (e: React.FocusEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    updateMousePosition(centerX, centerY);
+    setIsVisible(true);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    const nextFocused = e.relatedTarget as Node | null;
+    if (!nextFocused || !e.currentTarget.contains(nextFocused)) {
+      setIsVisible(false);
+    }
+  };
+
   // Keep position updated if tooltips change their size
   useEffect(() => {
     if (isVisible && contentRef.current) {
@@ -120,6 +136,13 @@ export const Tooltip = ({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleClick}
+      onFocusCapture={handleFocus}
+      onBlurCapture={handleBlur}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          setIsVisible(false);
+        }
+      }}
       onMouseEnter={supportsPointerEvents ? undefined : (e) => {
         setIsVisible(true);
         updateMousePosition(e.clientX, e.clientY);

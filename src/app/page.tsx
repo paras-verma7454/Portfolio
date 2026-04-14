@@ -23,6 +23,7 @@ import ProjectCard from "@/Components/ProjectCard";
 import ContributionItem from "@/Components/ContributionItem";
 import LiveClock from "@/Components/LiveClock";
 import Hero from "@/Components/Hero";
+import { Tooltip } from "@/Components/ui/tooltip-card";
 
 import TypeScript from "@/Components/Typescript";
 import NextJs from "@/Components/NextJS";
@@ -48,6 +49,31 @@ type GroupedContribution = {
   owner: string;
   contributions: Contribution[];
   prCount: number;
+};
+
+type TechLogo = {
+  src: string;
+  alt: string;
+};
+
+const TECH_STACK_LOGOS: Record<string, TechLogo> = {
+  "Next.js": { src: "https://cdn.simpleicons.org/nextdotjs", alt: "Next.js logo" },
+  React: { src: "https://cdn.simpleicons.org/react", alt: "React logo" },
+  TypeScript: { src: "https://cdn.simpleicons.org/typescript", alt: "TypeScript logo" },
+  JavaScript: { src: "https://cdn.simpleicons.org/javascript", alt: "JavaScript logo" },
+  "Node.js": { src: "https://cdn.simpleicons.org/nodedotjs", alt: "Node.js logo" },
+  "Prisma ORM": { src: "https://cdn.simpleicons.org/prisma", alt: "Prisma logo" },
+  "Drizzle ORM": { src: "https://cdn.simpleicons.org/drizzle", alt: "Drizzle ORM logo" },
+  Python: { src: "https://cdn.simpleicons.org/python", alt: "Python logo" },
+  FastAPI: { src: "https://cdn.simpleicons.org/fastapi", alt: "FastAPI logo" },
+  langchain: { src: "https://cdn.simpleicons.org/langchain", alt: "LangChain logo" },
+  Redis: { src: "https://cdn.simpleicons.org/redis", alt: "Redis logo" },
+  Docker: { src: "https://cdn.simpleicons.org/docker", alt: "Docker logo" },
+  GCP: { src: "https://cdn.simpleicons.org/googlecloud", alt: "Google Cloud logo" },
+  PostgreSQL: { src: "https://cdn.simpleicons.org/postgresql", alt: "PostgreSQL logo" },
+  MongoDB: { src: "https://cdn.simpleicons.org/mongodb", alt: "MongoDB logo" },
+  "Claude Code": { src: "https://cdn.simpleicons.org/claude", alt: "Anthropic logo" },
+  Codex: { src: "https://cdn.simpleicons.org/openai", alt: "OpenAI logo" },
 };
 
 const groupContributionsByRepo = (
@@ -360,19 +386,49 @@ export default function Home() {
               <div className="flex-1 relative overflow-hidden mask-linear-gradient">
                 <div className="space-y-2">
                   {PORTFOLIO_CONTENT.skills.map((skill, i) => (
-                    <motion.div
+                    <Tooltip
                       key={skill}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.4 + i * 0.05 }}
-                      className="flex items-center justify-between group/skill cursor-pointer"
+                      content={
+                        <div className="w-44 rounded-xl border border-neutral-200 dark:border-white/10 bg-white/95 dark:bg-neutral-900/95 p-3 shadow-xl backdrop-blur-md">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-white/10 flex items-center justify-center">
+                              {TECH_STACK_LOGOS[skill] ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={TECH_STACK_LOGOS[skill].src}
+                                  alt={TECH_STACK_LOGOS[skill].alt}
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5 object-contain"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              ) : (
+                                <Terminal size={16} className="text-neutral-600 dark:text-neutral-300" />
+                              )}
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400">Tech Stack</p>
+                              <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{skill}</p>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                      containerClassName="block"
                     >
-                      <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400 group-hover/skill:text-black dark:group-hover/skill:text-white transition-colors">
-                        {skill}
-                      </span>
-                      <div className="h-px flex-1 mx-3 bg-neutral-300 dark:bg-neutral-800 group-hover/skill:bg-neutral-400 dark:group-hover/skill:bg-neutral-700 transition-colors" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-700 group-hover/skill:bg-blue-500 transition-colors" />
-                    </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 + i * 0.05 }}
+                        className="flex items-center justify-between group/skill cursor-pointer"
+                      >
+                        <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400 group-hover/skill:text-black dark:group-hover/skill:text-white transition-colors">
+                          {skill}
+                        </span>
+                        <div className="h-px flex-1 mx-3 bg-neutral-300 dark:bg-neutral-800 group-hover/skill:bg-neutral-400 dark:group-hover/skill:bg-neutral-700 transition-colors" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-700 group-hover/skill:bg-blue-500 transition-colors" />
+                      </motion.div>
+                    </Tooltip>
                   ))}
                 </div>
               </div>
