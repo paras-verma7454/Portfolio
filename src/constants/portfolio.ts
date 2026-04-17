@@ -38,6 +38,7 @@ export interface Experience {
   period: string;
   startDate: string;
   description: string;
+  points?: string[];
   linkedin: string;
 }
 
@@ -53,10 +54,17 @@ export interface Project {
 }
 
 
+export interface SkillCategory {
+  label: string;
+  skills: string[];
+}
+
+
 export const PORTFOLIO_CONTENT: {
   personal: Personal;
   socials: Social[];
-  skills: string[];
+  // skills: string[];
+  skillCategories: SkillCategory[];
   experience: Experience[];
   projects: Project[];
   contributions: Contribution[];
@@ -87,26 +95,44 @@ export const PORTFOLIO_CONTENT: {
     { icon: TwitterIcon, href: "https://x.com/ParasVerma7454", label: "Twitter" },
     { icon: SendIcon, href: "mailto:parasverma7454@gmail.com", label: "Email" },
   ],
-  skills: [
-    "Next.js",
-    "FastAPI",
-    "Python",
-    "React",
-    "TypeScript",
-    "JavaScript",
-    "Node.js",
-    "Prisma ORM",
-    "RAG",
-    "Vector Databases",
-    "langChain",
-    "langGraph",
-    "Redis",
-    "Docker",
-    "GCP",
-    "AWS",
-    "PostgreSQL",
-    "MongoDB",
-    "Claude Code",
+  // skills: [
+  //   "Next.js",
+  //   "FastAPI",
+  //   "Python",
+  //   "React",
+  //   "TypeScript",
+  //   "JavaScript",
+  //   "Node.js",
+  //   "Prisma ORM",
+  //   "RAG",
+  //   "Vector Databases",
+  //   "langChain",
+  //   "langGraph",
+  //   "Redis",
+  //   "Docker",
+  //   "GCP",
+  //   "AWS",
+  //   "PostgreSQL",
+  //   "MongoDB",
+  //   "Claude Code",
+  // ],
+  skillCategories: [
+    {
+      label: "Frontend",
+      skills: ["Next.js", "React", "TypeScript", "JavaScript"],
+    },
+    {
+      label: "Backend",
+      skills: ["FastAPI", "Node.js","Python","SQLAlchemy", "Prisma ORM", "PostgreSQL", "MongoDB", "Redis","Docker", "GCP", "AWS"],
+    },
+    {
+      label: "AI & Agents",
+      skills: ["RAG", "Qdrant", "langChain", "langGraph", "Claude Code"],
+    },
+    // {
+    //   label: "Infrastructure",
+    //   skills: [ ],
+    // },
   ],
   experience: [
     {
@@ -115,7 +141,12 @@ export const PORTFOLIO_CONTENT: {
       role: "SDE Intern",
       period: "Nov 2025 - Present",
       startDate: "2025-11-01",
-      description: "",
+      description: "Working as a full-stack developer building scalable web applications and backend systems.",
+      points: [
+        "Built a multi-role CRM system with RBAC, enabling structured workflows.",
+        "Built a weather forecast platform using IMD datasets for real-time data delivery.",
+        "Contributing to end-to-end feature development across frontend and backend."
+      ],
       linkedin: "https://linkedin.com/company/jsparkai",
     },
   ],

@@ -65,10 +65,12 @@ const TECH_STACK_LOGOS: Record<string, TechLogo> = {
   "Node.js": { src: "https://cdn.simpleicons.org/nodedotjs", alt: "Node.js logo" },
   "Prisma ORM": { src: "https://cdn.simpleicons.org/prisma", alt: "Prisma logo" },
   "Drizzle ORM": { src: "https://cdn.simpleicons.org/drizzle", alt: "Drizzle ORM logo" },
+  "SQLAlchemy": { src: "https://cdn.simpleicons.org/sqlalchemy", alt: "SQLAlchemy logo" },
   Python: { src: "https://cdn.simpleicons.org/python", alt: "Python logo" },
   FastAPI: { src: "https://cdn.simpleicons.org/fastapi", alt: "FastAPI logo" },
   langChain: { src: "https://cdn.simpleicons.org/langchain", alt: "LangChain logo" },
   langGraph: { src: "https://cdn.simpleicons.org/langgraph", alt: "LangGraph logo" },
+  Qdrant: { src: "https://cdn.simpleicons.org/qdrant", alt: "Qdrant logo" },
   Redis: { src: "https://cdn.simpleicons.org/redis", alt: "Redis logo" },
   Docker: { src: "https://cdn.simpleicons.org/docker", alt: "Docker logo" },
   GCP: { src: "https://cdn.simpleicons.org/googlecloud", alt: "Google Cloud logo" },
@@ -110,7 +112,7 @@ const groupContributionsByRepo = (
 };
 
 // Socials Card Component with animated icons
-function SocialsCard() {
+function SocialsCard({ colSpan, rowSpan }: { colSpan?: string; rowSpan?: string }) {
   const githubRef = useRef<GithubIconHandle>(null);
   const linkedinRef = useRef<LinkedinIconHandle>(null);
   const twitterRef = useRef<TwitterIconHandle>(null);
@@ -151,7 +153,7 @@ function SocialsCard() {
   };
 
   return (
-    <BentoCard delay={0.2}>
+    <BentoCard colSpan={colSpan} rowSpan={rowSpan} delay={0.2}>
       <div className="flex flex-col justify-center h-full">
         <div className="grid grid-cols-2 gap-3">
           {PORTFOLIO_CONTENT.socials.map((link, i) => (
@@ -177,11 +179,11 @@ function SocialsCard() {
 }
 
 // Location Card Component with animated MapPin icon
-function LocationCard() {
+function LocationCard({ colSpan, rowSpan }: { colSpan?: string; rowSpan?: string }) {
   const mapPinRef = useRef<MapPinIconHandle>(null);
 
   return (
-    <BentoCard delay={0.1}>
+    <BentoCard colSpan={colSpan} rowSpan={rowSpan} delay={0.1}>
       <div
         className="flex flex-col items-center justify-center text-center space-y-3 h-full"
         onMouseEnter={() => mapPinRef.current?.startAnimation()}
@@ -217,6 +219,7 @@ function LocationCard() {
 export default function Home() {
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
+  const heroSendRef = useRef<SendIconHandle>(null);
 
   const currentRole = PORTFOLIO_CONTENT.experience[0];
 
@@ -286,74 +289,69 @@ export default function Home() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/5 dark:bg-purple-900/10 blur-[60px] gpu" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         {/* === HERO SECTION === */}
         <Hero />
 
         {/* === BENTO GRID LAYOUT === */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto md:auto-rows-[220px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-auto md:auto-rows-[220px]">
           {/* 1. Hero / About */}
-          <BentoCard colSpan="md:col-span-2" rowSpan="md:row-span-2" delay={0}>
+          <BentoCard colSpan="md:col-span-2 lg:col-span-2" rowSpan="md:row-span-2" delay={0}>
             <div className="flex flex-col justify-between h-full">
-              <div className="space-y-4">
+              <div className="space-y-6 md:space-y-8">
+                {/* Avatar */}
                 <Image
-                  className="w-40 h-40 rounded-2xl"
+                  className="w-32 h-32 md:w-36 md:h-36 rounded-2xl object-cover shadow-sm bg-neutral-100 dark:bg-neutral-800 border border-transparent dark:border-white/5"
                   src={PORTFOLIO_CONTENT.personal.avatar}
                   alt="Avatar"
-                  width={160}
-                  height={160}
+                  width={144}
+                  height={144}
+                  priority
                 />
-                <h2 className="text-3xl font-bold text-neutral-900 dark:text-white leading-tight">
-                  About me.
-                </h2>
-                 <div className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-lg">
+                
+                {/* Text Content */}
+                <div className="space-y-4">
+                  <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white leading-tight">
+                    About me.
+                  </h2>
+                 <div className="text-neutral-700 dark:text-neutral-300 text-[15px] md:text-[17px] leading-loose w-full max-w-none">
                    {PORTFOLIO_CONTENT.personal.bio.split(/(TypeScript|React|Next\.js|Node\.js|PostgreSQL|LLM APIs|RAG|FastAPI|AI|web)/g).map((part, i) => {
+                    const pillClass = "inline-flex items-center text-sm font-semibold bg-neutral-100 dark:bg-white/10 border border-neutral-200 dark:border-white/20 py-1 px-2.5 rounded-lg text-black dark:text-white align-baseline shadow-xs mx-0.5";
+                    
                     const inlineMap: Record<string, JSX.Element> = {
                       TypeScript: (
-                        <span key={`ts-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
-                          <span className="w-4 h-4"><TypeScript /></span>
+                        <span key={`ts-${i}`} className={pillClass}>
+                          <span className="w-4 h-4 mr-1.5"><TypeScript /></span>
                           <span>TypeScript</span>
                         </span>
                       ),
                       React: (
-                        <span key={`react-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2 align-middle">
-                          <span className="w-4 h-4"><ReactLogo /></span>
+                        <span key={`react-${i}`} className={pillClass}>
+                          <span className="w-4 h-4 mr-1.5"><ReactLogo /></span>
                           <span>React</span>
                         </span>
                       ),
                       "Next.js": (
-                        <span key={`next-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 gap-1 my-2 align-middle">
-                          <span className="w-4 h-4"><NextJs /></span>
+                        <span key={`next-${i}`} className={pillClass}>
+                          <span className="w-4 h-4 mr-1.5"><NextJs /></span>
                           <span>Next.js</span>
                         </span>
                       ),
                       "Node.js": (
-                        <span key={`node-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-2 gap-1 align-middle">
-                          <span className="w-4 h-4"><NodeJs /></span>
+                        <span key={`node-${i}`} className={pillClass}>
+                          <span className="w-4 h-4 mr-1.5"><NodeJs /></span>
                           <span>Node.js</span>
                         </span>
                       ),
                       PostgreSQL: (
-                        <span key={`pg-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
-                          <span className="w-4 h-4"><PostgreSQL /></span>
+                        <span key={`pg-${i}`} className={pillClass}>
+                          <span className="w-4 h-4 mr-1.5"><PostgreSQL /></span>
                           <span>PostgreSQL</span>
                         </span>
                       ),
-                      // "LLM APIs": (
-                      //   <span key={`llm-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
-                      //     <Sparkles className="w-4 h-4" />
-                      //     <span>LLM APIs</span>
-                      //   </span>
-                      // ),
-                      // RAG: (
-                      //   <span key={`rag-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
-                      //     <Sparkles className="w-4 h-4" />
-                      //     <span>RAG</span>
-                      //   </span>
-                      // ),
                       FastAPI: (
-                        <span key={`fastapi-${i}`} className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 my-1 gap-1 align-middle">
-                          <span className="w-4 h-4"><FastAPI /></span>
+                        <span key={`fastapi-${i}`} className={pillClass}>
+                          <span className="w-4 h-4 mr-1.5"><FastAPI /></span>
                           <span>FastAPI</span>
                         </span>
                       ),
@@ -364,160 +362,199 @@ export default function Home() {
                         <span key={`web-${i}`} className="font-bold text-neutral-900 dark:text-neutral-100">web</span>
                       ),
                     };
+                    
                     return inlineMap[part] || <span key={i}>{part}</span>;
                   })}
                 </div>
               </div>
-              <div className="flex gap-3">
-                <a
-                  href={`mailto:${PORTFOLIO_CONTENT.personal.email}`}
-                  className="inline-flex items-center text-sm bg-black/5 dark:bg-white/15 border border-dashed dark:border-white/30 border-black/20 py-1 px-2 rounded-md skill-inner-shadow self-end text-black dark:text-white mx-1 mt-3 gap-1"
-                >
-                  {PORTFOLIO_CONTENT.personal.email}
-                </a>
-              </div>
             </div>
-          </BentoCard>
 
-          {/* 2. Map / Location */}
-          <LocationCard />
+            {/* Actions */}
+            <div className="flex flex-wrap gap-3 pt-4 md:pt-6 w-full mt-auto">
+              <a
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PORTFOLIO_CONTENT.personal.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-[15px] font-bold bg-neutral-900 dark:bg-white text-white dark:text-black py-2.5 px-5 rounded-xl hover:scale-105 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all gap-2 shadow-sm group/send"
+                onMouseEnter={() => heroSendRef.current?.startAnimation()}
+                onMouseLeave={() => heroSendRef.current?.stopAnimation()}
+              >
+                <SendIcon ref={heroSendRef} size={16} />
+                Let's Connect
+              </a>
+            </div>
+          </div>
+        </BentoCard>
 
-           {/* 3. Tech Stack */}
-          <BentoCard rowSpan="md:row-span-3" delay={0.3}>
+          {/* 4. Tech Stack (Vertical Sidebar) */}
+          <BentoCard colSpan="md:col-span-1 lg:col-span-1" rowSpan="row-span-3" delay={0.3}>
             <div className="flex flex-col h-full">
-              <div className="mb-4 flex items-center gap-2">
+              <div className="mb-4 flex items-center gap-2 shrink-0">
                 <Terminal size={18} className="text-neutral-600 dark:text-neutral-400" />
                 <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-600 dark:text-neutral-500">
                   Skills & Stack
                 </h3>
               </div>
-              <div className="flex-1 relative overflow-hidden mask-linear-gradient">
-                <div className="space-y-2">
-                  {PORTFOLIO_CONTENT.skills.map((skill, i) => (
-                    <Tooltip
-                      key={skill}
-                      content={
-                        <div className="w-44 rounded-xl border border-neutral-200 dark:border-white/10 bg-white/95 dark:bg-neutral-900/95 p-3 shadow-xl backdrop-blur-md">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-white/10 flex items-center justify-center">
-                              {TECH_STACK_LOGOS[skill] ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  src={TECH_STACK_LOGOS[skill].src}
-                                  alt={TECH_STACK_LOGOS[skill].alt}
-                                  width={20}
-                                  height={20}
-                                  className="w-5 h-5 object-contain"
-                                  loading="lazy"
-                                  decoding="async"
-                                />
-                              ) : (
-                                <Terminal size={16} className="text-neutral-600 dark:text-neutral-300" />
-                              )}
+              <div className="flex-1 relative overflow-y-auto min-h-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div className="space-y-6 pt-1 pb-4">
+                  {PORTFOLIO_CONTENT.skillCategories.map((group, gIdx) => (
+                    <div key={group.label} className="space-y-3">
+                      <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 px-1">
+                        {group.label}
+                      </h4>
+                      <div className="flex flex-wrap content-start gap-2">
+                        {group.skills.map((skill, i) => (
+                          <motion.div
+                            key={skill}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.05 + (gIdx * 0.1) + (i * 0.02) }}
+                          >
+                            <div className="text-[12px] md:text-[13px] font-medium bg-neutral-100/50 dark:bg-white/5 border border-neutral-200 dark:border-white/10 py-1.5 px-3 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-blue-50/50 dark:hover:bg-blue-500/10 hover:border-blue-500/50 transition-all cursor-pointer flex items-center gap-2 group/skill">
+                              <div className="w-4 h-4 flex items-center justify-center shrink-0">
+                                {TECH_STACK_LOGOS[skill] ? (
+                                  <img
+                                    src={TECH_STACK_LOGOS[skill].src}
+                                    alt={TECH_STACK_LOGOS[skill].alt}
+                                    width={16}
+                                    height={16}
+                                    className="w-4 h-4 object-contain transition-all duration-300 group-hover/skill:scale-110"
+                                  />
+                                ) : (
+                                  <Terminal size={14} className="text-neutral-500" />
+                                )}
+                              </div>
+                              {skill}
                             </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400">Tech Stack</p>
-                              <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{skill}</p>
-                            </div>
-                          </div>
-                        </div>
-                      }
-                      containerClassName="block"
-                    >
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 + i * 0.05 }}
-                        className="flex items-center justify-between group/skill cursor-pointer"
-                      >
-                        <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400 group-hover/skill:text-black dark:group-hover/skill:text-white transition-colors">
-                          {skill}
-                        </span>
-                        <div className="h-px flex-1 mx-3 bg-neutral-300 dark:bg-neutral-800 group-hover/skill:bg-neutral-400 dark:group-hover/skill:bg-neutral-700 transition-colors" />
-                        <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-700 group-hover/skill:bg-blue-500 transition-colors" />
-                      </motion.div>
-                    </Tooltip>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
           </BentoCard>
 
-          {/* 4. Socials */}
-          <SocialsCard />
+          {/* 2. Map / Location */}
+          <LocationCard colSpan="md:col-span-1 lg:col-span-1" rowSpan="md:row-span-1" />
 
-         
+          {/* 3. Socials */}
+          <SocialsCard colSpan="md:col-span-1 lg:col-span-1" rowSpan="md:row-span-1" />
+        </div>
 
-          {/* 5. Quote */}
-          <BentoCard colSpan="md:col-span-1" className="bg-neutral-100 dark:bg-white/5" delay={0.4}>
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <p className="text-xl font-medium text-neutral-600 dark:text-neutral-400 italic">
-                  &quot;Code is read much more often than it is written.&quot;
-                </p>
-                <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-500">
-                  — Guido van Rossum
-                </p>
-              </div>
+        {/* === WORK EXPERIENCE SECTION === */}
+        <div className="mt-16 w-full cv-auto">
+          <div className="mb-8 px-4 md:px-6">
+            <div className="flex items-center gap-3">
+              <Briefcase className="text-blue-500" size={24} />
+              <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Experience</h2>
             </div>
-          </BentoCard>
+          </div>
 
-          {/* 6. Experience */}
-          <BentoCard
-            colSpan="md:col-span-2"
-            rowSpan={PORTFOLIO_CONTENT.experience.length > 1 ? "md:row-span-2" : "md:row-span-1"}
-            className="relative overflow-hidden"
-            delay={0.5}
-          >
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <Briefcase size={120} />
-            </div>
-            <div className="relative z-10 h-full flex flex-col">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="text-yellow-500 dark:text-yellow-400" size={18} />
-                <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-600 dark:text-neutral-500">
-                  Experience
-                </h3>
-              </div>
-              <div className="space-y-4 overflow-y-auto px-3 pb-6 flex-1 min-h-0 mask-linear-gradient-bottom [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-neutral-400 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-700 [&::-webkit-scrollbar-thumb]:rounded-full">
-                {PORTFOLIO_CONTENT.experience.map((role, idx) => (
-                  <div key={idx} className="relative pl-4 border-l border-neutral-200 dark:border-white/10 last:mb-0">
-                    <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-4 ring-white dark:ring-neutral-900 animate-pulse" />
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1">
-                      <div>
-                        <h4 className="text-lg font-bold text-neutral-900 dark:text-white">{role.role}</h4>
-                        <div className="flex items-center gap-2 text-blue-500 dark:text-blue-400 font-medium text-sm">
-                          <span>{role.company}</span>
-                          <div className="flex gap-2">
+          <div className="relative sm:mx-6 md:mx-12 lg:mx-20 border-l border-neutral-200 dark:border-white/10 ml-6 md:ml-12 lg:ml-20">
+            {PORTFOLIO_CONTENT.experience.map((role, idx) => {
+               const isPresent = idx === 0;
+               return (
+                 <div key={idx} className={`relative pl-6 sm:pl-8 py-6 group ${isPresent ? '' : 'opacity-90 hover:opacity-100 transition-opacity'}`}>
+                   {/* Timeline Node */}
+                   <motion.div 
+                     initial={{ scale: 0, opacity: 0 }}
+                     whileInView={{ scale: 1, opacity: 1 }}
+                     viewport={{ once: true, margin: "-50px" }}
+                     transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
+                     className={`absolute -left-[5px] top-8 w-2.5 h-2.5 rounded-full ring-4 ring-neutral-50 dark:ring-neutral-950 transition-colors z-10 ${isPresent ? 'bg-blue-500 dark:bg-blue-400' : 'bg-neutral-300 dark:bg-neutral-600 group-hover:bg-neutral-400 dark:group-hover:bg-neutral-500'}`} 
+                   />
+                   
+                   {/* Animated Ping for Current Role */}
+                   {isPresent && (
+                     <motion.div 
+                       initial={{ opacity: 0 }}
+                       whileInView={{ opacity: 0.75 }}
+                       viewport={{ once: true, margin: "-50px" }}
+                       transition={{ delay: 0.4 }}
+                       className="absolute -left-[5px] top-8 w-2.5 h-2.5 rounded-full bg-blue-500 dark:bg-blue-400 animate-ping" 
+                     />
+                   )}
+                   
+                   <motion.div 
+                     initial={{ opacity: 0, x: -20 }}
+                     whileInView={{ opacity: 1, x: 0 }}
+                     viewport={{ once: true, margin: "-50px" }}
+                     transition={{ duration: 0.4, delay: 0.2 }}
+                     className="flex flex-col gap-1"
+                   >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                         <h3 className={`text-xl font-bold ${isPresent ? 'text-neutral-900 dark:text-white' : 'text-neutral-700 dark:text-neutral-300'}`}>{role.role}</h3>
+                         <p className={`text-sm font-medium ${isPresent ? 'text-blue-600 dark:text-blue-400' : 'text-neutral-500 dark:text-neutral-400'}`}>{role.period}</p>
+                      </div>
+                      
+                      <div className="flex flex-wrap items-center gap-3 mt-1">
+                        <span className={`text-base font-semibold ${isPresent ? 'text-blue-600 dark:text-blue-400' : 'text-neutral-600 dark:text-neutral-400'}`}>{role.company}</span>
+                        
+                        {(role.companyUrl || role.linkedin) && (
+                          <div className="flex items-center gap-2">
                             {role.companyUrl && (
-                              <a href={role.companyUrl} target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 text-gray-700 dark:text-gray-200 transition-colors">
-                                <Globe size={12} />
+                              <a href={role.companyUrl} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                                <Globe size={14} />
                               </a>
                             )}
                             {role.linkedin && (
-                              <a href={role.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 text-gray-700 dark:text-gray-200 transition-colors">
-                                <Linkedin size={12} />
+                              <a href={role.linkedin} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                                <Linkedin size={14} />
                               </a>
                             )}
                           </div>
-                        </div>
-                      </div>
-                      <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium sm:text-right mt-1 sm:mt-0">
-                        {role.period}
-                      </span>
-                    </div>
-                    {role.description && <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-2 max-w-lg">{role.description}</p>}
-                    {idx === 0 && (
-                      <div className="inline-flex items-center text-[10px] bg-neutral-200 dark:bg-white/10 border border-neutral-300 dark:border-white/20 py-1 px-2 rounded-md text-neutral-900 dark:text-white gap-1 mt-2">
-                        Current Tenure: {expDuration}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </BentoCard>
+                        )}
 
+                        {isPresent && (
+                           <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wider bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 uppercase ring-1 ring-blue-500/20">
+                             Current
+                           </span>
+                        )}
+                      </div>
+                   </motion.div>
+
+                 <motion.div 
+                   initial={{ opacity: 0, y: 10 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   viewport={{ once: true, margin: "-50px" }}
+                   transition={{ duration: 0.4, delay: 0.3 }}
+                   className="mt-4"
+                 >
+                    {role.description && (
+                      <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-[15px] mb-4">
+                        {role.description}
+                      </p>
+                    )}
+                    
+                    {role.points && role.points.length > 0 && (
+                      <div className="mt-2 space-y-3">
+                         {role.points.map((point, pIdx) => (
+                           <motion.div 
+                             initial={{ opacity: 0, x: -10 }}
+                             whileInView={{ opacity: 1, x: 0 }}
+                             viewport={{ once: true, margin: "-50px" }}
+                             transition={{ duration: 0.3, delay: 0.4 + (pIdx * 0.1) }}
+                             key={pIdx} 
+                             className="flex items-start gap-3 group/point"
+                           >
+                             <div className="w-5 h-5 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-white/5 flex items-center justify-center shrink-0 mt-0.5 group-hover/point:border-blue-500/30 group-hover/point:bg-blue-50 dark:group-hover/point:bg-blue-500/10 transition-colors shadow-sm">
+                               <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-500 group-hover/point:bg-blue-500 dark:group-hover/point:bg-blue-400 transition-colors" />
+                             </div>
+                             <span className="text-sm md:text-[15px] text-neutral-600 dark:text-neutral-400 group-hover/point:text-neutral-900 dark:group-hover/point:text-neutral-200 transition-colors block flex-1 leading-relaxed">
+                               {point}
+                             </span>
+                           </motion.div>
+                         ))}
+                      </div>
+                     )}
+                 </motion.div>
+               </div>
+             );
+            })}
+          </div>
         </div>
 
         {/* === FEATURED PROJECTS (separate from bento grid for stable ordering) === */}
