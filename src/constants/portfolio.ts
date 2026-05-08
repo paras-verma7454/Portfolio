@@ -246,21 +246,21 @@ export const PORTFOLIO_CONTENT: {
       status:"merged"
     },
     {
-      prUrl:"https://github.com/OssiumOfficial/ossium/pull/17",
+      prUrl:"https://github.com/MxCorpIn/ossium/pull/17",
       title:"feat: Implement Smart Alerts for premium users",
       private:true,
       url:"https://www.linkedin.com/posts/paras-vermaa_buildinpublic-saas-developerexperience-activity-7413798950589259776-NDcn?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
       status:"merged"
     },
     {
-      prUrl:"https://github.com/OssiumOfficial/ossium/pull/3",
+      prUrl:"https://github.com/MxCorpIn/ossium/pull/3",
       title:"Feat: overhaul bounties page, navigation, and language detection",
       private:true,
       url:"https://www.linkedin.com/posts/paras-vermaa_opensource-webdevelopment-frontend-activity-7409948094131253248-mnej?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
       status:"merged"
     },
     {
-      prUrl:"https://github.com/OssiumOfficial/ossium/pull/9",
+      prUrl:"https://github.com/MxCorpIn/ossium/pull/9",
       title:"feat: Improve GSoC and Issues UIs",
       private:true,
       status:"merged"
