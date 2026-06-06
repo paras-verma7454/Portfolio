@@ -51,20 +51,45 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     async function fetchImage() {
       if (!href) return;
 
-      const cacheKey = `${href}|${github ?? ""}`;
+      const cacheKey = `og-image:${href}|${github ?? ""}`;
 
-      // Return immediately if already cached
+      // 1. Check in-memory cache first
       if (ogImageCache.has(cacheKey)) {
         if (isMounted) setOgImage(ogImageCache.get(cacheKey) ?? null);
         return;
       }
 
-      // Deduplicate in-flight requests (handles StrictMode double-fire)
+      // 2. Check localStorage cache
+      try {
+        const cached = localStorage.getItem(cacheKey);
+        if (cached !== null) {
+          const parsed = JSON.parse(cached) as { url: string | null; expiry: number };
+          if (parsed.expiry > Date.now()) {
+            ogImageCache.set(cacheKey, parsed.url);
+            if (isMounted) setOgImage(parsed.url);
+            return;
+          } else {
+            localStorage.removeItem(cacheKey);
+          }
+        }
+      } catch (e) {
+        console.warn("Failed to read from localStorage", e);
+      }
+
+      // 3. Fallback to server action
       let pending = ogImagePending.get(cacheKey);
       if (!pending) {
         pending = getOgImage(href, github).then((result) => {
           ogImageCache.set(cacheKey, result);
           ogImagePending.delete(cacheKey);
+          
+          try {
+            const expiry = Date.now() + 7 * 24 * 60 * 60 * 1000; // Cache for 7 days
+            localStorage.setItem(cacheKey, JSON.stringify({ url: result, expiry }));
+          } catch (e) {
+            console.warn("Failed to write to localStorage", e);
+          }
+          
           return result;
         });
         ogImagePending.set(cacheKey, pending);

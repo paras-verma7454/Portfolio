@@ -2,7 +2,7 @@
 
 import { useState, useEffect, type JSX, lazy, Suspense, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
   Linkedin,
@@ -219,6 +219,7 @@ function LocationCard({ colSpan, rowSpan }: { colSpan?: string; rowSpan?: string
 export default function Home() {
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const heroSendRef = useRef<SendIconHandle>(null);
 
   const currentRole = PORTFOLIO_CONTENT.experience[0];
@@ -558,7 +559,7 @@ export default function Home() {
         </div>
 
         {/* === FEATURED PROJECTS (separate from bento grid for stable ordering) === */}
-        <div className="mt-10 w-full pt-5">
+        <div id="projects" className="mt-10 w-full pt-5 scroll-mt-20">
           <div className="mb-6 px-1 md:px-2">
             <div className="flex items-center gap-3">
               <BookOpen className="text-blue-500" size={24} />
@@ -568,13 +569,66 @@ export default function Home() {
               Showcasing my most ambitious full-stack and AI applications.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PORTFOLIO_CONTENT.projects.map((project, index) => (
-              <BentoCard key={project.title} delay={0.7 + index * 0.05}>
-                <ProjectCard project={project} />
-              </BentoCard>
-            ))}
+          <div className="relative">
+            <motion.div 
+              initial={false}
+              animate={{ height: showAllProjects ? "auto" : 340 }}
+              transition={{ type: "spring", stiffness: 100, damping: 22 }}
+              className="overflow-hidden relative"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {PORTFOLIO_CONTENT.projects.map((project, index) => (
+                  <BentoCard key={project.title} delay={0.7 + index * 0.05}>
+                    <ProjectCard project={project} />
+                  </BentoCard>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Fold Gradient Overlay & Show More Button */}
+            <AnimatePresence>
+              {!showAllProjects && (
+                <motion.div 
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute bottom-0 left-0 right-0 flex items-end justify-center pb-4 bg-gradient-to-t from-neutral-50 via-neutral-50/95 to-transparent dark:from-neutral-950 dark:via-neutral-950/95 z-20 h-32 pointer-events-none"
+                >
+                  <button
+                    onClick={() => setShowAllProjects(true)}
+                    className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md border border-neutral-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 font-semibold text-sm shadow-md hover:shadow-lg hover:bg-white/90 dark:hover:bg-neutral-900/90 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto"
+                  >
+                    <span>Show More Projects</span>
+                    <ChevronDown size={16} className="text-neutral-500 group-hover/btn:text-blue-500 dark:group-hover/btn:text-blue-400 group-hover/btn:translate-y-0.5 transition-all duration-300" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+
+          {/* Show Less Button (only visible when expanded) */}
+          <AnimatePresence>
+            {showAllProjects && (
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="flex justify-center mt-6"
+              >
+                <button
+                  onClick={() => {
+                    setShowAllProjects(false);
+                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md border border-neutral-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 font-semibold text-sm shadow-md hover:shadow-lg hover:bg-white/90 dark:hover:bg-neutral-900/90 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:scale-105 transition-all duration-300 cursor-pointer"
+                >
+                  <span>Show Less</span>
+                  <ChevronDown size={16} className="rotate-180 text-neutral-500 group-hover/btn:text-blue-500 dark:group-hover/btn:text-blue-400 group-hover/btn:-translate-y-0.5 transition-all duration-300" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* === GITHUB CALENDAR SECTION === */}

@@ -139,7 +139,7 @@ export const PORTFOLIO_CONTENT: {
       company: "Jspark AI",
       companyUrl: "https://jspark.ai",
       role: "SDE Intern",
-      period: "Nov 2025 - Present",
+      period: "Nov 2025 - Jun 2026",
       startDate: "2025-11-01",
       description: "Working as a full-stack developer building scalable web applications and backend systems.",
       points: [

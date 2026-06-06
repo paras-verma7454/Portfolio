@@ -1,50 +1,61 @@
 # Paras Verma — Portfolio
 
-This is the portfolio of Paras Verma, a software engineer and AI engineer based in India (IST).
+This is the portfolio of Paras Verma, a fullstack developer and AI engineer based in India (IST).
 
 ## Summary
-- Builds interactive web applications with clean UI.
-- Primary stack: TypeScript, React, Next.js, Node.js, PostgreSQL.
+- Builds production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI, and RAG.
+- Primary stack: TypeScript, React, Next.js, Node.js, FastAPI, PostgreSQL, RAG.
 - Availability: Available for freelance.
 
 ## Current Experience
-- SDE Intern at Jspark AI (Nov 2025 - Present)
+- SDE Intern at Jspark AI (Nov 2025 - Jun 2026)
 - Company: https://jspark.ai
 
 ## Skills
-Next.js, React, TypeScript, JavaScript, Node.js, Prisma ORM, Supabase, Tailwind CSS, Docker, Redux, Postman, PostgreSQL, MongoDB, Git, GitHub
+- **Frontend**: Next.js, React, TypeScript, JavaScript
+- **Backend**: FastAPI, Node.js, Python, SQLAlchemy, Prisma ORM, PostgreSQL, MongoDB, Redis, Docker, GCP, AWS
+- **AI & Agents**: RAG, Qdrant, langChain, langGraph, Claude Code
 
 ## Featured Projects
-- Review Scope: Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.
+- **Review Scope**: Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.
   - Live: https://reviewscope.luffytaro.me
   - Source: https://github.com/Review-scope/ReviewScope
-- CalMarshal: Streamlined event scheduling platform featuring seamless Google Calendar integration and real-time availability tracking.
+- **Orizen Flow**: Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates with technical precision.
+  - Live: https://orizenflow.luffytaro.me
+  - Source: https://github.com/paras-verma7454/orizenflow
+- **Orizen TUI**: Open-source terminal UI components for Node.js CLI applications. Build beautiful terminal interfaces with a shadcn-style copy workflow.
+  - Live: https://orizen-tui.vercel.app
+  - Source: https://github.com/paras-verma7454/orizen-tui
+- **Paper Mind**: PaperMind is a simple Retrieval-Augmented Generation (RAG) system that lets you chat with PDF documents using modern AI tools.
+  - Live: https://github.com/paras-verma7454/PaperMind
+  - Source: https://github.com/paras-verma7454/PaperMind
+- **CalMarshal**: Streamlined event scheduling platform featuring seamless Google Calendar integration and real-time availability tracking.
   - Live: https://cal-marshal-phi.vercel.app
   - Source: https://github.com/paras-verma7454/CalMarshal
-- Dionysus: Executive AI assistant that automates meeting notes, performs deep code analysis, and enhances developer productivity using LLMs.
+- **Dionysus**: Executive AI assistant that automates meeting notes, performs deep code analysis, and enhances developer productivity using LLMs.
   - Live: https://dionysus-zeta.vercel.app/
   - Source: https://github.com/paras-verma7454/Dionysus
-- Bolt New: Advanced prompt-to-app generator that transforms natural language into production-ready React applications with instant previews.
+- **Bolt New**: Advanced prompt-to-app generator that transforms natural language into production-ready React applications with instant previews.
   - Live: https://bolt-new-olive.vercel.app/
   - Source: https://github.com/paras-verma7454/bolt.new
-- DriveDeck: Dynamic automotive marketplace platform designed for high-performance car trading with integrated management tools.
+- **DriveDeck**: Dynamic automotive marketplace platform designed for high-performance car trading with integrated management tools.
   - Live: https://drive-deck.vercel.app/
   - Source: https://github.com/paras-verma7454/DriveDeck
-- Chat App: Real-time communication platform powered by WebSockets, featuring instant messaging and low-latency data synchronization.
+- **Chat App**: Real-time communication platform powered by WebSockets, featuring instant messaging and low-latency data synchronization.
   - Live: https://github.com/paras-verma7454/chat-app
   - Source: https://github.com/paras-verma7454/chat-app
-- Paytm: Comprehensive fintech solution for digital payments, enabling secure peer-to-peer transfers and robust account management.
+- **Paytm**: Comprehensive fintech solution for digital payments, enabling secure peer-to-peer transfers and robust account management.
   - Live: https://paytm-livid.vercel.app/
   - Source: https://github.com/paras-verma7454/Paytm
-- Medium: Full-featured blogging platform with markdown support, content discovery, and a rich reading experience — built with Hono and Prisma.
+- **Medium**: Full-featured blogging platform with markdown support, content discovery, and a rich reading experience — built with Hono and Prisma.
   - Live: https://medium-kappa-nine.vercel.app/
   - Source: https://github.com/paras-verma7454/Medium
 
 ## Open Source Contributions
 - https://github.com/itshover/itshover/pull/58
-- https://github.com/OssiumOfficial/ossium/pull/17
-- https://github.com/OssiumOfficial/ossium/pull/3
-- https://github.com/OssiumOfficial/ossium/pull/9
+- https://github.com/MxCorpIn/ossium/pull/17
+- https://github.com/MxCorpIn/ossium/pull/3
+- https://github.com/MxCorpIn/ossium/pull/9
 - https://github.com/fastapi/fastapi/pull/14565
 - https://github.com/ig-imanish/mx-icons/pull/9
 
