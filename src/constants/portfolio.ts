@@ -33,13 +33,13 @@ export interface Social {
 
 export interface Experience {
   company: string;
-  companyUrl: string;
+  companyUrl?: string;
   role: string;
   period: string;
   startDate: string;
   description: string;
   points?: string[];
-  linkedin: string;
+  linkedin?: string;
 }
 
 export interface Project {
@@ -137,17 +137,17 @@ export const PORTFOLIO_CONTENT: {
   experience: [
     {
       company: "Jspark AI",
-      companyUrl: "https://jspark.ai",
+      // companyUrl: "https://jspark.ai",
       role: "SDE Intern",
       period: "Nov 2025 - Jun 2026",
       startDate: "2025-11-01",
-      description: "Working as a full-stack developer building scalable web applications and backend systems.",
+      description: "Worked as a full-stack developer building scalable web applications and backend systems.",
       points: [
         "Built a multi-role CRM system with RBAC, enabling structured workflows.",
         "Built a weather forecast platform using IMD datasets for real-time data delivery.",
-        "Contributing to end-to-end feature development across frontend and backend."
+        "Contributed to end-to-end feature development across frontend and backend."
       ],
-      linkedin: "https://linkedin.com/company/jsparkai",
+      // linkedin: "https://linkedin.com/company/jsparkai",
     },
   ],
   projects: [

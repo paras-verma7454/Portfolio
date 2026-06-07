@@ -80,6 +80,22 @@ const TECH_STACK_LOGOS: Record<string, TechLogo> = {
   Codex: { src: "https://cdn.simpleicons.org/openai", alt: "OpenAI logo" },
 };
 
+const HIDDEN_BLOG_MATCHES = [
+  "4a1617798586",
+  "6b88c7941e53",
+  "683fdbd0a8c1",
+  "im-building-a-github-pr-reviewer-that-actually-thinks-not-just-comments",
+  "orizen-flow-an-ai-system-for-evidence-based-hiring",
+  "building-beautiful-cli-experiences-introducing-orizen-tui",
+];
+
+const isHiddenBlog = (post: MediumPost) => {
+  const searchablePostFields = [post.link, post.guid, post.title]
+    .join(" ")
+    .toLowerCase();
+  return HIDDEN_BLOG_MATCHES.some((match) => searchablePostFields.includes(match));
+};
+
 const groupContributionsByRepo = (
   contributions: Contribution[]
 ): GroupedContribution[] => {
@@ -220,6 +236,7 @@ export default function Home() {
   const [blogs, setBlogs] = useState<MediumPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [showAllBlogs, setShowAllBlogs] = useState(false);
   const heroSendRef = useRef<SendIconHandle>(null);
 
   const currentRole = PORTFOLIO_CONTENT.experience[0];
@@ -237,7 +254,11 @@ export default function Home() {
         return response.json() as Promise<{ posts?: MediumPost[] }>;
       })
       .then((data) => {
-        setBlogs(Array.isArray(data.posts) ? data.posts : []);
+        setBlogs(
+          Array.isArray(data.posts)
+            ? data.posts.filter((post) => !isHiddenBlog(post))
+            : []
+        );
       })
       .catch((error) => {
         if ((error as Error).name === "AbortError") return;
@@ -456,7 +477,7 @@ export default function Home() {
 
           <div className="relative sm:mx-6 md:mx-12 lg:mx-20 border-l border-neutral-200 dark:border-white/10 ml-6 md:ml-12 lg:ml-20">
             {PORTFOLIO_CONTENT.experience.map((role, idx) => {
-               const isPresent = idx === 0;
+               const isPresent = /\b(present|current)\b/i.test(role.period);
                return (
                  <div key={idx} className={`relative pl-6 sm:pl-8 py-6 group ${isPresent ? '' : 'opacity-90 hover:opacity-100 transition-opacity'}`}>
                    {/* Timeline Node */}
@@ -592,11 +613,11 @@ export default function Home() {
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute bottom-0 left-0 right-0 flex items-end justify-center pb-4 bg-gradient-to-t from-neutral-50 via-neutral-50/95 to-transparent dark:from-neutral-950 dark:via-neutral-950/95 z-20 h-32 pointer-events-none"
+                  className="absolute bottom-0 left-0 right-0 flex items-end justify-center pb-4 bg-gradient-to-t from-neutral-50 via-neutral-50/95 to-transparent dark:from-neutral-950 dark:via-neutral-950/95 z-20 h-32"
                 >
                   <button
                     onClick={() => setShowAllProjects(true)}
-                    className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md border border-neutral-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 font-semibold text-sm shadow-md hover:shadow-lg hover:bg-white/90 dark:hover:bg-neutral-900/90 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto"
+                    className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md border border-neutral-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 font-semibold text-sm shadow-md hover:shadow-lg hover:bg-white/90 dark:hover:bg-neutral-900/90 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:scale-105 transition-all duration-300 cursor-pointer"
                   >
                     <span>Show More Projects</span>
                     <ChevronDown size={16} className="text-neutral-500 group-hover/btn:text-blue-500 dark:group-hover/btn:text-blue-400 group-hover/btn:translate-y-0.5 transition-all duration-300" />
@@ -692,7 +713,7 @@ export default function Home() {
           <div className="mb-8 px-4 md:px-6">
             <div className="flex items-center gap-3">
               <BookOpen className="text-emerald-500" size={24} />
-              <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Latest Writings</h2>
+              <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Blogs</h2>
             </div>
             <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1">Thought-provoking articles on technology and development.</p>
           </div>
@@ -702,17 +723,69 @@ export default function Home() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
             </div>
           ) : blogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogs.map((post, idx) => (
+            <div className="max-w-4xl mx-auto">
+              <div className="relative">
                 <motion.div
-                  key={post.guid}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * idx }}
+                  initial={false}
+                  animate={{ height: showAllBlogs ? "auto" : 340 }}
+                  transition={{ type: "spring", stiffness: 100, damping: 22 }}
+                  className="overflow-hidden relative"
                 >
-                  <BlogCard post={post} />
+                  <div className="flex flex-col border-t border-neutral-200 dark:border-white/5">
+                    {blogs.map((post, idx) => (
+                      <motion.div
+                        key={post.guid}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 * idx }}
+                      >
+                        <BlogCard post={post} />
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
-              ))}
+
+                {/* Fold Gradient Overlay & Show More Button */}
+                <AnimatePresence>
+                  {!showAllBlogs && (
+                    <motion.div
+                      initial={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute bottom-0 left-0 right-0 flex items-end justify-center pb-4 bg-gradient-to-t from-neutral-50 via-neutral-50/95 to-transparent dark:from-neutral-950 dark:via-neutral-950/95 z-20 h-32 pointer-events-none"
+                    >
+                      <button
+                        onClick={() => setShowAllBlogs(true)}
+                        className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md border border-neutral-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 font-semibold text-sm shadow-md hover:shadow-lg hover:bg-white/90 dark:hover:bg-neutral-900/90 hover:border-emerald-500/50 dark:hover:border-emerald-400/50 hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto"
+                      >
+                        <span>Show More Articles</span>
+                        <ChevronDown size={16} className="text-neutral-500 group-hover/btn:text-emerald-500 dark:group-hover/btn:text-emerald-400 group-hover/btn:translate-y-0.5 transition-all duration-300" />
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Show Less Button */}
+              <AnimatePresence>
+                {showAllBlogs && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 15 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="flex justify-center mt-6"
+                  >
+                    <button
+                      onClick={() => setShowAllBlogs(false)}
+                      className="group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md border border-neutral-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 font-semibold text-sm shadow-md hover:shadow-lg hover:bg-white/90 dark:hover:bg-neutral-900/90 hover:border-emerald-500/50 dark:hover:border-emerald-400/50 hover:scale-105 transition-all duration-300 cursor-pointer"
+                    >
+                      <span>Show Less</span>
+                      <ChevronDown size={16} className="rotate-180 text-neutral-500 group-hover/btn:text-emerald-500 dark:group-hover/btn:text-emerald-400 group-hover/btn:-translate-y-0.5 transition-all duration-300" />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <div className="mx-4 md:mx-6 rounded-2xl border border-neutral-200 dark:border-white/10 bg-white/70 dark:bg-neutral-900/50 p-5 flex flex-col gap-2">
@@ -732,15 +805,15 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <div className="mt-20 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-20 border-t border-neutral-200 dark:border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-neutral-500 text-sm">
             © {new Date().getFullYear()} Paras. All Rights Reserved.
           </p>
-          <div className="flex gap-6 text-sm font-medium text-neutral-400">
+          <div className="flex gap-6 text-sm font-medium text-neutral-500 dark:text-neutral-400">
             {PORTFOLIO_CONTENT.socials
               .filter((s) => s.label !== "Email")
               .map((link) => (
-                <a key={link.label} href={link.href} className="hover:text-white transition-colors">
+                <a key={link.label} href={link.href} className="hover:text-neutral-900 dark:hover:text-white transition-colors">
                   {link.label}
                 </a>
               ))}
