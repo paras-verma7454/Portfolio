@@ -37,7 +37,7 @@ export interface Experience {
   role: string;
   period: string;
   startDate: string;
-  description: string;
+  description?: string;
   points?: string[];
   linkedin?: string;
 }
@@ -138,15 +138,15 @@ export const PORTFOLIO_CONTENT: {
     {
       company: "Jspark AI",
       // companyUrl: "https://jspark.ai",
-      role: "SDE Intern",
+      role: "Software Engineer Intern",
       period: "Nov 2025 - Jun 2026",
       startDate: "2025-11-01",
       description: "Worked as a full-stack developer building scalable web applications and backend systems.",
-      points: [
-        "Built a multi-role CRM system with RBAC, enabling structured workflows.",
-        "Built a weather forecast platform using IMD datasets for real-time data delivery.",
-        "Contributed to end-to-end feature development across frontend and backend."
-      ],
+      // points: [
+      //   "Built a multi-role CRM system with RBAC, enabling structured workflows.",
+      //   "Built a weather forecast platform using IMD datasets for real-time data delivery.",
+      //   "Contributed to end-to-end feature development across frontend and backend."
+      // ],
       // linkedin: "https://linkedin.com/company/jsparkai",
     },
   ],
