@@ -260,6 +260,27 @@ export const PORTFOLIO_CONTENT: {
       status:"merged"
     },
     {
+      prUrl:"https://github.com/MxCorpIn/ossium/pull/28",
+      title:"FIX: Daily/weekly Emails digest",
+      private:true,
+      // url:"https://www.linkedin.com/posts/paras-vermaa_opensource-webdevelopment-frontend-activity-7409948094131253248-mnej?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
+      status:"merged"
+    },
+    {
+      prUrl:"https://github.com/MxCorpIn/ossium/pull/29",
+      title:"refactor: optimize digest cron performance and improve email UI ",
+      private:true,
+      // url:"https://www.linkedin.com/posts/paras-vermaa_opensource-webdevelopment-frontend-activity-7409948094131253248-mnej?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
+      status:"merged"
+    },
+    {
+      prUrl:"https://github.com/MxCorpIn/ossium/pull/40",
+      title:"chore: upgrade Next.js 15.5.9 → 16.3.1",
+      private:true,
+      // url:"https://www.linkedin.com/posts/paras-vermaa_opensource-webdevelopment-frontend-activity-7409948094131253248-mnej?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD05PBwB23RB7tDRtbGEloj7PwjWHcbvFSI",
+      status:"merged"
+    },
+    {
       prUrl:"https://github.com/MxCorpIn/ossium/pull/9",
       title:"feat: Improve GSoC and Issues UIs",
       private:true,

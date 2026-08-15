@@ -4,17 +4,17 @@ This is the portfolio of Paras Verma, a fullstack developer and AI engineer base
 
 ## Summary
 - Builds production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI, and RAG.
-- Primary stack: TypeScript, React, Next.js, Node.js, FastAPI, PostgreSQL, RAG.
+- Primary stack: TypeScript, React, Next.js, Node.js, Python, FastAPI, PostgreSQL, RAG.
 - Availability: Available for freelance.
 
 ## Current Experience
-- SDE Intern at Jspark AI (Nov 2025 - Jun 2026)
-- Company: https://jspark.ai
+- Software Engineer Intern at Jspark AI (Nov 2025 - Jun 2026)
+
 
 ## Skills
 - **Frontend**: Next.js, React, TypeScript, JavaScript
 - **Backend**: FastAPI, Node.js, Python, SQLAlchemy, Prisma ORM, PostgreSQL, MongoDB, Redis, Docker, GCP, AWS
-- **AI & Agents**: RAG, Qdrant, langChain, langGraph, Claude Code
+- **AI & Agents**: RAG, Qdrant, langChain, langGraph, Claude Code, Cursor
 
 ## Featured Projects
 - **Review Scope**: Automated code reviews that go beyond the diff. Catch bugs and enforce standards with an AI that understands your entire repository context.
@@ -56,10 +56,13 @@ This is the portfolio of Paras Verma, a fullstack developer and AI engineer base
 - https://github.com/MxCorpIn/ossium/pull/17
 - https://github.com/MxCorpIn/ossium/pull/3
 - https://github.com/MxCorpIn/ossium/pull/9
+- https://github.com/MxCorpIn/ossium/pull/28
+- https://github.com/MxCorpIn/ossium/pull/29
+- https://github.com/MxCorpIn/ossium/pull/40
 - https://github.com/fastapi/fastapi/pull/14565
 - https://github.com/ig-imanish/mx-icons/pull/9
 
-## Writing
+## Blogs
 - Medium: https://medium.com/@parasverma7454
 
 ## Contact
