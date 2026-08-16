@@ -4,23 +4,19 @@ import { useState, useEffect, type JSX, lazy, Suspense, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Github,
   Linkedin,
   MapPin,
   Terminal,
   Briefcase,
-  Sparkles,
   BookOpen,
   Globe,
   ChevronDown,
-  Mail,
 } from "lucide-react";
 
 import { PORTFOLIO_CONTENT } from "@/constants/portfolio";
-import type { Contribution } from "@/constants/portfolio";
 import BentoCard from "@/Components/BentoCard";
 import ProjectCard from "@/Components/ProjectCard";
-import ContributionItem from "@/Components/ContributionItem";
+import OpenSourceSection from "@/Components/OpenSourceSection";
 import LiveClock from "@/Components/LiveClock";
 import Hero from "@/Components/Hero";
 import { Tooltip } from "@/Components/ui/tooltip-card";
@@ -44,13 +40,6 @@ import { MapPinIcon, type MapPinIconHandle } from "@/Components/ui/map-pin";
 
 // Lazy load heavy below-the-fold components
 const Oneko = lazy(() => import("@/Components/Oneko"));
-
-type GroupedContribution = {
-  repoName: string;
-  owner: string;
-  contributions: Contribution[];
-  prCount: number;
-};
 
 type TechLogo = {
   src: string;
@@ -94,37 +83,6 @@ const isHiddenBlog = (post: MediumPost) => {
     .join(" ")
     .toLowerCase();
   return HIDDEN_BLOG_MATCHES.some((match) => searchablePostFields.includes(match));
-};
-
-const groupContributionsByRepo = (
-  contributions: Contribution[]
-): GroupedContribution[] => {
-  const grouped: { [key: string]: GroupedContribution } = {};
-
-  contributions.forEach((contribution) => {
-    try {
-      const urlObj = new URL(contribution.prUrl);
-      const parts = urlObj.pathname.split("/");
-      const owner = parts[1];
-      const repoName = parts[2];
-      const fullRepoName = `${owner}/${repoName}`;
-
-      if (!grouped[fullRepoName]) {
-        grouped[fullRepoName] = {
-          repoName: fullRepoName,
-          owner: owner,
-          contributions: [],
-          prCount: 0,
-        };
-      }
-      grouped[fullRepoName].contributions.push(contribution);
-      grouped[fullRepoName].prCount++;
-    } catch (error) {
-      console.error("Invalid prUrl in contribution:", contribution.prUrl, error);
-    }
-  });
-
-  return Object.values(grouped);
 };
 
 // Socials Card Component with animated icons
@@ -284,25 +242,6 @@ export default function Home() {
   const displayMonths = months < 1 ? 1 : months;
   const expDuration = `${displayMonths} month${displayMonths > 1 ? "s" : ""}`;
 
-  const groupedContributions = groupContributionsByRepo(
-    PORTFOLIO_CONTENT.contributions
-  );
-
-  const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
-    new Set(groupedContributions.map(group => group.repoName))
-  );
-  const toggleCollapse = (repoName: string) => {
-    setCollapsedGroups((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(repoName)) {
-        newSet.delete(repoName);
-      } else {
-        newSet.add(repoName);
-      }
-      return newSet;
-    });
-  };
-
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200 font-sans selection:bg-blue-600 selection:text-white dark:selection:bg-blue-300 dark:selection:text-neutral-900 transition-colors duration-300">
       {/* Background Gradient Mesh */}
@@ -441,6 +380,7 @@ export default function Home() {
                                     alt={TECH_STACK_LOGOS[skill].alt}
                                     width={16}
                                     height={16}
+                                    loading="lazy"
                                     className="w-4 h-4 object-contain transition-all duration-300 group-hover/skill:scale-110"
                                   />
                                 ) : (
@@ -657,56 +597,8 @@ export default function Home() {
           <GitHubCalendarComponent />
         </div>
 
-        {/* === OPEN SOURCE SECTION (Outside the fixed-row grid to fix overflow) === */}
-        <div className="mt-16 w-full cv-auto">
-          <div className="mb-6 px-4 md:px-6">
-            <div className="flex items-center gap-3">
-              <Github className="text-purple-500" size={24} />
-              <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Open Source Contributions</h2>
-            </div>
-            <p className="text-neutral-600 dark:text-neutral-500 text-sm mt-1 pb-15">Building and giving back to the community.</p>
-          </div>
-
-          <div className="flex flex-col mb-12 sm:mx-6 md:mx-12 lg:mx-20 bg-white/40 dark:bg-neutral-900/40 rounded-3xl border border-neutral-200 dark:border-white/5 overflow-hidden">
-            {groupedContributions.map((group) => {
-              const isCollapsed = collapsedGroups.has(group.repoName);
-              return (
-                <div key={group.repoName} className="border-b border-neutral-200 dark:border-white/5 last:border-b-0">
-                  <button
-                    className="flex items-center border-b border-neutral-200 dark:border-white/10 justify-between w-full p-4 bg-neutral-100/50 dark:bg-neutral-800/50 hover:bg-neutral-200/70 dark:hover:bg-neutral-800/70 transition-colors cursor-pointer"
-                    onClick={() => toggleCollapse(group.repoName)}
-                    aria-expanded={!isCollapsed}
-                    aria-controls={`contributions-for-${group.repoName}`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src={`https://github.com/${group.owner}.png`}
-                        alt={group.owner}
-                        className="w-6 h-6 rounded-full"
-                        width={24}
-                        height={24}
-                        unoptimized
-                      />
-                      <h3 className="text-lg font-bold text-neutral-900 dark:text-white">{group.repoName}</h3>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-neutral-600 dark:text-neutral-500 text-sm">{group.prCount} PRs</p>
-                    <ChevronDown size={20} className={`text-neutral-400 dark:text-neutral-400 transition-transform duration-300 ${isCollapsed ? 'rotate-0' : 'rotate-180'}`} />
-                    </div>
-                  </button>
-                  <div
-                    id={`contributions-for-${group.repoName}`}
-                    className={`overflow-hidden transition-all duration-300 ease-in-out ${isCollapsed ? 'max-h-0 opacity-0' : 'max-h-[1000px] opacity-100'}`}
-                  >
-                    {!isCollapsed && group.contributions.map((contribution, index) => (
-                      <ContributionItem key={index} contribution={contribution} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* === OPEN SOURCE SECTION === */}
+        <OpenSourceSection />
 
         {/* === BLOG SECTION === */}
         <div className="mt-20 w-full mb-20 cv-auto">

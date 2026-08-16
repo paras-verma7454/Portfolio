@@ -287,6 +287,14 @@ export const PORTFOLIO_CONTENT: {
       status:"merged"
     },
     {
+      prUrl: "https://github.com/MxCorpIn/blogs/pull/13",
+      status:"open"
+    },
+    {
+      prUrl: "https://github.com/MxCorpIn/blogs/pull/14",
+      status:"open"
+    },
+    {
       prUrl: "https://github.com/fastapi/fastapi/pull/14565",
       status:"merged"
     },

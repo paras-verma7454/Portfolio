@@ -59,6 +59,8 @@ This is the portfolio of Paras Verma, a fullstack developer and AI engineer base
 - https://github.com/MxCorpIn/ossium/pull/28
 - https://github.com/MxCorpIn/ossium/pull/29
 - https://github.com/MxCorpIn/ossium/pull/40
+- https://github.com/MxCorpIn/blogs/pull/13
+- https://github.com/MxCorpIn/blogs/pull/14
 - https://github.com/fastapi/fastapi/pull/14565
 - https://github.com/ig-imanish/mx-icons/pull/9
 

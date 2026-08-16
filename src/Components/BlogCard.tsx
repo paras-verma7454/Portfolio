@@ -60,7 +60,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
               className="object-contain w-full h-full"
               fill
               sizes="192px"
-              unoptimized
+              loading="lazy"
             />
           </div>
         )}

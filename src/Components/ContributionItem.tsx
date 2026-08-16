@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import { Github, ArrowUpRight, Lock, GitMerge, GitPullRequest, XCircle } from "lucide-react";
 import type { Contribution } from "../constants/portfolio";
 
 const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contribution }) => {
   const { prUrl, private: isPrivate, title: customTitle, url } = contribution;
+  const [avatarError, setAvatarError] = useState(false);
 
   const info = useMemo(() => {
     try {
@@ -46,14 +47,15 @@ const ContributionItem: React.FC<{ contribution: Contribution }> = ({ contributi
     >
       <div className="flex items-center gap-4 sm:gap-5">
         <div className="w-10 h-10 rounded-xl overflow-hidden bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shrink-0">
-          {avatarUrl ? (
+          {avatarUrl && !avatarError ? (
             <Image 
               src={avatarUrl} 
               alt={info?.owner || "repo"} 
               className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500"
               width={40}
               height={40}
-              unoptimized
+              loading="lazy"
+              onError={() => setAvatarError(true)}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-neutral-400 dark:text-neutral-500">
