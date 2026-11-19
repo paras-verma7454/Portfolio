@@ -78,7 +78,7 @@ export const PORTFOLIO_CONTENT: {
     timezone: "Asia/Kolkata",
     bio: `I build production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI, RAG — focused on clean UX and real user impact.`,
     email: "Parasverma7454@gmail.com",
-    availability: "Available for freelance",
+    availability: "Open to Work",
     avatar: "/luffy.jpg",
   },
   socials: [
