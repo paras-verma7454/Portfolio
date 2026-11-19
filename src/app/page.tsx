@@ -334,7 +334,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3 pt-4 md:pt-6 w-full mt-auto">
               <a
                 // href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PORTFOLIO_CONTENT.personal.email}`}
-                href={`https://drive.google.com/file/d/1fh7zrKLt2Xk4G6jQx595zUj42e-epS14/view`}
+                href={`https://x.com/ParasVerma7454`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-[15px] font-bold bg-neutral-900 dark:bg-white text-white dark:text-black py-2.5 px-5 rounded-xl hover:scale-105 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all gap-2 shadow-sm group/send"
@@ -342,7 +342,7 @@ export default function Home() {
                 onMouseLeave={() => heroSendRef.current?.stopAnimation()}
               >
                 <SendIcon ref={heroSendRef} size={16} />
-                Resume
+                DM me on X
               </a>
             </div>
           </div>

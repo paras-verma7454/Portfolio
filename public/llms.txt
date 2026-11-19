@@ -5,7 +5,7 @@ This is the portfolio of Paras Verma, a fullstack developer and AI engineer base
 ## Summary
 - Builds production-ready web and AI applications using TypeScript, React, Next.js, Node.js, FastAPI, and RAG.
 - Primary stack: TypeScript, React, Next.js, Node.js, Python, FastAPI, PostgreSQL, RAG.
-- Availability: Available for freelance.
+- Availability: Available to get hired.
 
 ## Current Experience
 - Software Engineer Intern at Jspark AI (Nov 2025 - Jun 2026)
